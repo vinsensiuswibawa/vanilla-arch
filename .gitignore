@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env and deploy
+.env*
+.vercel
+
+# local tool state
+.claude/settings.local.json
+.impeccable/config.local.json
+
+# raw 3D downloads (optimized GLBs live in public/models)
+raw/
+
+# os and logs
+.DS_Store
+Thumbs.db
+npm-debug.log*
