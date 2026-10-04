@@ -537,7 +537,7 @@ Phases are drawn equal because no dates are set yet; a shot that misses its gate
 
 1. `frontend-design` self-critique: is every choice specific to this subject, or would it fit any project?
 2. Impeccable's hooks check every UI edit during the shot; at the end, run `/impeccable critique` and `/impeccable audit` and fix every P0 and P1.
-3. Emil Kowalski's `review-animations` on the shot's motion. The verdict must be Approve, not Block.
+3. Emil Kowalski's `/review-animations` on the shot's motion; it is command-only, so you type it at each gate. The verdict must be Approve, not Block.
 4. Shot 3 and polish add `web-design-guidelines` (Vercel's Web Interface Guidelines) and `break-ui` on the listing data.
 5. `karpathy-guidelines` governs the code: the smallest change that meets the requirement, then verified.
 

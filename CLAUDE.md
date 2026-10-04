@@ -21,7 +21,7 @@ Before the first UI code, run the `frontend-design` design-plan pass (palette, t
 
 1. `frontend-design` self-critique.
 2. `/impeccable critique` and `/impeccable audit`; fix every P0 and P1. Triage hook findings as the `impeccable` skill describes: fix real problems, add only narrow ignores with named evidence.
-3. `review-animations` (Emil Kowalski) on the shot's motion; the verdict must be Approve.
+3. `/review-animations` (Emil Kowalski) on the shot's motion; the verdict must be Approve. It sets `disable-model-invocation`, so Claude can't trigger it: at each gate, ask the user to run it (same for `/prototype` and `/pick-ui-library`).
 4. From Shot 3: `web-design-guidelines` and `break-ui`.
 
 ## Non-negotiables
