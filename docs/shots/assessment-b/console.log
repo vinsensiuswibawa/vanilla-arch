@@ -1,0 +1,36 @@
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] GSAP target  not found. https://gsap.com
+[warning] GSAP target  not found. https://gsap.com
+[warning] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[warning] [.WebGL-0x70b400a34600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x70b400a34600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x70b400a34600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x70b400a34600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 468ms
+[warning] THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 2057ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1190ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1975ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1558ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 2988ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 18495ms
+[log] [Fast Refresh] rebuilding
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] GSAP target  not found. https://gsap.com
+[warning] GSAP target  not found. https://gsap.com
+[warning] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[warning] THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+[log] [Fast Refresh] rebuilding

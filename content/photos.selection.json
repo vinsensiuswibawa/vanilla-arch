@@ -1,0 +1,130 @@
+{
+  "honda-nsx-na1": [
+    { "file": "File:1991 Honda NSX Auto 2.jpg", "kind": "exterior", "alt": "Formula Red NSX on the grass at a car show, front three-quarter view" },
+    { "file": "File:1991 Honda NSX Auto 3.jpg", "kind": "exterior", "alt": "Front three-quarter view on tarmac with the headlights down" },
+    { "file": "File:1991 Honda NSX Auto 4.jpg", "kind": "exterior", "alt": "Front view with the pop-up headlights raised" },
+    { "file": "File:1991 Honda NSX Auto 5.jpg", "kind": "detail", "alt": "Raised pop-up headlight above the front bumper" },
+    { "file": "File:1991 Honda NSX Auto 6.jpg", "kind": "detail", "alt": "Close-up of the pop-up headlight pod against the red bonnet" },
+    { "file": "File:1991 Honda NSX 3.0 Auto (52657090011).jpg", "kind": "exterior", "alt": "Red NSX 3.0 Auto, front three-quarter view at an indoor show" }
+  ],
+  "honda-integra-type-r-db8": [
+    { "file": "File:Honda E-DB8 Integra 4 Door Hardtop TYPE R (23071517130).jpg", "kind": "exterior", "alt": "Championship White Integra Type R sedan, rear three-quarter view in a residential car park" },
+    { "file": "File:Honda E-DB8 Integra 4 Door Hardtop TYPE R (23071517131).jpg", "kind": "exterior", "alt": "Side profile with the Type R wing" },
+    { "file": "File:Honda E-DB8 Integra 4 Door Hardtop TYPE R (23100911284).jpg", "kind": "exterior", "alt": "Side profile on a later visit" },
+    { "file": "File:Honda E-DB8 Integra 4 Door Hardtop TYPE R (23100911285).jpg", "kind": "exterior", "alt": "Side profile showing the five-spoke wheels" },
+    { "file": "File:Honda INTEGRA TYPE R (GF-DB8) front.jpg", "kind": "exterior", "alt": "Championship White Integra Type R sedan, front three-quarter view on gravel" },
+    { "file": "File:Honda INTEGRA TYPE R (GF-DB8) rear.jpg", "kind": "exterior", "alt": "Rear three-quarter view with the Type R wing" }
+  ],
+  "bmw-m5-e39": [
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (20).jpg", "kind": "exterior", "alt": "Carbon Black M5 on a gravel drive, front three-quarter view" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (13).jpg", "kind": "exterior", "alt": "Rear three-quarter view" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (15).jpg", "kind": "exterior", "alt": "Rear three-quarter view, opposite side" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (8).jpg", "kind": "interior", "alt": "Right-hand-drive dashboard with satellite navigation and six-speed manual" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (7).jpg", "kind": "interior", "alt": "Black leather front seats" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (4).jpg", "kind": "interior", "alt": "Black leather rear seats" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (5).jpg", "kind": "interior", "alt": "Instrument cluster with the M tachometer" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (2).jpg", "kind": "interior", "alt": "Six-speed gear lever" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (3).jpg", "kind": "interior", "alt": "Satellite navigation screen" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (16).jpg", "kind": "detail", "alt": "V8 engine under its M Power cover" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (19).jpg", "kind": "detail", "alt": "Multi-spoke alloy wheel" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (17).jpg", "kind": "detail", "alt": "Headlights with angel-eye rings" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (18).jpg", "kind": "detail", "alt": "Tail light and M5 badge" },
+    { "file": "File:BMW M5 (2002) - Flickr - The Car Spy (1).jpg", "kind": "detail", "alt": "M5 boot badge" }
+  ],
+  "jaguar-xj220": [
+    { "file": "File:Jaguar XJ220 1993 AboveLSideFront LakeMirrorClassic 17Oct09 (14600551575).jpg", "kind": "exterior", "alt": "Maroon XJ220 on a concours lawn, front three-quarter view from above" },
+    { "file": "File:Jaguar XJ220 1993 LSideFront LakeMirrorClassic 17Oct09 (14413945908).jpg", "kind": "exterior", "alt": "Front three-quarter view, left side" },
+    { "file": "File:Jaguar XJ220 1993 LFront LakeMirrorClassic 17Oct09 (14413906218).jpg", "kind": "exterior", "alt": "Front view showing the low nose and covered headlamps" },
+    { "file": "File:Jaguar XJ220 1993 Nose LakeMirrorClassic 17Oct09 (14598601834).jpg", "kind": "exterior", "alt": "Close front view of the nose and intakes" },
+    { "file": "File:Jaguar XJ220 1993 RSideFront LakeMirrorClassic 17Oct09 (14413946508).jpg", "kind": "exterior", "alt": "Front three-quarter view, right side, with the side intake" },
+    { "file": "File:Jaguar XJ220 1993 LSideRear LakeMirrorClassic 17Oct09 (14413971849).jpg", "kind": "exterior", "alt": "Rear three-quarter view, left side" },
+    { "file": "File:Jaguar XJ220 1993 RSideRear LakeMirrorClassic 17Oct09 (14600554275).jpg", "kind": "exterior", "alt": "Rear three-quarter view, right side" },
+    { "file": "File:Jaguar XJ220 1993 Rear LakeMirrorClassic 17Oct09 (14600553595).jpg", "kind": "exterior", "alt": "Rear view with the full-width wing" },
+    { "file": "File:Jaguar XJ220 1993 AboveRear LakeMirrorClassic 17Oct09 (14577540306).jpg", "kind": "exterior", "alt": "Rear view from above, engine cover glass visible" },
+    { "file": "File:Jaguar XJ220 1993 Cockpit LakeMirrorClassic 17Oct09 (14577501306).jpg", "kind": "interior", "alt": "Cockpit trimmed in cream leather with a three-spoke wheel" },
+    { "file": "File:Jaguar XJ220 1993 Console LakeMirrorClassic 17Oct09 (14599930932).jpg", "kind": "interior", "alt": "Instrument cluster and centre vents" },
+    { "file": "File:Jaguar XJ220 1993 Engine LakeMirrorClassic 17Oct09 (14620624423).jpg", "kind": "detail", "alt": "Twin-turbocharged V6 seen through the rear glass" },
+    { "file": "File:Jaguar XJ220 1993 HoodVentsFans LakeMirrorClassic 17Oct09 (14620624713).jpg", "kind": "detail", "alt": "Engine cover vents and cooling fans" }
+  ],
+  "lamborghini-gallardo": [
+    { "file": "File:Lamborghini Gallardo 5.2 '08 (9390301627).jpg", "kind": "exterior", "alt": "Black Gallardo LP 560-4 on a cobbled town street, front three-quarter view" },
+    { "file": "File:Lamborghini Gallardo 5.2 '08 (9390283255).jpg", "kind": "exterior", "alt": "Rear three-quarter view" },
+    { "file": "File:Lamborghini Gallardo 5.2 '08 (9393068996).jpg", "kind": "exterior", "alt": "Front three-quarter view at the event" },
+    { "file": "File:Lamborghini Gallardo 5.2 '08 (9392959024).jpg", "kind": "exterior", "alt": "Front view among spectators" },
+    { "file": "File:Lamborghini Gallardo 5.2 '08 (9390272143).jpg", "kind": "exterior", "alt": "Rear view with the quad exhausts" },
+    { "file": "File:Lamborghini Gallardo 5.2 '08 (9393052062).jpg", "kind": "exterior", "alt": "Rear view showing the engine-cover louvres" }
+  ],
+  "mazda-mx-5-nc": [
+    { "file": "File:Mazda MX-5 convertible 17 Blackwood St Mitchelton L1060810.jpg", "kind": "exterior", "alt": "Black MX-5 with the hood up, front three-quarter view in a shopping-centre car park" },
+    { "file": "File:Mazda MX-5 convertible 17 Blackwood St Mitchelton L1060806.jpg", "kind": "exterior", "alt": "Front view" },
+    { "file": "File:Mazda MX-5 convertible 17 Blackwood St Mitchelton L1060809.jpg", "kind": "exterior", "alt": "Side profile on a suburban street" },
+    { "file": "File:Mazda MX-5 convertible 17 Blackwood St Mitchelton L1060804.jpg", "kind": "exterior", "alt": "Rear three-quarter view with the hood up" },
+    { "file": "File:Mazda MX-5 convertible 17 Blackwood St Mitchelton L1060807.jpg", "kind": "exterior", "alt": "Front three-quarter view in the car park, from the left" },
+    { "file": "File:Mazda MX-5 (KV06 PBH) - 7 June 2026.jpg", "kind": "exterior", "alt": "Black pre-facelift MX-5 on the grass at a car show, front three-quarter view" }
+  ],
+  "triumph-tr6": [
+    { "file": "File:Tr6 Landstraße Ansicht schräg vorne.jpg", "kind": "exterior", "alt": "White TR6 with the hood down on a country road, front three-quarter view" },
+    { "file": "File:Tr6 Seitenansicht.jpg", "kind": "exterior", "alt": "Side profile" },
+    { "file": "File:Tr6 Landstraße, Ansicht von schräg hinten.jpg", "kind": "exterior", "alt": "Rear three-quarter view on the road" },
+    { "file": "File:Tr6 back field.jpg", "kind": "exterior", "alt": "Rear three-quarter view beside a field" },
+    { "file": "File:Tr6 von oben.jpg", "kind": "exterior", "alt": "From above, showing the boot rack" },
+    { "file": "File:Triumph tr6 interior.jpg", "kind": "interior", "alt": "Black leather seats, wood dashboard and three-spoke wheel" }
+  ],
+  "porsche-930": [
+    { "url": "https://live.staticflickr.com/65535/52561752768_b146ee206f_b.jpg", "kind": "exterior", "alt": "Copper Brown 911 Turbo in a classic-car hall, front three-quarter view showing the flared arches", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52561752768" },
+    { "url": "https://live.staticflickr.com/65535/52561752743_25b44ddda7_b.jpg", "kind": "exterior", "alt": "Front three-quarter view, right side, on black-centred Fuchs wheels", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52561752743" },
+    { "url": "https://live.staticflickr.com/65535/52560758942_b1419d4aaa_b.jpg", "kind": "exterior", "alt": "Rear three-quarter view with the whale-tail spoiler", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52560758942" },
+    { "file": "File:Porsche 930 Turbo (52176841670).jpg", "kind": "exterior", "alt": "Copper 911 Turbo in a classic-car hall, front three-quarter view" },
+    { "file": "File:Porsche 911 930 Turbo (52176354211).jpg", "kind": "detail", "alt": "Whale-tail spoiler and Turbo script on the copper car, from behind" },
+    { "file": "File:Porsche 911 Turbo 3.jpg", "kind": "exterior", "alt": "Rust-orange 911 Turbo, rear three-quarter view with the whale tail" }
+  ],
+  "lotus-elise": [
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (17).jpg", "kind": "exterior", "alt": "Silver Elise Sport 135 with its hardtop, front three-quarter view on a gravel drive" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (8).jpg", "kind": "exterior", "alt": "Side profile on the drive" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (9).jpg", "kind": "exterior", "alt": "Tail with round lamps and twin exhausts" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (12).jpg", "kind": "exterior", "alt": "Nose with the covered headlamps and orange indicators" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (1).jpg", "kind": "interior", "alt": "Pink Corbeau seats and exposed aluminium sill" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (3).jpg", "kind": "interior", "alt": "Red Alcantara wheel and aluminium gear lever" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (13).jpg", "kind": "interior", "alt": "Passenger seat in pink Corbeau trim" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (7).jpg", "kind": "interior", "alt": "Instruments behind the wheel" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (2).jpg", "kind": "detail", "alt": "Sport 135 decal on the rear flank" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (16).jpg", "kind": "detail", "alt": "Five-spoke alloy wheel" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (15).jpg", "kind": "detail", "alt": "Engine cover vents" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (14).jpg", "kind": "detail", "alt": "Side intake ahead of the rear wheel" },
+    { "file": "File:Lotus Elise 135 - Flickr - The Car Spy (5).jpg", "kind": "detail", "alt": "Elise script and mesh between the tail lamps" }
+  ],
+  "datsun-240k-gt": [
+    { "url": "https://live.staticflickr.com/65535/54268356810_3764ffe3bc_b.jpg", "kind": "exterior", "alt": "Blue-grey 240K GT hardtop on the grass at a Japanese classic show, front three-quarter view", "credit": "Rutger van der Maar", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/83468718@N06/54268356810" },
+    { "url": "https://live.staticflickr.com/65535/54268356835_24a8df6c9c_b.jpg", "kind": "exterior", "alt": "Side profile, left front three-quarter", "credit": "Rutger van der Maar", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/83468718@N06/54268356835" },
+    { "url": "https://live.staticflickr.com/65535/54268175848_05c258edbf_b.jpg", "kind": "exterior", "alt": "Rear view with the twin round tail lights", "credit": "Rutger van der Maar", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/83468718@N06/54268175848" },
+    { "file": "File:1975 Datsun 240K GT from Kuwait 04.jpg", "kind": "exterior", "alt": "Blue-grey 240K GT on the grass at a classic show, front three-quarter view" },
+    { "file": "File:1975 Datsun 240K GT from Kuwait 05.jpg", "kind": "exterior", "alt": "Rear view with the twin round tail lights and the Kuwaiti plate" },
+    { "file": "File:Nissan Skyline Hardtop 2000GT - C110 (1974) at Nissan Crossing showroom in Ginza, Tokyo (Dec 2019) - front.jpg", "kind": "exterior", "alt": "Blue Skyline 2000GT hardtop in a showroom, head-on view" }
+  ],
+  "peugeot-205-cj": [
+    { "url": "https://live.staticflickr.com/65535/54395591832_bff6336da5_b.jpg", "kind": "exterior", "alt": "White 205 CJ with the hood down, front three-quarter view in an underground garage", "credit": "Txemai Argazki", "license": "CC0 1.0", "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/", "sourceUrl": "https://www.flickr.com/photos/59170444@N05/54395591832" },
+    { "url": "https://live.staticflickr.com/65535/54396481631_76877e1b67_b.jpg", "kind": "exterior", "alt": "Rear three-quarter view with the roll hoop and the hood folded", "credit": "Txemai Argazki", "license": "CC0 1.0", "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/", "sourceUrl": "https://www.flickr.com/photos/59170444@N05/54396481631" },
+    { "url": "https://live.staticflickr.com/65535/52838221403_2abef82b6d_b.jpg", "kind": "exterior", "alt": "White 205 CJ with the hood down, front three-quarter view on a park path", "credit": "crash71100", "license": "CC0 1.0", "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/", "sourceUrl": "https://www.flickr.com/photos/152930510@N02/52838221403" },
+    { "url": "https://live.staticflickr.com/65535/52837957029_533bc106c7_b.jpg", "kind": "exterior", "alt": "Rear view of the same car with the black hood up", "credit": "crash71100", "license": "CC0 1.0", "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/", "sourceUrl": "https://www.flickr.com/photos/152930510@N02/52837957029" },
+    { "url": "https://live.staticflickr.com/65535/55146099883_f27ff22fab_b.jpg", "kind": "exterior", "alt": "White 205 CJ with the hood up, front three-quarter view on a city street", "credit": "LineAndSinker06", "license": "CC0 1.0", "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/", "sourceUrl": "https://www.flickr.com/photos/202735026@N08/55146099883" },
+    { "url": "https://live.staticflickr.com/65535/52681408468_dd70cf2ef2_b.jpg", "kind": "exterior", "alt": "1994 205 CJ with the hood folded, front three-quarter view on a cobbled street", "credit": "Rutger van der Maar", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/83468718@N06/52681408468" }
+  ],
+  "fiat-barchetta": [
+    { "file": "File:Fiat Barchetta (21365204542).jpg", "kind": "exterior", "alt": "Red Barchetta with the hood down, front three-quarter view on a village street" },
+    { "file": "File:Fiat Barchetta (21189357229).jpg", "kind": "exterior", "alt": "Front view showing the covered headlamps" },
+    { "file": "File:Fiat Barchetta (20753478444).jpg", "kind": "exterior", "alt": "Side profile in front of a stone house" },
+    { "file": "File:Fiat Barchetta (21350101516).jpg", "kind": "exterior", "alt": "Rear three-quarter view" },
+    { "file": "File:Fiat Barchetta (21384303171).jpg", "kind": "exterior", "alt": "Rear three-quarter view above an Alpine valley" },
+    { "file": "File:Fiat Barchetta (21365247122).jpg", "kind": "exterior", "alt": "Front three-quarter view, right side" },
+    { "file": "File:Fiat Barchetta (21384449661).jpg", "kind": "detail", "alt": "Six-spoke alloy wheel under the front arch" }
+  ],
+  "subaru-wrx-wagon-gg": [
+    { "file": "File:ASA IMG 7270 (3829259046).jpg", "kind": "exterior", "alt": "WR Blue WRX wagon with a roof rack, front three-quarter view on an autocross course" },
+    { "file": "File:ASA IMG 7241 (3829257848).jpg", "kind": "exterior", "alt": "Front three-quarter view through a turn, bonnet scoop and round headlamps" },
+    { "file": "File:ASA IMG 7268 (3828459263).jpg", "kind": "exterior", "alt": "Rear three-quarter view between cones" },
+    { "file": "File:ASA IMG 7239 (3829257716).jpg", "kind": "exterior", "alt": "Rear three-quarter view, accelerating out of a turn" },
+    { "file": "File:ASA ASA WinterX 6 12 (8522265229).jpg", "kind": "exterior", "alt": "On its winter wheels, side profile on a frozen course" },
+    { "file": "File:ASA ASA WinterX 6 08 (8523379942).jpg", "kind": "exterior", "alt": "Opposite side profile on the winter wheels" },
+    { "file": "File:ASA ASA WinterX 6 01 (8523381098).jpg", "kind": "exterior", "alt": "Front view on a winter course" }
+  ]
+}

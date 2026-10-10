@@ -1,0 +1,6611 @@
+{
+ "marketplaces": [
+  {
+   "id": "halden",
+   "name": "Halden",
+   "kind": "Classifieds"
+  },
+  {
+   "id": "torquewell",
+   "name": "Torquewell",
+   "kind": "Dealer marketplace"
+  },
+  {
+   "id": "lot-twelve",
+   "name": "Lot Twelve",
+   "kind": "Online auction"
+  }
+ ],
+ "cars": {
+  "datsun-240k-gt": {
+   "listings": [
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 85400,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 39200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 63000,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 38400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1973,
+     "mileageMi": 159700,
+     "condition": "3",
+     "location": "Hamburg, DE",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 79700,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 33500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1977,
+     "mileageMi": 108700,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 38800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1973,
+     "mileageMi": 38700,
+     "condition": "5",
+     "location": "Utrecht, NL",
+     "priceUsd": 41500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1977,
+     "mileageMi": 248500,
+     "condition": "3",
+     "location": "Bristol, UK",
+     "priceUsd": 37100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 43700,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 41700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 69000,
+     "condition": "5",
+     "location": "Austin, TX",
+     "priceUsd": 44200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 74800,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 45100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 79300,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 38400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 42400,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 44100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1973,
+     "mileageMi": 70300,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 42300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 65600,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 40000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1974,
+     "mileageMi": 104200,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 36100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 77300,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 37200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 102600,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 39500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1976,
+     "mileageMi": 107400,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 38900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1975,
+     "mileageMi": 119500,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1977,
+     "mileageMi": 130500,
+     "condition": "2.5",
+     "location": "Denver, CO",
+     "priceUsd": 36700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1976,
+     "mileageMi": 107600,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 139100,
+     "condition": "3.5",
+     "location": "Lyon, FR",
+     "priceUsd": 39500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 52100,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 43200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 128600,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 42300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1973,
+     "mileageMi": 109700,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 38800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 133900,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 41900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 81300,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 42900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 25800,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 41100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 272900,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 37400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1976,
+     "mileageMi": 70200,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 39600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 60700,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 39300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1977,
+     "mileageMi": 83700,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 42600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 177200,
+     "condition": "3",
+     "location": "Utrecht, NL",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1977,
+     "mileageMi": 48000,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 42800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1976,
+     "mileageMi": 49500,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 42700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1977,
+     "mileageMi": 204100,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 37900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1975,
+     "mileageMi": 144200,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 38700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1976,
+     "mileageMi": 192800,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 35700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1976,
+     "mileageMi": 110900,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 37500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 74800,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 45600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 79400,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 43200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 136300,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 40400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 79500,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 44500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 166600,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 40800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 169000,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 36900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1974,
+     "mileageMi": 528600,
+     "condition": "2.5",
+     "location": "Austin, TX",
+     "priceUsd": 34500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 30900,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 46900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1977,
+     "mileageMi": 147200,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 41400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 61400,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 41300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 65800,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 43300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 59300,
+     "condition": "5",
+     "location": "Utrecht, NL",
+     "priceUsd": 41800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1974,
+     "mileageMi": 86600,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 36200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 84600,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 38600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 64400,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 42900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1975,
+     "mileageMi": 141700,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 37100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1975,
+     "mileageMi": 72700,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 37400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 73100,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 40500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1975,
+     "mileageMi": 92200,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 41300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 53300,
+     "condition": "5",
+     "location": "Bristol, UK",
+     "priceUsd": 41100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 71000,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 42300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1974,
+     "mileageMi": 84000,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 36500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 98500,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 41300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 98100,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 41300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1973,
+     "mileageMi": 94600,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 40200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 85000,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 40300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 54000,
+     "condition": "5",
+     "location": "Utrecht, NL",
+     "priceUsd": 39900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 38600,
+     "condition": "5",
+     "location": "Portland, OR",
+     "priceUsd": 39600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 108700,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 41900
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 27100
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 28000
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 28700
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 29700
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 29600
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 30300
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 30900
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 31600
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 31900
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 32700
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 34300
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 34200
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 34900
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 36400
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 36300
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 36400
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 37600
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 38700
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 40000
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 40100
+    }
+   ]
+  },
+  "triumph-tr6": {
+   "listings": [
+    {
+     "marketplace": "lot-twelve",
+     "year": 1970,
+     "mileageMi": 131100,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 31000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1973,
+     "mileageMi": 39700,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 38600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1969,
+     "mileageMi": 64900,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 32000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1969,
+     "mileageMi": 60700,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 32800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1970,
+     "mileageMi": 37300,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 36400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1971,
+     "mileageMi": 71000,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 35400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1969,
+     "mileageMi": 52000,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 36200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1971,
+     "mileageMi": 51700,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 38200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1972,
+     "mileageMi": 58100,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1973,
+     "mileageMi": 21300,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 43500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 93800,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 34400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1970,
+     "mileageMi": 48400,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 36000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 40500,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 41700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1976,
+     "mileageMi": 26100,
+     "condition": "5",
+     "location": "Charlotte, NC",
+     "priceUsd": 37200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1970,
+     "mileageMi": 45000,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 39600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 105600,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 35800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1972,
+     "mileageMi": 57600,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 44500,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 38600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1972,
+     "mileageMi": 88500,
+     "condition": "3",
+     "location": "Hamburg, DE",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1972,
+     "mileageMi": 58500,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 35900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 131400,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 33000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1972,
+     "mileageMi": 26200,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 39100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 75000,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 36300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 46900,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 39100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 18600,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 44300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1971,
+     "mileageMi": 43600,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 36900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 72700,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 43100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1969,
+     "mileageMi": 50400,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 41100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1972,
+     "mileageMi": 41100,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 37300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1970,
+     "mileageMi": 56400,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 33600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 23600,
+     "condition": "5",
+     "location": "Toronto, CA",
+     "priceUsd": 40300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1972,
+     "mileageMi": 104400,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 32800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 200300,
+     "condition": "3",
+     "location": "Atlanta, GA",
+     "priceUsd": 34100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1975,
+     "mileageMi": 79000,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 38400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1969,
+     "mileageMi": 67700,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 32300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1974,
+     "mileageMi": 104000,
+     "condition": "3",
+     "location": "Denver, CO",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1972,
+     "mileageMi": 124600,
+     "condition": "2.5",
+     "location": "Bristol, UK",
+     "priceUsd": 30500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1971,
+     "mileageMi": 73200,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 35000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 63900,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 38600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 84700,
+     "condition": "3",
+     "location": "Surrey, UK",
+     "priceUsd": 35900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 70400,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 33500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 86000,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 35700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1970,
+     "mileageMi": 26500,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 40800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1972,
+     "mileageMi": 139200,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 34100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1976,
+     "mileageMi": 60400,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 30500,
+     "condition": "5",
+     "location": "Hamburg, DE",
+     "priceUsd": 42200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1969,
+     "mileageMi": 65300,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 34800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1970,
+     "mileageMi": 62200,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 31100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1975,
+     "mileageMi": 223300,
+     "condition": "2.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 31300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 61900,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 37000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1973,
+     "mileageMi": 41000,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 37800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1971,
+     "mileageMi": 66100,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 33900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1971,
+     "mileageMi": 57900,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 38000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1973,
+     "mileageMi": 51300,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 39700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1973,
+     "mileageMi": 85900,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 35900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 49600,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 39100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1973,
+     "mileageMi": 42800,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 40300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1974,
+     "mileageMi": 67000,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 37100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 51500,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 38800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1972,
+     "mileageMi": 46300,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 36700
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 32400
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 32200
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 32000
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 32200
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 32200
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 33100
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 32900
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 33300
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 34400
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 33700
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 34200
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 34400
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 34500
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 34700
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 35800
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 35500
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 36000
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 36000
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 36500
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 36600
+    }
+   ]
+  },
+  "porsche-930": {
+   "listings": [
+    {
+     "marketplace": "torquewell",
+     "year": 1979,
+     "mileageMi": 114500,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 198500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1985,
+     "mileageMi": 49400,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 228500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1984,
+     "mileageMi": 43800,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 272000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 38500,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 276500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1989,
+     "mileageMi": 26600,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 284000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1982,
+     "mileageMi": 131200,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 192500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1987,
+     "mileageMi": 40500,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 264000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 61000,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 236500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1986,
+     "mileageMi": 71000,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 240000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1978,
+     "mileageMi": 46700,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 237500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1980,
+     "mileageMi": 92400,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 213500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1976,
+     "mileageMi": 75700,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 220500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 110700,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 216000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1980,
+     "mileageMi": 37600,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 213500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1978,
+     "mileageMi": 26500,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 240000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1978,
+     "mileageMi": 54600,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 229000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1976,
+     "mileageMi": 58100,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 219000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1986,
+     "mileageMi": 49200,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 250000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1986,
+     "mileageMi": 59300,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 229000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1981,
+     "mileageMi": 37100,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 238500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1984,
+     "mileageMi": 131000,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 241500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1983,
+     "mileageMi": 82500,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 236000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1979,
+     "mileageMi": 51400,
+     "condition": "4.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 217500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1982,
+     "mileageMi": 62900,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 221000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1983,
+     "mileageMi": 63000,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 212000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 84300,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 244500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1979,
+     "mileageMi": 92100,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 203000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1981,
+     "mileageMi": 54100,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 224000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1988,
+     "mileageMi": 37100,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 249500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1978,
+     "mileageMi": 50900,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 250000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1980,
+     "mileageMi": 62200,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 219000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 58300,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 250500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1982,
+     "mileageMi": 95800,
+     "condition": "2.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 226500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 54100,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 230000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1983,
+     "mileageMi": 66900,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 227500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1976,
+     "mileageMi": 106000,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 219500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1981,
+     "mileageMi": 56100,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 227000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1989,
+     "mileageMi": 51500,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 256000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1985,
+     "mileageMi": 74900,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 238000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1975,
+     "mileageMi": 65200,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 210000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1977,
+     "mileageMi": 50100,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 229000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1978,
+     "mileageMi": 150000,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 200500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1984,
+     "mileageMi": 67100,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 216500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1978,
+     "mileageMi": 33200,
+     "condition": "5",
+     "location": "Brisbane, AU",
+     "priceUsd": 245500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1983,
+     "mileageMi": 81800,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 226500
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 172000
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 172500
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 183500
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 184500
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 184500
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 187500
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 193000
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 190500
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 194000
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 199500
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 205500
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 203500
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 207500
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 211000
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 207500
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 220000
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 219000
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 221500
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 228500
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 229000
+    }
+   ]
+  },
+  "peugeot-205-cj": {
+   "listings": [
+    {
+     "marketplace": "torquewell",
+     "year": 1989,
+     "mileageMi": 58300,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 10100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1990,
+     "mileageMi": 61200,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 9700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1991,
+     "mileageMi": 61800,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 11000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 53800,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 11000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1991,
+     "mileageMi": 75700,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 10100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 50900,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 9900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1991,
+     "mileageMi": 73200,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 10900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1990,
+     "mileageMi": 59500,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 9400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1986,
+     "mileageMi": 58100,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 9700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 67400,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 9600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 60200,
+     "condition": "3",
+     "location": "Toronto, CA",
+     "priceUsd": 12100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1988,
+     "mileageMi": 124800,
+     "condition": "3",
+     "location": "Hamburg, DE",
+     "priceUsd": 10000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1988,
+     "mileageMi": 33200,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 11300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 127300,
+     "condition": "3",
+     "location": "Denver, CO",
+     "priceUsd": 10000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 72800,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 11900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 117600,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 9700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 79300,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 10500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1991,
+     "mileageMi": 78900,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 10800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 78200,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 88400,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 10000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1986,
+     "mileageMi": 117500,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 8800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 116000,
+     "condition": "3",
+     "location": "Denver, CO",
+     "priceUsd": 9500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 159000,
+     "condition": "2.5",
+     "location": "Milan, IT",
+     "priceUsd": 10100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1991,
+     "mileageMi": 52900,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 10500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 49000,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 11300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 133900,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 9100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1991,
+     "mileageMi": 138000,
+     "condition": "3",
+     "location": "Brisbane, AU",
+     "priceUsd": 8800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1988,
+     "mileageMi": 73300,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 9900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1990,
+     "mileageMi": 186200,
+     "condition": "3",
+     "location": "Toronto, CA",
+     "priceUsd": 9500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1986,
+     "mileageMi": 68400,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 9500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 159300,
+     "condition": "3",
+     "location": "Surrey, UK",
+     "priceUsd": 9700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1988,
+     "mileageMi": 32900,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 11500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1988,
+     "mileageMi": 85900,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 9200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1989,
+     "mileageMi": 66500,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 10500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 76800,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 9700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1988,
+     "mileageMi": 76200,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 10100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1986,
+     "mileageMi": 54000,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 10700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1989,
+     "mileageMi": 98600,
+     "condition": "3",
+     "location": "Brisbane, AU",
+     "priceUsd": 9500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1988,
+     "mileageMi": 138700,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 9900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 106800,
+     "condition": "3",
+     "location": "Surrey, UK",
+     "priceUsd": 9500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 25400,
+     "condition": "5",
+     "location": "Boston, MA",
+     "priceUsd": 11100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 59500,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 11200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1990,
+     "mileageMi": 102900,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 9700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 99900,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 10500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 67800,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 10700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1990,
+     "mileageMi": 61400,
+     "condition": "4.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 10700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1988,
+     "mileageMi": 36200,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 10300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1990,
+     "mileageMi": 43000,
+     "condition": "5",
+     "location": "Atlanta, GA",
+     "priceUsd": 10100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1990,
+     "mileageMi": 48800,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 10800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1989,
+     "mileageMi": 65900,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 10300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1987,
+     "mileageMi": 35600,
+     "condition": "5",
+     "location": "Toronto, CA",
+     "priceUsd": 10100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 84900,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 10600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 46400,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 10700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 36500,
+     "condition": "5",
+     "location": "Denver, CO",
+     "priceUsd": 10800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 39000,
+     "condition": "5",
+     "location": "Austin, TX",
+     "priceUsd": 10600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1991,
+     "mileageMi": 50200,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 10800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1987,
+     "mileageMi": 39600,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 10200
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 8100
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 8300
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 8300
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 8300
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 8300
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 8500
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 8600
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 8800
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 8600
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 9000
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 9200
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 9100
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 9400
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 9500
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 9700
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 9600
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 9700
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 10000
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 10000
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 10100
+    }
+   ]
+  },
+  "honda-nsx-na1": {
+   "listings": [
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 100400,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 78600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 45900,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 91600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 49000,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 92400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1997,
+     "mileageMi": 93800,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 99600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1995,
+     "mileageMi": 53700,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 93400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 28300,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 100000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 36700,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 97900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 43700,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 107500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 25000,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 105000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 107900,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 85600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 92200,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 81600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1991,
+     "mileageMi": 72600,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 94100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1995,
+     "mileageMi": 43200,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 89100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1995,
+     "mileageMi": 205200,
+     "condition": "2.5",
+     "location": "Portland, OR",
+     "priceUsd": 80400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 48800,
+     "condition": "4.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 83200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 57400,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 100000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 91600,
+     "condition": "3",
+     "location": "Milan, IT",
+     "priceUsd": 86800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 80900,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 93000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 48800,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 89000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 32900,
+     "condition": "5",
+     "location": "Lyon, FR",
+     "priceUsd": 97900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1995,
+     "mileageMi": 44100,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 88600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 48500,
+     "condition": "5",
+     "location": "Portland, OR",
+     "priceUsd": 90100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 62600,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 90600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1995,
+     "mileageMi": 125200,
+     "condition": "3",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 80300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 60100,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 93400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 51100,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 99100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 50200,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 86200
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1996,
+     "mileageMi": 44100,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 92500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 68500,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 90500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 57600,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 90700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1995,
+     "mileageMi": 186000,
+     "condition": "3",
+     "location": "Portland, OR",
+     "priceUsd": 82600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1991,
+     "mileageMi": 26900,
+     "condition": "5",
+     "location": "Sacramento, CA",
+     "priceUsd": 95400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 80900,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 100500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1995,
+     "mileageMi": 53100,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 101500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1991,
+     "mileageMi": 98500,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 85800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 62000,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 88800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 37500,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 95600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 29900,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 90400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 41000,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 83900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 54500,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 97500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1995,
+     "mileageMi": 97300,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 91600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1995,
+     "mileageMi": 147300,
+     "condition": "3",
+     "location": "Utrecht, NL",
+     "priceUsd": 84700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 58900,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 86900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 43300,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 96700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 40300,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 91400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 38100,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 90900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 60000,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 88500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 143200,
+     "condition": "2.5",
+     "location": "Denver, CO",
+     "priceUsd": 81500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1995,
+     "mileageMi": 48500,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 86800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 39300,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 92700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 58700,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 87300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1996,
+     "mileageMi": 38700,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 92400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1996,
+     "mileageMi": 22800,
+     "condition": "5",
+     "location": "Utrecht, NL",
+     "priceUsd": 104000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 36800,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 84300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 50900,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 87800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 81100,
+     "condition": "3",
+     "location": "Utrecht, NL",
+     "priceUsd": 102500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 55000,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 93800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1997,
+     "mileageMi": 39600,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 91200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 114000,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 90000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 76500,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 92500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1995,
+     "mileageMi": 81200,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 82800
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 65600
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 67100
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 67300
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 69700
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 70200
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 70700
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 74300
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 74000
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 77200
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 78300
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 79900
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 78300
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 80000
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 83200
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 84000
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 84500
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 86800
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 87900
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 89300
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 90900
+    }
+   ]
+  },
+  "jaguar-xj220": {
+   "listings": [
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 3800,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 542000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 3600,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 530500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 3900,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 574500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 3500,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 557000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 1000,
+     "condition": "5",
+     "location": "Bristol, UK",
+     "priceUsd": 648500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 2700,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 526000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 4400,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 557500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 2700,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 589500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 4700,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 566000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 3100,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 564000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 5800,
+     "condition": "3",
+     "location": "Toronto, CA",
+     "priceUsd": 559500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 4500,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 507500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 2600,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 551000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 7000,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 520500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 7600,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 514500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 4600,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 532000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 5100,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 580000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 2600,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 556000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 4500,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 543500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 1800,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 553500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 7800,
+     "condition": "3",
+     "location": "Charlotte, NC",
+     "priceUsd": 502500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 5400,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 512500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 10000,
+     "condition": "2.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 467500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1994,
+     "mileageMi": 2600,
+     "condition": "5",
+     "location": "Toronto, CA",
+     "priceUsd": 556500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 3400,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 591000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 2500,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 531000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 3700,
+     "condition": "3",
+     "location": "Toronto, CA",
+     "priceUsd": 490500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 6400,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 517000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1994,
+     "mileageMi": 8300,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 532500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 2900,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 583000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 4600,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 586500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1993,
+     "mileageMi": 4200,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 595000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 8400,
+     "condition": "3.5",
+     "location": "Lyon, FR",
+     "priceUsd": 475000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1992,
+     "mileageMi": 3600,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 555500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 1500,
+     "condition": "5",
+     "location": "Lyon, FR",
+     "priceUsd": 583500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 4200,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 552500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 3500,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 577500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1993,
+     "mileageMi": 3100,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 569000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 3500,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 483500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 6000,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 497500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1993,
+     "mileageMi": 2200,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 529000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1994,
+     "mileageMi": 3900,
+     "condition": "4.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 582500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1992,
+     "mileageMi": 7900,
+     "condition": "3",
+     "location": "Sacramento, CA",
+     "priceUsd": 538500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1992,
+     "mileageMi": 2600,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 553500
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 466000
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 457000
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 475000
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 457000
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 478500
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 488500
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 477500
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 492500
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 490500
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 506500
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 505000
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 522000
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 504000
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 521500
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 525500
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 523500
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 540000
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 553500
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 552500
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 553000
+    }
+   ]
+  },
+  "honda-integra-type-r-db8": {
+   "listings": [
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 125600,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 38500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 28100,
+     "condition": "5",
+     "location": "Atlanta, GA",
+     "priceUsd": 50900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 81300,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 42800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 91200,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 45000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 79100,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 38600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 117200,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 40300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 63500,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 45000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 74700,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 43700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 176200,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 39700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 53400,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 42400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 70600,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 43800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 142000,
+     "condition": "2.5",
+     "location": "Bristol, UK",
+     "priceUsd": 38900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 82400,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 42600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 66600,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 46100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 154100,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 41800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 201600,
+     "condition": "3",
+     "location": "Denver, CO",
+     "priceUsd": 39600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 98400,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 41400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 55600,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 45200
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1996,
+     "mileageMi": 43200,
+     "condition": "5",
+     "location": "Bristol, UK",
+     "priceUsd": 46100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 121300,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 42000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 59200,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 49900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 68300,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 41400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 98700,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 39500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 86000,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 44300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 103800,
+     "condition": "3",
+     "location": "Charlotte, NC",
+     "priceUsd": 44000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 93200,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 43300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 127800,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 40100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 122500,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 44400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1997,
+     "mileageMi": 132700,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 41100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 74300,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 42400
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 87900,
+     "condition": "3",
+     "location": "Hamburg, DE",
+     "priceUsd": 42500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 46200,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 44900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 50200,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 45900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 56200,
+     "condition": "5",
+     "location": "Charlotte, NC",
+     "priceUsd": 42100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 82800,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 46400
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 58900,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 42800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1998,
+     "mileageMi": 72900,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 42000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 88500,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 45000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 65100,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 50400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 40700,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 46900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 61900,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 44800
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 28100
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 28800
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 29500
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 30100
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 30500
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 31400
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 31600
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 32900
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 34300
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 34500
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 35600
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 35800
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 37300
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 37800
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 39700
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 38800
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 40400
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 40400
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 41800
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 42800
+    }
+   ]
+  },
+  "lotus-elise": {
+   "listings": [
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 47200,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1997,
+     "mileageMi": 13600,
+     "condition": "5",
+     "location": "Austin, TX",
+     "priceUsd": 44400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 64500,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 36100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 7200,
+     "condition": "5",
+     "location": "Utrecht, NL",
+     "priceUsd": 41000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 52100,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 34800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 59800,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 36200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 80300,
+     "condition": "3",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 37800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 95300,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 33500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 18000,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 38800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2000,
+     "mileageMi": 30300,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 40100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 49600,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 35200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 40600,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 36400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2000,
+     "mileageMi": 15400,
+     "condition": "5",
+     "location": "Boston, MA",
+     "priceUsd": 40600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 37900,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 40100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 39200,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 43900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 84500,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 33500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 60800,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 33200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 180200,
+     "condition": "2.5",
+     "location": "Milan, IT",
+     "priceUsd": 29900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 90500,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 35600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 46500,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 50800,
+     "condition": "4.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 34500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1997,
+     "mileageMi": 103300,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 25200,
+     "condition": "5",
+     "location": "Portland, OR",
+     "priceUsd": 40300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 52900,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 34800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 86700,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 32700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 59300,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 35100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 41400,
+     "condition": "5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 32900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 22500,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 70700,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 32100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 52100,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 39300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 42100,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 32500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 65500,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 38100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1998,
+     "mileageMi": 52500,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 35100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 52300,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 73000,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 34400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 20600,
+     "condition": "5",
+     "location": "Utrecht, NL",
+     "priceUsd": 38000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 40400,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 35100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 53400,
+     "condition": "3.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 37300,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 38000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 113900,
+     "condition": "3",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 32900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 56100,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 37700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 91800,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 35900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 26000,
+     "condition": "5",
+     "location": "Denver, CO",
+     "priceUsd": 37700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 114000,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 32800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1997,
+     "mileageMi": 31300,
+     "condition": "4.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 36200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 17200,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 39500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 77500,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 32800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 54300,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 34800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1996,
+     "mileageMi": 52300,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 35000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2000,
+     "mileageMi": 29500,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 38200
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 30300
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 29600
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 30700
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 31100
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 30600
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 32100
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 31700
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 32200
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 32500
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 32800
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 33400
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 33800
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 34000
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 33900
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 34500
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 35000
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 34800
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 35200
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 35700
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 36000
+    }
+   ]
+  },
+  "fiat-barchetta": {
+   "listings": [
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 69900,
+     "condition": "3",
+     "location": "Boston, MA",
+     "priceUsd": 12800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2003,
+     "mileageMi": 34700,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 13600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 109500,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 12100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 87400,
+     "condition": "3",
+     "location": "Sacramento, CA",
+     "priceUsd": 14400
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 39600,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 13100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1997,
+     "mileageMi": 37100,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 13600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 44100,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 14300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 44300,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 36200,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 14500
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 29500,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2000,
+     "mileageMi": 52100,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 13600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2003,
+     "mileageMi": 31000,
+     "condition": "4.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 14200
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 35000,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 13900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 50200,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1995,
+     "mileageMi": 43500,
+     "condition": "4.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 12800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 57600,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 13200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1998,
+     "mileageMi": 66400,
+     "condition": "3",
+     "location": "Atlanta, GA",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 82000,
+     "condition": "2.5",
+     "location": "Toronto, CA",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 31200,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 14800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 59500,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 11700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1995,
+     "mileageMi": 41700,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 13700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2004,
+     "mileageMi": 86700,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 12700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1996,
+     "mileageMi": 60700,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 57000,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 72500,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 13800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 92700,
+     "condition": "3",
+     "location": "Atlanta, GA",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 83900,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 14300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1995,
+     "mileageMi": 24200,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 13200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1996,
+     "mileageMi": 37300,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 14100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2004,
+     "mileageMi": 24100,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 13100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 50900,
+     "condition": "5",
+     "location": "Toronto, CA",
+     "priceUsd": 12400
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 40000,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 70500,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 76900,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 63500,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 12800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 128500,
+     "condition": "3",
+     "location": "Charlotte, NC",
+     "priceUsd": 11700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 87400,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 14300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 43100,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 12700
+    },
+    {
+     "marketplace": "halden",
+     "year": 1997,
+     "mileageMi": 63300,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 16400,
+     "condition": "5",
+     "location": "Charlotte, NC",
+     "priceUsd": 14400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 48200,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 12600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2005,
+     "mileageMi": 107800,
+     "condition": "2.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 13700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1999,
+     "mileageMi": 69900,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 11700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 35200,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 13900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1995,
+     "mileageMi": 36200,
+     "condition": "5",
+     "location": "Bristol, UK",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2004,
+     "mileageMi": 70600,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 12400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1996,
+     "mileageMi": 20000,
+     "condition": "5",
+     "location": "Charlotte, NC",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 71800,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 12300
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 24800,
+     "condition": "5",
+     "location": "Austin, TX",
+     "priceUsd": 14100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 57400,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 12000
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 131200,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 11400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 66200,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 14600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2000,
+     "mileageMi": 32000,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 14800
+    },
+    {
+     "marketplace": "halden",
+     "year": 1998,
+     "mileageMi": 77600,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 13100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1998,
+     "mileageMi": 78900,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 12300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 57500,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 11900
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 10000
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 10100
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 10300
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 10500
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 10600
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 10600
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 10700
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 11000
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 11100
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 11100
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 11600
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 12000
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 11900
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 12000
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 12200
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 12300
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 12500
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 12800
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 12800
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 13100
+    }
+   ]
+  },
+  "subaru-wrx-wagon-gg": {
+   "listings": [
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 301700,
+     "condition": "2.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 12400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 58000,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 18200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 96100,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 16100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 115400,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 15500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 95300,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 15300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 73000,
+     "condition": "5",
+     "location": "Portland, OR",
+     "priceUsd": 15600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 109800,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 15100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 39000,
+     "condition": "5",
+     "location": "Hamburg, DE",
+     "priceUsd": 16400
+    },
+    {
+     "marketplace": "halden",
+     "year": 2004,
+     "mileageMi": 141700,
+     "condition": "3",
+     "location": "Boston, MA",
+     "priceUsd": 14700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 67900,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 16500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2004,
+     "mileageMi": 126600,
+     "condition": "4.5",
+     "location": "Boston, MA",
+     "priceUsd": 15300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 89500,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 15800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 170000,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 14600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2003,
+     "mileageMi": 183200,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 13900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2005,
+     "mileageMi": 108500,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 14400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 148800,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 14300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2004,
+     "mileageMi": 167800,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 16000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2004,
+     "mileageMi": 86600,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 16400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 119600,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 14200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2003,
+     "mileageMi": 85400,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 16100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2003,
+     "mileageMi": 137100,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 155300,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 14500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2004,
+     "mileageMi": 37500,
+     "condition": "5",
+     "location": "Denver, CO",
+     "priceUsd": 16000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 67000,
+     "condition": "5",
+     "location": "Austin, TX",
+     "priceUsd": 14800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 137200,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 14000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2003,
+     "mileageMi": 68100,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 15600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 138700,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 13900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 111400,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 16200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 101700,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 14500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 366500,
+     "condition": "2.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2003,
+     "mileageMi": 78300,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 15700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 81400,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 15200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 218500,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 13300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2004,
+     "mileageMi": 189500,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 15300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 150500,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 14200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 70000,
+     "condition": "5",
+     "location": "Denver, CO",
+     "priceUsd": 15300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 82300,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 14700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2004,
+     "mileageMi": 169600,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 15000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 212900,
+     "condition": "3",
+     "location": "Lyon, FR",
+     "priceUsd": 12300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 125500,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 13100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2004,
+     "mileageMi": 80600,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 14600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 137100,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 15700
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 10800
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 11200
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 11100
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 11700
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 11700
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 11900
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 12100
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 12100
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 12600
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 12700
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 13000
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 13200
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 13600
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 13500
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 13900
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 14300
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 14600
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 14600
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 14700
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 15100
+    }
+   ]
+  },
+  "bmw-m5-e39": {
+   "listings": [
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 179300,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 32200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 74300,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 36200
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 104100,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 39200
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2003,
+     "mileageMi": 76300,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 37000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 115500,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 35100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 97700,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 38900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 60800,
+     "condition": "4.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 38800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 68900,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 38700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 149100,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 34800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 35300,
+     "condition": "5",
+     "location": "Bristol, UK",
+     "priceUsd": 41200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 80800,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 77800,
+     "condition": "4",
+     "location": "Austin, TX",
+     "priceUsd": 35100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 62500,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 38700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 71400,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 36400
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 95900,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 38600
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 83200,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 34100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 116400,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 37100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 66800,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 32900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 91800,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 34800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 51900,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 37200
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 143600,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 32000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 251300,
+     "condition": "2.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 31600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 164400,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 37200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2001,
+     "mileageMi": 67100,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 36700
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 67100,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 39900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2001,
+     "mileageMi": 160500,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 39300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 121800,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 35100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 286500,
+     "condition": "3",
+     "location": "Boston, MA",
+     "priceUsd": 34900
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 87000,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 34500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 56900,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 34100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 145300,
+     "condition": "3",
+     "location": "Austin, TX",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 135300,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 36600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2002,
+     "mileageMi": 146800,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 139800,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 37100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 100000,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 36800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2002,
+     "mileageMi": 288900,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 31600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 147800,
+     "condition": "3",
+     "location": "Surrey, UK",
+     "priceUsd": 32500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2000,
+     "mileageMi": 86300,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 1998,
+     "mileageMi": 54600,
+     "condition": "4.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 39600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2000,
+     "mileageMi": 37800,
+     "condition": "5",
+     "location": "Boston, MA",
+     "priceUsd": 40300
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 75400,
+     "condition": "3.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 37600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2002,
+     "mileageMi": 73900,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 33600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 1999,
+     "mileageMi": 200200,
+     "condition": "3",
+     "location": "Charlotte, NC",
+     "priceUsd": 35300
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2000,
+     "mileageMi": 120400,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 37500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2001,
+     "mileageMi": 51600,
+     "condition": "5",
+     "location": "Milan, IT",
+     "priceUsd": 35400
+    },
+    {
+     "marketplace": "halden",
+     "year": 2003,
+     "mileageMi": 154600,
+     "condition": "4",
+     "location": "Boston, MA",
+     "priceUsd": 37100
+    },
+    {
+     "marketplace": "halden",
+     "year": 1999,
+     "mileageMi": 83400,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 35000
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 29400
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 29700
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 29800
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 30700
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 30700
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 31300
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 31100
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 32500
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 32100
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 32300
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 32500
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 33400
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 32800
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 33800
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 34000
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 34600
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 35200
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 35700
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 35100
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 36600
+    }
+   ]
+  },
+  "lamborghini-gallardo": {
+   "listings": [
+    {
+     "marketplace": "torquewell",
+     "year": 2012,
+     "mileageMi": 22800,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 119500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 42000,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 111500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2011,
+     "mileageMi": 46700,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 131000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2011,
+     "mileageMi": 35600,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 107500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2012,
+     "mileageMi": 7700,
+     "condition": "5",
+     "location": "Brisbane, AU",
+     "priceUsd": 140500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 23100,
+     "condition": "3.5",
+     "location": "Boston, MA",
+     "priceUsd": 137500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 16800,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 141500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2011,
+     "mileageMi": 42500,
+     "condition": "3",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 112000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2008,
+     "mileageMi": 11300,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 122000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 24300,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 120000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2008,
+     "mileageMi": 26400,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 124000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 8900,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 144000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 25800,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 138000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2010,
+     "mileageMi": 17600,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 127000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2011,
+     "mileageMi": 13200,
+     "condition": "4.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 129500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2011,
+     "mileageMi": 23500,
+     "condition": "4.5",
+     "location": "Milan, IT",
+     "priceUsd": 125500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2011,
+     "mileageMi": 30700,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 125000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 20600,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 126500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 19700,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 129500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 23500,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 129500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2010,
+     "mileageMi": 16600,
+     "condition": "4.5",
+     "location": "Lyon, FR",
+     "priceUsd": 137500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 31200,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 129500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2008,
+     "mileageMi": 18600,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 128500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2010,
+     "mileageMi": 37000,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 116500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2013,
+     "mileageMi": 32400,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 141000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2011,
+     "mileageMi": 10800,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 137500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2010,
+     "mileageMi": 38800,
+     "condition": "3",
+     "location": "Sacramento, CA",
+     "priceUsd": 129500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2013,
+     "mileageMi": 8900,
+     "condition": "5",
+     "location": "Surrey, UK",
+     "priceUsd": 140000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 18000,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 139000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2011,
+     "mileageMi": 19100,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 133000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2013,
+     "mileageMi": 17900,
+     "condition": "4",
+     "location": "Surrey, UK",
+     "priceUsd": 117000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2010,
+     "mileageMi": 25300,
+     "condition": "3.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 128500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 20200,
+     "condition": "3.5",
+     "location": "Lyon, FR",
+     "priceUsd": 127500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2012,
+     "mileageMi": 14900,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 130000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 21300,
+     "condition": "4",
+     "location": "Utrecht, NL",
+     "priceUsd": 122000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2008,
+     "mileageMi": 22900,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 134000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2011,
+     "mileageMi": 38400,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 114000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2009,
+     "mileageMi": 9500,
+     "condition": "5",
+     "location": "Portland, OR",
+     "priceUsd": 147000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2012,
+     "mileageMi": 14700,
+     "condition": "5",
+     "location": "Charlotte, NC",
+     "priceUsd": 138500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2010,
+     "mileageMi": 18300,
+     "condition": "5",
+     "location": "Toronto, CA",
+     "priceUsd": 109500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 13300,
+     "condition": "4.5",
+     "location": "Denver, CO",
+     "priceUsd": 135500
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2013,
+     "mileageMi": 21300,
+     "condition": "3.5",
+     "location": "Utrecht, NL",
+     "priceUsd": 141000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 18300,
+     "condition": "5",
+     "location": "Lyon, FR",
+     "priceUsd": 131000
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2012,
+     "mileageMi": 22000,
+     "condition": "4.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 135500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 31400,
+     "condition": "3",
+     "location": "Portland, OR",
+     "priceUsd": 124000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2008,
+     "mileageMi": 24200,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 118000
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 127500
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 127500
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 127500
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 126000
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 129500
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 129500
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 127000
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 130000
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 128500
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 131000
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 130000
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 128500
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 129000
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 131000
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 131000
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 127500
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 124500
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 130000
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 127500
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 129500
+    }
+   ]
+  },
+  "mazda-mx-5-nc": {
+   "listings": [
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 40700,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 14100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2005,
+     "mileageMi": 97900,
+     "condition": "3",
+     "location": "Bristol, UK",
+     "priceUsd": 10000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 55000,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2012,
+     "mileageMi": 36000,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 12600
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2014,
+     "mileageMi": 86100,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 11500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 82900,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 11100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2007,
+     "mileageMi": 76300,
+     "condition": "3",
+     "location": "Charlotte, NC",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 52300,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 12500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2007,
+     "mileageMi": 49800,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 12100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2012,
+     "mileageMi": 8800,
+     "condition": "5",
+     "location": "Brisbane, AU",
+     "priceUsd": 15600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2008,
+     "mileageMi": 34200,
+     "condition": "4.5",
+     "location": "Austin, TX",
+     "priceUsd": 13700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 25800,
+     "condition": "5",
+     "location": "Toronto, CA",
+     "priceUsd": 13700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2015,
+     "mileageMi": 41000,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 50300,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 13400
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2006,
+     "mileageMi": 61900,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2007,
+     "mileageMi": 84100,
+     "condition": "4",
+     "location": "Charlotte, NC",
+     "priceUsd": 12000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2007,
+     "mileageMi": 111100,
+     "condition": "3",
+     "location": "Denver, CO",
+     "priceUsd": 10500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 95200,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 12200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2007,
+     "mileageMi": 96900,
+     "condition": "3.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 11000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2006,
+     "mileageMi": 33000,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 12200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2011,
+     "mileageMi": 12900,
+     "condition": "5",
+     "location": "Boston, MA",
+     "priceUsd": 15000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2012,
+     "mileageMi": 56900,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2013,
+     "mileageMi": 34500,
+     "condition": "4.5",
+     "location": "Bristol, UK",
+     "priceUsd": 14100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 27200,
+     "condition": "5",
+     "location": "Lyon, FR",
+     "priceUsd": 13300
+    },
+    {
+     "marketplace": "halden",
+     "year": 2015,
+     "mileageMi": 36200,
+     "condition": "5",
+     "location": "Sacramento, CA",
+     "priceUsd": 13700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2010,
+     "mileageMi": 42800,
+     "condition": "5",
+     "location": "Portland, OR",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 112500,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 15000,
+     "condition": "5",
+     "location": "Charlotte, NC",
+     "priceUsd": 14900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 26200,
+     "condition": "4.5",
+     "location": "Hamburg, DE",
+     "priceUsd": 13100
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 45700,
+     "condition": "3.5",
+     "location": "Milan, IT",
+     "priceUsd": 13200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 65500,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2010,
+     "mileageMi": 70500,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 87900,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2014,
+     "mileageMi": 46200,
+     "condition": "3.5",
+     "location": "Portland, OR",
+     "priceUsd": 13200
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2007,
+     "mileageMi": 84800,
+     "condition": "3.5",
+     "location": "Sacramento, CA",
+     "priceUsd": 11000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2008,
+     "mileageMi": 93100,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 11500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2011,
+     "mileageMi": 74700,
+     "condition": "3",
+     "location": "Boston, MA",
+     "priceUsd": 13300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 61600,
+     "condition": "3.5",
+     "location": "Toronto, CA",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2011,
+     "mileageMi": 48400,
+     "condition": "4",
+     "location": "Lyon, FR",
+     "priceUsd": 13400
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2012,
+     "mileageMi": 85700,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 11800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2011,
+     "mileageMi": 32300,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 13800
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2005,
+     "mileageMi": 48800,
+     "condition": "4",
+     "location": "Hamburg, DE",
+     "priceUsd": 13200
+    },
+    {
+     "marketplace": "halden",
+     "year": 2011,
+     "mileageMi": 82200,
+     "condition": "4",
+     "location": "Milan, IT",
+     "priceUsd": 12500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 176800,
+     "condition": "3.5",
+     "location": "Lyon, FR",
+     "priceUsd": 11500
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2014,
+     "mileageMi": 55400,
+     "condition": "4.5",
+     "location": "Portland, OR",
+     "priceUsd": 12000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2009,
+     "mileageMi": 52700,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 12700
+    },
+    {
+     "marketplace": "halden",
+     "year": 2014,
+     "mileageMi": 19900,
+     "condition": "4.5",
+     "location": "Charlotte, NC",
+     "priceUsd": 15300
+    },
+    {
+     "marketplace": "halden",
+     "year": 2007,
+     "mileageMi": 102100,
+     "condition": "3.5",
+     "location": "Austin, TX",
+     "priceUsd": 11000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2010,
+     "mileageMi": 44100,
+     "condition": "4",
+     "location": "Toronto, CA",
+     "priceUsd": 13000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 106700,
+     "condition": "3.5",
+     "location": "Bristol, UK",
+     "priceUsd": 11600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2007,
+     "mileageMi": 58100,
+     "condition": "3.5",
+     "location": "Lyon, FR",
+     "priceUsd": 13100
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 114300,
+     "condition": "3",
+     "location": "Atlanta, GA",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "halden",
+     "year": 2007,
+     "mileageMi": 42900,
+     "condition": "4.5",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 11300
+    },
+    {
+     "marketplace": "halden",
+     "year": 2012,
+     "mileageMi": 20500,
+     "condition": "4.5",
+     "location": "Brisbane, AU",
+     "priceUsd": 14500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2009,
+     "mileageMi": 57800,
+     "condition": "3.5",
+     "location": "Denver, CO",
+     "priceUsd": 11700
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2007,
+     "mileageMi": 31500,
+     "condition": "4.5",
+     "location": "Surrey, UK",
+     "priceUsd": 12900
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2006,
+     "mileageMi": 58400,
+     "condition": "4",
+     "location": "Denver, CO",
+     "priceUsd": 11600
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2009,
+     "mileageMi": 66000,
+     "condition": "4",
+     "location": "Atlanta, GA",
+     "priceUsd": 14000
+    },
+    {
+     "marketplace": "halden",
+     "year": 2006,
+     "mileageMi": 32500,
+     "condition": "4.5",
+     "location": "Toronto, CA",
+     "priceUsd": 10900
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2013,
+     "mileageMi": 87000,
+     "condition": "3",
+     "location": "Austin, TX",
+     "priceUsd": 12800
+    },
+    {
+     "marketplace": "halden",
+     "year": 2008,
+     "mileageMi": 46000,
+     "condition": "4",
+     "location": "Bristol, UK",
+     "priceUsd": 13500
+    },
+    {
+     "marketplace": "halden",
+     "year": 2007,
+     "mileageMi": 64800,
+     "condition": "3.5",
+     "location": "Atlanta, GA",
+     "priceUsd": 12100
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2010,
+     "mileageMi": 54100,
+     "condition": "4",
+     "location": "Scottsdale, AZ",
+     "priceUsd": 12000
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2008,
+     "mileageMi": 38100,
+     "condition": "4",
+     "location": "Brisbane, AU",
+     "priceUsd": 12300
+    },
+    {
+     "marketplace": "torquewell",
+     "year": 2008,
+     "mileageMi": 58100,
+     "condition": "3.5",
+     "location": "Surrey, UK",
+     "priceUsd": 13800
+    },
+    {
+     "marketplace": "lot-twelve",
+     "year": 2005,
+     "mileageMi": 44300,
+     "condition": "4",
+     "location": "Portland, OR",
+     "priceUsd": 11600
+    },
+    {
+     "marketplace": "halden",
+     "year": 2013,
+     "mileageMi": 43300,
+     "condition": "4",
+     "location": "Sacramento, CA",
+     "priceUsd": 12500
+    }
+   ],
+   "history": [
+    {
+     "quarter": "2021-Q4",
+     "medianUsd": 12900
+    },
+    {
+     "quarter": "2022-Q1",
+     "medianUsd": 12900
+    },
+    {
+     "quarter": "2022-Q2",
+     "medianUsd": 12600
+    },
+    {
+     "quarter": "2022-Q3",
+     "medianUsd": 12700
+    },
+    {
+     "quarter": "2022-Q4",
+     "medianUsd": 12700
+    },
+    {
+     "quarter": "2023-Q1",
+     "medianUsd": 12800
+    },
+    {
+     "quarter": "2023-Q2",
+     "medianUsd": 13000
+    },
+    {
+     "quarter": "2023-Q3",
+     "medianUsd": 12700
+    },
+    {
+     "quarter": "2023-Q4",
+     "medianUsd": 12600
+    },
+    {
+     "quarter": "2024-Q1",
+     "medianUsd": 13000
+    },
+    {
+     "quarter": "2024-Q2",
+     "medianUsd": 12700
+    },
+    {
+     "quarter": "2024-Q3",
+     "medianUsd": 12300
+    },
+    {
+     "quarter": "2024-Q4",
+     "medianUsd": 12500
+    },
+    {
+     "quarter": "2025-Q1",
+     "medianUsd": 12700
+    },
+    {
+     "quarter": "2025-Q2",
+     "medianUsd": 12600
+    },
+    {
+     "quarter": "2025-Q3",
+     "medianUsd": 12900
+    },
+    {
+     "quarter": "2025-Q4",
+     "medianUsd": 12500
+    },
+    {
+     "quarter": "2026-Q1",
+     "medianUsd": 12600
+    },
+    {
+     "quarter": "2026-Q2",
+     "medianUsd": 12500
+    },
+    {
+     "quarter": "2026-Q3",
+     "medianUsd": 12600
+    }
+   ]
+  }
+ }
+}

@@ -32,7 +32,7 @@ Every listing pairs the seller's subjective photos with an objective 3D model co
 
 ## Capabilities and Constraints
 
-- Nine real cars with full manufacturer branding: 1991 Mazda MX-5 (NA), 1991 Honda NSX (NA1), 1993 Jaguar XJ220, 1993 Mazda RX-7 (FD3S), 1995 BMW M3 (E36, modified), 1998 Honda Integra Type R (DB8), 1999 Nissan Skyline GT-R (BNR34), 2002 BMW M5 (E39), 2010 Lamborghini Gallardo LP560-4.
+- Nine real cars with full manufacturer branding: 1991 Eunos Roadster (Mazda MX-5, NA6CE), 1991 Honda NSX (NA1), 1993 Jaguar XJ220, 1994 Efini RX-7 (Mazda RX-7, FD3S), 1997 Honda Integra Type R (DB8), 1998 BMW M3 Evolution (E36), 1999 Nissan Skyline GT-R V-spec (BNR34), 2002 BMW M5 (E39), 2008 Lamborghini Gallardo LP 560-4. Colorways follow each car's photo set; `lib/cars.ts` is the source of truth.
 - 3D models are free CC-BY Sketchfab models, credited. Seller photos are licensed real photos, and each car's 3D colorway is matched to its photo set.
 - Fixed-price listings in USD, mileage in miles and kilometers. Prices, mileage, owners and flaws are fictional; makes, models and specs are factual.
 - No accounts, transactions, backend or CMS; the enquiry form is a mock that sends nothing.

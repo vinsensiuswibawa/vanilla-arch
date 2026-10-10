@@ -1,0 +1,635 @@
+@import "tailwindcss";
+
+/* Arcade tokens (docs/PRD.md, Design system). The UI is achromatic: Tailwind's default
+   palette is removed so only these colors exist; the cars carry all saturation. */
+@theme {
+  --color-*: initial;
+  --color-paper: #ffffff;
+  --color-mist-100: #f2f2f2;
+  --color-mist-200: #e6e6e6;
+  --color-mist-300: #d4d4d4;
+  --color-mist-500: #9a9a9a; /* decorative type at 24px and up only */
+  --color-mist-700: #5c5c5c; /* secondary text, 6.7:1 on paper */
+  --color-ink: #161616;
+  --color-night: #0e0e0e;
+  --color-signal: #ee6a1f; /* Braun signal orange: marks only, at most 2% of a screen */
+  --color-signal-text: #c2541b; /* rare inline emphasis, 4.6:1 on paper */
+
+  /* Detail-page surfaces (docs/overhaul.md, Layers): the pale field the car stands on, the dark
+     panel and bottom bar, and the price card. Both themes below redefine them. */
+  --color-field: #ececec;
+  --color-panel: #0e0e0e;
+  --color-card: #f2f2f2;
+
+  /* Motion curves from the PRD's motion spec (emil-design-eng). Never ease-in for UI. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* The font utilities read the theme's font stacks (--t-*, defined per theme below), so `?theme=`
+   swaps every family at once. Inline, so each utility resolves the stack on its own element. */
+@theme inline {
+  --font-display: var(--t-display);
+  --font-text: var(--t-text);
+  --font-sans: var(--t-text);
+  --font-mono: var(--t-mono);
+  --font-condensed: var(--t-condensed);
+  --font-ja: var(--font-shippori-mincho), "Hiragino Mincho ProN", "Yu Mincho", serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* ---- Themes (docs/overhaul.md; switched with ?theme=current|figma) ------------------------------ */
+
+/* "current": Bodoni Moda, Host Grotesk, Geist Mono, achromatic. Also the default and the fallback.
+   Both blocks apply to any element carrying data-theme, so the token sheet can show them side by side. */
+:root,
+[data-theme="current"] {
+  --t-display: var(--font-bodoni-moda), "Didot", "Bodoni 72", serif;
+  --t-text: var(--font-host-grotesk), system-ui, sans-serif;
+  --t-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --t-condensed: var(--font-host-grotesk), system-ui, sans-serif;
+
+  /* Display type: how the theme sets the car name, headlines and the big words. */
+  --display-case: none;
+  --display-weight: 400;
+  --display-tracking: -0.01em;
+  --display-leading: 0.95;
+  --label-case: uppercase;
+  --label-tracking: 0.08em;
+}
+
+/* "figma": the user's earlier direction, colours sampled from the storyboard frames (docs/storyboard).
+   Paper, ink, the dark slate (panel, bottom bar), the beige card and the pale field are measured; the
+   mist steps are tints of the ink between them. Satoshi carries text, display and numerals (tabular
+   figures, see the .font-mono rule below); Staatliches the narrow subheadings. */
+[data-theme="figma"] {
+  --color-paper: #fffdf9;
+  --color-ink: #102e30;
+  --color-night: #2c3638;
+  --color-mist-100: #f4f2ec;
+  --color-mist-200: #ededed;
+  --color-mist-300: #cfd4d2;
+  --color-mist-500: #8a9899;
+  --color-mist-700: #4a5f61; /* secondary text, 7:1 on paper */
+  --color-field: #ededed;
+  --color-panel: #2c3638;
+  --color-card: #dbd7cb;
+
+  --t-display: var(--font-satoshi), system-ui, sans-serif;
+  --t-text: var(--font-satoshi), system-ui, sans-serif;
+  --t-mono: var(--font-satoshi), system-ui, sans-serif;
+  --t-condensed: var(--font-staatliches), "Arial Narrow", sans-serif;
+
+  --display-case: uppercase;
+  --display-weight: 400;
+  --display-tracking: -0.02em;
+  --display-leading: 0.95;
+  --label-case: uppercase;
+  --label-tracking: 0.04em;
+}
+
+/* Satoshi's numerals are proportional by default; wherever the mono face sets figures (price, mileage,
+   the spec bar), the figma theme keeps them in aligned columns. */
+[data-theme="figma"] .font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Detail-page tokens: grid, scale, type, motion (docs/overhaul.md, steps 2 and 3) ------------ */
+
+:root {
+  /* One Figma pixel. The design is drawn at 1440 x 960 and keeps its 3 : 2 proportions on any screen:
+     at 1920 x 1080 this is 1.125 px, at 1080 x 720 it is 0.75 px. Margins and gutters stay at 24 px. */
+  --u: min(calc(100vw / 1440), calc(100vh / 960));
+
+  /* Five columns. Width = (viewport - 2 margins - 4 gutters) / 5: 187 px at 1080, 259 at 1440, 355 at 1920. */
+  --grid-cols: 5;
+  --grid-margin: 24px;
+  --grid-gutter: 24px;
+  --col: calc((100vw - 144px) / 5);
+  /* Left edge of each column, from the viewport's left. */
+  --col-1: var(--grid-margin);
+  --col-2: calc(var(--col-1) + var(--col) + var(--grid-gutter));
+  --col-3: calc(var(--col-2) + var(--col) + var(--grid-gutter));
+  --col-4: calc(var(--col-3) + var(--col) + var(--grid-gutter));
+  --col-5: calc(var(--col-4) + var(--col) + var(--grid-gutter));
+
+  /* Type scale at the 1440 reference, from the storyboard's cap heights (font size = cap height / 0.7).
+     Starting points; each section tunes its own in 6e and 6f. */
+  --type-hero: calc(160 * var(--u)); /* the car name (user, 2026-10-09: 160px, down from the storyboard's 168) */
+  --type-enquiry: calc(136 * var(--u)); /* "Give it" / "A new home", cap height 95 */
+  --type-headline: calc(106 * var(--u)); /* section B headline, cap height 75 */
+  /* section C quote. Down from the storyboard's cap-height-60 reading (86px) — at that size the longer end of
+     the summary's approved 25-40 word range (docs/overhaul-copy.md) wrapped to six lines and collided with "Our
+     take" below it (verified: the Peugeot and Subaru cars, 6f); 76px holds every car's summary to five lines
+     at 999u-plus width. */
+  --type-summary: calc(76 * var(--u));
+  --type-price: calc(56 * var(--u));
+  --type-bar-value: calc(26 * var(--u));
+  /* Down from the storyboard's 20px (6f): at 20px the longest spec values ("3.0 L 930/50 turbocharged
+     flat-six", mileage with both units added) truncated even in the widened column (see c-table-a/b in
+     lib/detail-layout.ts); 18px with the wider column clears every car's longest row. */
+  --type-spec: calc(18 * var(--u));
+  --type-body: calc(17 * var(--u));
+  --type-label: calc(12 * var(--u)); /* small caps labels and captions */
+
+  /* Motion vocabulary, step 2. GSAP equivalents live in lib/detail-motion.ts. */
+  --ease-reveal: cubic-bezier(0.215, 0.61, 0.355, 1); /* power3.out: text, clips, sidebars */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1); /* expo.out: the car arriving */
+  --ease-travel: cubic-bezier(0.8, 0, 0.45, 1); /* camera transitions: very gentle start, fastest at about two thirds, soft landing */
+  --ease-swap: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* power2.out: the image-swap wipe */
+  --ease-fade: cubic-bezier(0.39, 0.575, 0.565, 1); /* sine.out: opacity-only chrome */
+  --ease-leave: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* power2.in: closing sidebars */
+  --dur-hover: 0.3s;
+  --dur-chrome: 0.6s;
+  --dur-handoff-chrome: 0.4s; /* the carousel's own chrome and frames fading at hand-off, step 2's entry table */
+  --dur-sidebar: 0.8s;
+  --dur-sidebar-leave: 0.5s;
+  --dur-reveal: 0.9s;
+}
+
+/* Height follows the device: where dynamic viewport units exist, the scale unit tracks the visible height
+   (a phone's address bar, a short window), not the largest one. */
+@supports (height: 100dvh) {
+  :root {
+    --u: min(calc(100vw / 1440), calc(100dvh / 960));
+  }
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--t-text);
+}
+
+/* Focus is always 2px ink with an offset; signal orange is never the only state cue. */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+/* Headings that receive focus programmatically (a listing opening) are not controls. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* The showroom maps vertical document scroll to sideways travel, so a vertical scrollbar would
+   point the wrong way; the progress glyphs and the Index stand in for it. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Showroom frames ------------------------------------------------------------------------- */
+
+/* The mist is the cyclorama's own field: a veiled car dissolves into the studio it stands in.
+   Its opacity follows the veil every frame; hover clears a further 30% (PRD motion spec). */
+.mist {
+  background: radial-gradient(75% 75% at 50% 42%, #f2f2f2 0%, #ececec 30%, #dddddd 70%, #d4d4d4 100%);
+  transition: opacity 320ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mist[data-clear] {
+    opacity: 0.7;
+    transition-duration: 240ms;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .frame-link {
+    cursor: none;
+  }
+}
+
+.cursor-pill {
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out);
+}
+.cursor-pill[data-on="true"] {
+  opacity: 1;
+  transition-duration: 240ms;
+}
+/* The pill settles under the hand from a touch smaller rather than fading in from nowhere. The
+   outer element carries the position transform; the label scales on its own property. */
+.cursor-pill > span {
+  scale: 0.92;
+  transition: scale 320ms var(--ease-out);
+}
+.cursor-pill[data-on="true"] > span {
+  scale: 1;
+  transition-duration: 240ms;
+}
+
+/* The live dot is state, not motion: it switches with no transition, since steps are often
+   keyboard-driven and repeat. */
+.live-dot {
+  opacity: 0;
+}
+.live-dot[data-on] {
+  opacity: 1;
+}
+
+/* ---- Controls -------------------------------------------------------------------------------- */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  height: 2.75rem;
+  padding-inline: 1.25rem;
+  border-radius: 9999px;
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  transition: transform 120ms var(--ease-out);
+}
+.pill:active {
+  transform: scale(0.97);
+}
+
+/* Record mode holds the gate until every car is loaded (lib/store.ts). */
+.pill:disabled {
+  opacity: 0.4;
+  cursor: progress;
+  pointer-events: none;
+}
+
+/* Primary actions: flat ink. */
+.pill-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+@media (hover: hover) {
+  .pill-ink:hover {
+    background: #000;
+  }
+}
+
+.pill-line {
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px var(--color-mist-700);
+}
+@media (hover: hover) {
+  .pill-line:hover {
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+  }
+}
+
+/* Secondary controls only: soft extrusion on mist-200, with a hairline for 3:1 non-text contrast. */
+.pill-soft {
+  background: var(--color-mist-200);
+  color: var(--color-ink);
+  box-shadow:
+    -6px -6px 14px rgb(255 255 255 / 0.9),
+    6px 6px 14px rgb(0 0 0 / 0.07),
+    inset 0 0 0 1px var(--color-mist-300);
+}
+.pill-soft:active,
+.pill-soft[aria-pressed="false"] {
+  box-shadow:
+    inset 3px 3px 7px rgb(0 0 0 / 0.08),
+    inset -3px -3px 7px rgb(255 255 255 / 0.9),
+    inset 0 0 0 1px var(--color-mist-300);
+}
+
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.375rem;
+  height: 1.375rem;
+  padding-inline: 0.3rem;
+  border-radius: 0.3rem;
+  box-shadow: inset 0 0 0 1px var(--color-mist-300);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-mist-700);
+}
+
+/* ---- Press Start gate ------------------------------------------------------------------------ */
+
+.gate {
+  background: radial-gradient(120% 90% at 50% 45%, #f2f2f2 0%, #ebebeb 50%, #e0e0e0 100%);
+  transition: opacity 1200ms var(--ease-in-out);
+}
+/* The content lifts and blurs as it fades, so it never double-exposes over the emerging car. */
+.gate-inner {
+  transition:
+    transform 1200ms var(--ease-in-out),
+    filter 1200ms var(--ease-in-out);
+}
+.gate[data-phase="entering"] {
+  opacity: 0;
+  pointer-events: none;
+}
+.gate[data-phase="entering"] .gate-inner {
+  transform: translateY(-4vh);
+  filter: blur(8px);
+}
+
+.glyph-fill {
+  opacity: 0;
+  transition: opacity 240ms var(--ease-out);
+}
+.glyph-fill[data-on] {
+  opacity: 1;
+}
+
+/* ---- Index ----------------------------------------------------------------------------------- */
+
+.index::backdrop {
+  background: transparent;
+}
+.index-scrim {
+  opacity: 0;
+  transition: opacity 220ms var(--ease-out);
+}
+.index-sheet {
+  transform: translateX(100%);
+  transition: transform 220ms var(--ease-out);
+}
+.index[data-state="open"] .index-scrim {
+  opacity: 1;
+  transition: opacity 320ms var(--ease-drawer);
+}
+.index[data-state="open"] .index-sheet {
+  transform: none;
+  transition: transform 320ms var(--ease-drawer);
+}
+
+/* Opened or closed from the keyboard (I or Esc), the Index appears and leaves at once: a shortcut
+   gets no animation. The Close button and the scrim keep the drawer slide. */
+.index[data-by-key="true"] .index-scrim,
+.index[data-by-key="true"] .index-sheet {
+  transition: none;
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 2.5rem 3.5rem minmax(0, 1fr) 8.5rem 6rem;
+  column-gap: 1.5rem;
+  align-items: baseline;
+}
+/* Row hover is high-frequency: it changes instantly. */
+@media (hover: hover) {
+  .index-link:hover {
+    background: var(--color-mist-100);
+  }
+}
+
+/* The showroom's chrome and carousel fade out over 0.4 s at hand-off (M12 reversed) instead of vanishing
+   instantly, and fade back in the same way on the way out. `inert` (set in Experience.tsx) already disables
+   them the moment a listing opens or closes, so opacity alone is enough here: no `visibility`, which would
+   otherwise fight the focus the showroom restores to a car's frame on the way back (its discrete transition
+   isn't reliably flipping on the very next animation frame). */
+[data-fading] {
+  transition: opacity var(--dur-handoff-chrome) var(--ease-fade);
+}
+[data-fading="true"] {
+  opacity: 0;
+}
+
+/* ---- Detail page (docs/overhaul.md; shot 6d's skeleton) --------------------------------------- */
+
+/* Grey placeholder blocks, one per kind. Decorative: the real content replaces them in 6e to 6g. */
+.blk {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  padding: calc(8 * var(--u)) calc(10 * var(--u));
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: max(10px, var(--type-label));
+  line-height: 1.25;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+.blk-field {
+  background: var(--color-field);
+}
+.blk-surface {
+  background: var(--color-paper);
+}
+.blk-panel {
+  background: var(--color-panel);
+  color: var(--color-paper);
+}
+.blk-photo {
+  background: var(--color-mist-700);
+  color: var(--color-paper);
+}
+.blk-card {
+  background: var(--color-card);
+}
+.blk-type {
+  outline: 1px dashed color-mix(in srgb, currentColor 40%, transparent);
+  outline-offset: -1px;
+}
+.blk-control {
+  box-shadow: inset 0 0 0 1px currentColor;
+  align-items: center;
+  cursor: pointer;
+}
+.blk[data-tone="dark"] {
+  color: var(--color-paper);
+}
+/* On a dark panel the ink focus ring would vanish; the paper one keeps 3:1 there. Scoped to
+   `[data-tone="dark"]` generally, not just `.blk` (6d's placeholders): 6f's real dark-panel controls
+   (section C's "See equipment and ownership history") carry the same attribute without the placeholder
+   class, and need the same override (found missing by /impeccable critique, 6f). */
+[data-tone="dark"]:focus-visible,
+[data-tone="dark"] :focus-visible {
+  outline-color: var(--color-paper);
+}
+button.blk-control:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+/* The way back: a small pill that reads whatever is under it. Light ground: ink on translucent paper; dark
+   ground (photos, the dark sections): paper on translucent ink. A hairline and a light blur keep it legible
+   over a busy photo. The tone switch is a short colour crossfade as the boundary passes under it. */
+.detail-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 36px;
+  padding-inline: 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-case);
+  white-space: nowrap;
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-paper) 72%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 22%, transparent);
+  backdrop-filter: blur(8px);
+  transition:
+    color var(--dur-hover) var(--ease-fade),
+    background-color var(--dur-hover) var(--ease-fade),
+    box-shadow var(--dur-hover) var(--ease-fade);
+}
+[data-pill-tone="dark"] .detail-pill {
+  color: var(--color-paper);
+  background: color-mix(in srgb, var(--color-ink) 62%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 30%, transparent);
+}
+[data-pill-tone="dark"] .detail-pill:focus-visible {
+  outline-color: var(--color-paper);
+}
+
+.detail-line {
+  background: var(--color-ink);
+  transition: background-color var(--dur-hover) var(--ease-fade);
+}
+[data-pill-tone="dark"] .detail-line {
+  background: var(--color-paper);
+}
+
+.detail-bar {
+  background: var(--color-panel);
+  color: var(--color-paper);
+}
+
+/* "Jump to specs": the underline draws in on hover/focus (M8's "link underlines on hover" note). A native
+   <button> carries its own UA padding/border and, less obviously, `text-align: center` (buttons centre by
+   default, unlike other elements); reset all of it so its text sits flush left, aligned with the name and
+   make/year above it (user, 2026-10-09: it was reading as indented/centred). */
+.detail-jump {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--color-ink);
+  cursor: pointer;
+  /* The font floors at 12px (max(12px, ...)) but the box's u-scaled width doesn't, so a small enough
+     viewport can give it less room than the text needs; nowrap keeps the arrow beside the text instead
+     of wrapping to a second line, letting it overflow the box rather than break (user, 2026-10-10). */
+  white-space: nowrap;
+}
+.detail-jump::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-hover) var(--ease-fade);
+}
+.detail-jump:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .detail-jump:hover::after {
+    transform: scaleX(1);
+  }
+}
+.detail-label {
+  font-size: max(10px, var(--type-label));
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-case);
+  color: color-mix(in srgb, var(--color-paper) 70%, transparent);
+}
+/* `.detail-label`'s default is paper-on-dark (the spec table, the bar); section D's price charts and the
+   enquiry sidebar (6g) are light panels, so a `[data-tone="light"]` ancestor flips it to ink-on-paper instead
+   of the near-invisible paper-on-paper it would otherwise render (found visually: labels were present in the
+   DOM but unreadable). */
+[data-tone="light"] .detail-label {
+  color: color-mix(in srgb, var(--color-ink) 65%, transparent);
+}
+
+/* The enquiry sidebar's form fields (6g): a bottom hairline, not a bordered box — the page's own vocabulary
+   for a dividing line (the spec table's rules, the price strip's baseline, the progress line), not the boxed,
+   rounded input a generic form reaches for by default. 2px ink focus ring per the motion non-negotiable's
+   "focus rings are 2 px ink". */
+.enquiry-input {
+  display: block;
+  width: 100%;
+  padding: 8px 2px;
+  font-family: inherit;
+  font-size: max(14px, var(--type-body));
+  color: var(--color-ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 30%, transparent);
+  border-radius: 0;
+}
+.enquiry-input:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+.enquiry-input[aria-invalid="true"] {
+  border-bottom-color: var(--color-signal-text);
+}
+
+/* The price charts' marks (6g): focusing a circle got only the browser's default outline, not the project's
+   "focus rings are 2 px ink" rule — every other focusable control on the page sets this explicitly. */
+svg[data-mark-group] circle:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+
+/* ---- Reduced motion: keep opacity, remove travel ---------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .gate {
+    transition-duration: 250ms;
+  }
+  .gate[data-phase="entering"] .gate-inner {
+    transform: none;
+    filter: none;
+  }
+  .index-sheet,
+  .index[data-state="open"] .index-sheet {
+    transform: none;
+    opacity: 0;
+    transition: opacity 220ms var(--ease-out);
+  }
+  .index[data-state="open"] .index-sheet {
+    opacity: 1;
+    transition-duration: 320ms;
+  }
+  .pill:active {
+    transform: none;
+  }
+}
+
+/* A frame's focus ring is a 2px ink stroke on the frame's own outline (drawn in the mat's SVG, so
+   the mat cannot cover it), with the name underlined as a second cue. */
+.frame-link:focus-visible {
+  outline: none;
+}
+.frame-ring {
+  visibility: hidden;
+}
+.frame-link:focus-visible .frame-ring {
+  visibility: visible;
+}
+.frame-link:focus-visible h2 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}

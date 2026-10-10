@@ -7,6 +7,9 @@ A horizontally scrolling 3D showroom of nine modern-classic cars with fictional 
 - `docs/PRD.md`: the build spec. Read the sections a shot touches before writing code. It mirrors the canonical Claude Doc (https://claude.ai/code/artifact/6cbf5ebb-ec3a-4e80-a289-f0f3f3cb52ad), where the user reviews and comments. If they disagree, ask.
 - `PRODUCT.md` and `DESIGN.md`: Impeccable's product record and visual seed. `DESIGN.md` is a seed; re-run `/impeccable document` once real tokens exist.
 - Decisions already made are listed in the PRD's decision log. Don't reopen them without a reason; flag conflicts instead.
+- `AGENTS.md` (managed by `next dev`, imported below): Next.js 16.3 differs from older versions; read the matching guide in `node_modules/next/dist/docs/` before writing Next code.
+
+@AGENTS.md
 
 ## How the build runs
 

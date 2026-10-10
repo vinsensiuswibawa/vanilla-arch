@@ -1,0 +1,502 @@
+{
+  "mazda-mx-5-nc": {
+    "uid": "96056443d55c4afaa90099e9e1d45d9b",
+    "title": "2009 Mazda Miata MX-5 Roadster",
+    "author": "Res1n",
+    "license": "CC-BY-4.0",
+    "rotateY": -90,
+    "removeMaterials": [],
+    "removeNodes": [],
+    "lengthMm": 4020,
+    "paint": [
+      "carpaint"
+    ],
+    "original": {
+      "name": "Competition Yellow",
+      "hex": "#e8b819",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "Copper Red Mica",
+        "hex": "#8a2a1c",
+        "metallic": true
+      },
+      {
+        "name": "Stormy Blue Mica",
+        "hex": "#3c5a78",
+        "metallic": true
+      },
+      {
+        "name": "Crystal White Pearl",
+        "hex": "#eeede6",
+        "metallic": true
+      }
+    ],
+    "unlock": [
+      "black",
+      "tire",
+      "Material__2"
+    ],
+    "protect": [
+      {
+        "materials": [
+          "chrome"
+        ],
+        "share": 0.25
+      }
+    ]
+  },
+  "honda-nsx-na1": {
+    "uid": "1cc15628a00a4739a6b6c01128927c8d",
+    "title": "Honda NSX 1990",
+    "author": "Lexyc16",
+    "license": "CC-BY-4.0",
+    "lengthMm": 4405,
+    "rotateY": 0,
+    "paint": [
+      "Material.003"
+    ],
+    "removeMaterials": [],
+    "removeNodes": [],
+    "original": {
+      "name": "Sebring Silver Metallic",
+      "hex": "#b4b7b9",
+      "metallic": true
+    },
+    "colors": [
+      {
+        "name": "Formula Red",
+        "hex": "#c8102e",
+        "metallic": false
+      },
+      {
+        "name": "Sebring Silver Metallic",
+        "hex": "#b4b7b9",
+        "metallic": true
+      },
+      {
+        "name": "Berlina Black",
+        "hex": "#111214",
+        "metallic": false
+      }
+    ]
+  },
+  "honda-integra-type-r-db8": {
+    "uid": "06f0eba84e9745e9aec41a985ccac915",
+    "title": "Honda Integra (DB8) Type-R",
+    "author": "myedsu",
+    "license": "CC-BY-4.0",
+    "lengthMm": 4525,
+    "rotateY": 0,
+    "paint": [
+      "paint",
+      "logo_paint"
+    ],
+    "removeMaterials": [],
+    "removeNodes": [
+      "^numberplate",
+      "^number(\\.001)?$"
+    ],
+    "original": {
+      "name": "Championship White",
+      "hex": "#f1f0ea",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "Championship White",
+        "hex": "#f1f0ea",
+        "metallic": false
+      },
+      {
+        "name": "Vogue Silver Metallic",
+        "hex": "#b5b8ba",
+        "metallic": true
+      },
+      {
+        "name": "Flamenco Black Pearl",
+        "hex": "#16151a",
+        "metallic": true
+      }
+    ]
+  },
+  "bmw-m5-e39": {
+    "uid": "531a5a93da5d493d9918eb36f011c20d",
+    "title": "BMW E39 Free",
+    "author": "BlackSnow02",
+    "license": "CC-BY-4.0",
+    "lengthMm": 4783,
+    "rotateY": 180,
+    "paint": [
+      "body"
+    ],
+    "removeMaterials": [],
+    "removeNodes": [],
+    "original": {
+      "name": "Author’s dark red",
+      "hex": "#6e1214",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "Carbon Black Metallic",
+        "hex": "#1b1e26",
+        "metallic": true
+      },
+      {
+        "name": "Le Mans Blue Metallic",
+        "hex": "#1e3e8c",
+        "metallic": true
+      },
+      {
+        "name": "Titanium Silver Metallic",
+        "hex": "#a9adb0",
+        "metallic": true
+      }
+    ]
+  },
+  "porsche-930": {
+    "uid": "8568d9d14a994b9cae59499f0dbed21e",
+    "title": "FREE 1975 Porsche 911 (930) Turbo",
+    "author": "Lionsharp Studios",
+    "license": "CC-BY-4.0",
+    "lengthMm": 4291,
+    "rotateY": 0,
+    "paint": [],
+    "removeMaterials": [
+      "material_0",
+      "coat"
+    ],
+    "removeNodes": [],
+    "original": {
+      "name": "Silver Metallic",
+      "hex": "#8e8a86",
+      "metallic": true
+    },
+    "colors": [
+      {
+        "name": "Grand Prix White",
+        "hex": "#f1efe6",
+        "metallic": false
+      },
+      {
+        "name": "Copper Brown Metallic",
+        "hex": "#6b3a22",
+        "metallic": true
+      },
+      {
+        "name": "Silver Metallic",
+        "hex": "#b0b2b3",
+        "metallic": true
+      }
+    ]
+  },
+  "triumph-tr6": {
+    "uid": "69e5de3f68804fbc900557b7740b680c",
+    "title": "Triumph TR6",
+    "author": "Alexios_Apokaukos",
+    "license": "CC-BY-4.0",
+    "lengthMm": 3962,
+    "rotateY": 0,
+    "paint": [
+      "carpaint"
+    ],
+    "removeMaterials": [],
+    "removeNodes": [],
+    "original": {
+      "name": "French Blue",
+      "hex": "#2e6db4",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "French Blue",
+        "hex": "#2e6db4",
+        "metallic": false
+      },
+      {
+        "name": "Pimento Red",
+        "hex": "#c62a1c",
+        "metallic": false
+      },
+      {
+        "name": "Mimosa Yellow",
+        "hex": "#f2c230",
+        "metallic": false
+      }
+    ]
+  },
+  "fiat-barchetta": {
+    "uid": "1f4a33656cca442885dc708c38bb3332",
+    "title": "Fiat Barchetta",
+    "author": "ngon_3d",
+    "license": "CC-BY-4.0",
+    "lengthMm": 3916,
+    "rotateY": 180,
+    "paint": [
+      "Carpaint_Flakes_Ruby"
+    ],
+    "removeMaterials": [],
+    "removeNodes": [],
+    "original": {
+      "name": "Giallo Ginestra",
+      "hex": "#e8b20c",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "Rosso Speed",
+        "hex": "#c8161e",
+        "metallic": false
+      },
+      {
+        "name": "Giallo Ginestra",
+        "hex": "#e8b20c",
+        "metallic": false
+      },
+      {
+        "name": "Blu Midnight",
+        "hex": "#1c2a4a",
+        "metallic": true
+      }
+    ]
+  },
+  "lamborghini-gallardo": {
+    "uid": "ff0eb2242d0e42eb8b7034b4db639e56",
+    "title": "Lamborghini Gallardo 2010",
+    "author": "temp0.crazy",
+    "license": "CC-BY-4.0",
+    "rotateY": 0,
+    "removeMaterials": [],
+    "removeNodes": [],
+    "lengthMm": 4345,
+    "paint": [
+      "paint"
+    ],
+    "original": {
+      "name": "Author’s red-orange pearl",
+      "hex": "#c8321a",
+      "metallic": true
+    },
+    "colors": [
+      {
+        "name": "Giallo Midas",
+        "hex": "#f0b400",
+        "metallic": true
+      },
+      {
+        "name": "Arancio Borealis",
+        "hex": "#e8601a",
+        "metallic": true
+      },
+      {
+        "name": "Bianco Monocerus",
+        "hex": "#efefea",
+        "metallic": false
+      }
+    ]
+  },
+  "peugeot-205-cj": {
+    "uid": "ff2b04cf7da94cbdbd277fe23b7204b8",
+    "title": "Peugeot 205 cabriolet convertible",
+    "author": "maxipub",
+    "license": "CC-BY-4.0",
+    "lengthMm": 3705,
+    "rotateY": 0,
+    "paint": [
+      "base_0",
+      "Mat_5",
+      "base"
+    ],
+    "removeMaterials": [],
+    "removeNodes": [],
+    "original": {
+      "name": "Blanc Meije",
+      "hex": "#efeee8",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "Blanc Meije",
+        "hex": "#efeee8",
+        "metallic": false
+      },
+      {
+        "name": "Rouge Vallelunga",
+        "hex": "#c1121c",
+        "metallic": false
+      },
+      {
+        "name": "Gris Graphite Metallic",
+        "hex": "#55595e",
+        "metallic": true
+      }
+    ]
+  },
+  "jaguar-xj220": {
+    "uid": "d99bb7b0fc0e4e3c9553246679dd067f",
+    "title": "Jaguar XJ220 1991",
+    "author": "comrade1280",
+    "license": "CC-BY-4.0",
+    "lengthMm": 4930,
+    "rotateY": 0,
+    "paint": [
+      "body"
+    ],
+    "removeMaterials": [
+      "material"
+    ],
+    "removeNodes": [],
+    "original": {
+      "name": "Spa Silver",
+      "hex": "#a7abae",
+      "metallic": true
+    },
+    "colors": [
+      {
+        "name": "Spa Silver",
+        "hex": "#a7abae",
+        "metallic": true
+      },
+      {
+        "name": "Le Mans Blue",
+        "hex": "#1f2f5c",
+        "metallic": true
+      },
+      {
+        "name": "Monza Red",
+        "hex": "#8e1a1e",
+        "metallic": false
+      }
+    ]
+  },
+  "subaru-wrx-wagon-gg": {
+    "uid": "fa2c8e1d265443e982b90f964c2b3e02",
+    "title": "Subaru WRX Wagon (GG)",
+    "author": "ilvskf",
+    "license": "CC-BY-4.0",
+    "lengthMm": 4405,
+    "rotateY": 0,
+    "paint": [
+      "car_paint"
+    ],
+    "removeMaterials": [
+      "Wheel_Stock_Blur"
+    ],
+    "removeNodes": [],
+    "original": {
+      "name": "Platinum Silver Metallic",
+      "hex": "#a7b0ba",
+      "metallic": true
+    },
+    "colors": [
+      {
+        "name": "WR Blue Pearl",
+        "hex": "#1d3c8f",
+        "metallic": true
+      },
+      {
+        "name": "Platinum Silver Metallic",
+        "hex": "#a7b0ba",
+        "metallic": true
+      },
+      {
+        "name": "Aspen White",
+        "hex": "#efefea",
+        "metallic": false
+      }
+    ]
+  },
+  "lotus-elise": {
+    "uid": "75e9045ac1af4cdbb69318108c81edfd",
+    "title": "LOTUS ÉLISE",
+    "author": "sa3d",
+    "license": "CC-BY-4.0",
+    "lengthMm": 3726,
+    "rotateY": 180,
+    "paint": [
+      "CAR.carros"
+    ],
+    "removeMaterials": [
+      "material",
+      "SHADE",
+      "NANA-black",
+      "NANA-po",
+      "NANA-combi",
+      "NANA-oeil",
+      "NANA-lang",
+      "NANA-verre"
+    ],
+    "removeNodes": [],
+    "original": {
+      "name": "Author’s black",
+      "hex": "#1d1f22",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "Norfolk Mustard",
+        "hex": "#d9a520",
+        "metallic": false
+      },
+      {
+        "name": "Azure Blue",
+        "hex": "#2a7fc2",
+        "metallic": false
+      },
+      {
+        "name": "Calypso Red",
+        "hex": "#c3161e",
+        "metallic": false
+      }
+    ]
+  },
+  "datsun-240k-gt": {
+    "uid": "b2303a552b444e5b8637fdf5169b41cb",
+    "title": "(FREE) 1972 Datsun 240k GT",
+    "author": "Lionsharp Studios",
+    "license": "CC-BY-SA-4.0",
+    "lengthMm": 4460,
+    "rotateY": 0,
+    "paint": [
+      "paint"
+    ],
+    "removeMaterials": [
+      "Plane.035__0",
+      "coat"
+    ],
+    "removeNodes": [],
+    "original": {
+      "name": "Author’s mustard",
+      "hex": "#d4a62a",
+      "metallic": false
+    },
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#eeede6",
+        "metallic": false
+      },
+      {
+        "name": "Silver Metallic",
+        "hex": "#a9acaf",
+        "metallic": true
+      },
+      {
+        "name": "Bright Blue Metallic",
+        "hex": "#2b5da6",
+        "metallic": true
+      }
+    ],
+    "protect": [
+      {
+        "materials": [
+          "chrome"
+        ],
+        "share": 0.22
+      }
+    ],
+    "budgetScale": 1.6
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "datsun-240k-gt": {
+    "src": "/emblems/datsun-1976.png",
+    "name": "Datsun",
+    "title": "Datsun 1976 logo",
+    "license": "Public domain (simple geometry, ineligible for copyright); trademark of Nissan Motor Co., Ltd.",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Datsun_1976_logo.svg"
+  },
+  "triumph-tr6": {
+    "src": "/emblems/triumph.png",
+    "name": "Triumph",
+    "title": "Triumph wordmark",
+    "license": "Public domain (text logo); trademark of its owners",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Logo_Triumph.svg"
+  },
+  "porsche-930": {
+    "src": "/emblems/porsche.png",
+    "name": "Porsche",
+    "title": "Porsche wordmark (1957)",
+    "license": "Public domain (text logo); trademark of Dr. Ing. h.c. F. Porsche AG. The crest is not freely licensed, so the wordmark stands in",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Porsche_Wortmarke.svg"
+  },
+  "peugeot-205-cj": {
+    "src": "/emblems/peugeot-1991.png",
+    "name": "Peugeot",
+    "title": "Peugeot wordmark (1991–1998)",
+    "license": "Public domain (text logo); trademark of Stellantis. The lion is not freely licensed, so the wordmark stands in",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peugeot_logo_wordmark_(1991-1998).png"
+  },
+  "honda-nsx-na1": {
+    "src": "/emblems/honda.png",
+    "name": "Honda",
+    "title": "Honda wordmark (tagline removed)",
+    "license": "Public domain (text logo); trademark of Honda Motor Co., Ltd.",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Honda-logo.svg"
+  },
+  "jaguar-xj220": {
+    "src": "/emblems/jaguar.png",
+    "name": "Jaguar",
+    "title": "Jaguar 1979 logo",
+    "license": "Public domain (text logo); trademark of Jaguar Land Rover",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jaguar_1979_logo.svg"
+  },
+  "honda-integra-type-r-db8": {
+    "src": "/emblems/honda.png",
+    "name": "Honda",
+    "title": "Honda wordmark (tagline removed)",
+    "license": "Public domain (text logo); trademark of Honda Motor Co., Ltd.",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Honda-logo.svg"
+  },
+  "fiat-barchetta": {
+    "src": "/emblems/fiat-1968.png",
+    "name": "Fiat",
+    "title": "Fiat logo (1968–1999)",
+    "license": "Public domain (simple geometry, ineligible for copyright); trademark of Stellantis",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fiat_logo_1968.svg"
+  },
+  "subaru-wrx-wagon-gg": {
+    "src": "/emblems/subaru.png",
+    "name": "Subaru",
+    "title": "Subaru logo (2003–2019)",
+    "license": "Public domain (simple geometry, ineligible for copyright); trademark of Subaru Corporation",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Subaru_logo.svg"
+  },
+  "bmw-m5-e39": {
+    "src": "/emblems/bmw.png",
+    "name": "BMW",
+    "title": "BMW logo (1997–2020)",
+    "license": "Public domain (simple geometry, ineligible for copyright); trademark of BMW AG",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMW.svg"
+  },
+  "lamborghini-gallardo": {
+    "src": "/emblems/lamborghini.png",
+    "name": "Lamborghini",
+    "title": "Lamborghini wordmark (1963–)",
+    "license": "Public domain (text logo); trademark of Automobili Lamborghini S.p.A. The bull shield is not freely licensed, so the wordmark stands in",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lamborghini_-_logo_wordmark_(italy,_1963-).svg"
+  },
+  "mazda-mx-5-nc": {
+    "src": "/emblems/mazda.png",
+    "name": "Mazda",
+    "title": "Mazda wordmark (1975–)",
+    "license": "Public domain (text logo); trademark of Mazda Motor Corporation",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mazda_logo.svg"
+  }
+}

@@ -1,0 +1,55 @@
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] GSAP target  not found. https://gsap.com
+[warning] GSAP target  not found. https://gsap.com
+[warning] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[warning] [.WebGL-0x21640040fa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x21640040fa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x21640040fa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x21640040fa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[warning] THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 2342ms
+[test] default2: FAILED to click Enter without sound even with force: locator.click: Element is not visible
+Call log:
+[2m  - waiting for getByText('Enter without sound')[22m
+[2m    - locator resolved to <button type="button" class="pill pill-line">Enter without sound</button>[22m
+[2m  - attempting click action[22m
+[2m    - scrolling into view if needed[22m
+
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 2338ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 2383ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 15648ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 6289ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 2939ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 3380ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 3335ms
+[log] [Fast Refresh] rebuilding
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 335ms
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] GSAP target  not found. https://gsap.com
+[warning] GSAP target  not found. https://gsap.com
+[warning] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[warning] THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 19143ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 3442ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 11132ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 5634ms
+[log] [Fast Refresh] rebuilding

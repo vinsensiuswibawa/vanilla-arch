@@ -1,0 +1,24 @@
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[log] [Fast Refresh] rebuilding
+[warning] GSAP target  not found. https://gsap.com
+[warning] GSAP target  not found. https://gsap.com
+[warning] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[log] [Fast Refresh] done in 7065ms
+[warning] [.WebGL-0x245400ad2400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x245400ad2400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x245400ad2400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x245400ad2400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[warning] THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported.
+[test] d3: could not click Jump to specs: locator.click: Timeout 5000ms exceeded.
+Call log:
+[2m  - waiting for getByText('Jump to specs')[22m
+
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 4569ms
+[log] [Fast Refresh] rebuilding
+[test] f3 run error: page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://localhost:3000/cars/porsche-930?theme=figma", waiting until "domcontentloaded"[22m

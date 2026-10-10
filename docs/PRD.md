@@ -173,30 +173,34 @@ const shown = hovered ? veil * 0.7 : veil;  // hover clears another 30%
 
 ## Content model and information architecture
 
-Four routes, one typed data file and nine cars. There is no backend: every listing is fiction written to read like fact.
+Four routes, one typed data file and thirteen cars. There is no backend: every listing is fiction written to read like fact.
 
 | Route | Purpose | Rendering |
 | --- | --- | --- |
 | `/` | Gate, then the showroom carousel | Static shell; the client experience lives in the root layout |
-| `/cars/[slug]` | One listing; 9 slugs | Static via `generateStaticParams`, with per-car metadata and OG image |
+| `/cars/[slug]` | One listing; 13 slugs | Static via `generateStaticParams`, with per-car metadata and OG image |
 | `/credits` | Model, photo and font credits, plus the disclaimer | Static |
 | 404 | Styled not-found page | Static |
 
 The Index is an overlay on any route, not a page.
 
-**The lineup.** Ordered by year, so the showroom reads like an archive. Paint and interior are targets: the final colorway follows whichever licensed photo set we find, and the 3D model is set to match it. Prices and mileage are fictional but market-plausible.
+**The lineup.** Ordered by year, so the showroom reads like an archive. Shot 0 fixed each car's colorway, year, variant and location to match its licensed photo set (one physical car per set), and the 3D model is configured to match. Prices and mileage are fictional but market-plausible. `lib/cars.ts` is the source of truth; details and sources are in `docs/shots/shot-0.md`.
 
-| No. | Car | Japanese accent | Frame | Target paint / interior | Price | Mileage | 3D model (CC-BY) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 01 | 1991 Mazda MX-5 (NA) | ユーノス・ロードスター (Eunos Roadster) | Arch | British Racing Green / Tan | $16,500 | 74,200 mi | [Lexyc16](https://sketchfab.com/3d-models/mazda-miata-mx-5-na-d51fcd44b74f4daf8012c41e0400c041) |
-| 02 | 1991 Honda NSX (NA1) | ホンダ NSX | Circle | Formula Red / Black, the brief's own example | $128,000 | 41,300 mi | [Lexyc16](https://sketchfab.com/3d-models/honda-nsx-1990-1cc15628a00a4739a6b6c01128927c8d) |
-| 03 | 1993 Jaguar XJ220 | ジャガー XJ220 | Square | Silver / Grey | $595,000 | 3,900 mi | [comrade1280](https://sketchfab.com/3d-models/jaguar-xj220-1991-d99bb7b0fc0e4e3c9553246679dd067f) |
-| 04 | 1993 Mazda RX-7 (FD3S) | アンフィニ RX-7 (Efini RX-7) | Half-disc | Competition Yellow Mica / Black | $64,000 | 52,800 mi | [Lexyc16](https://sketchfab.com/3d-models/mazda-rx-7-fd-d35ff630df614771b82e7b2f59035b1e) |
-| 05 | 1995 BMW M3 (E36), modified | BMW M3 | Arch | Alpine White / Black | $27,500 | 118,400 mi | [TinoD2](https://sketchfab.com/3d-models/bmw-e36-m3-762b90efd3dc413cb61c3e3c8097b8ac) |
-| 06 | 1998 Honda Integra Type R (DB8) | インテグラ タイプR | Circle | Championship White / Black | $52,000 | 63,100 mi | [myedsu](https://sketchfab.com/3d-models/honda-integra-db8-type-r-06f0eba84e9745e9aec41a985ccac915) |
-| 07 | 1999 Nissan Skyline GT-R (BNR34) | スカイライン GT-R | Square | Bayside Blue / Black | $215,000 | 38,900 mi | [Lexyc16](https://sketchfab.com/3d-models/nissan-skyline-r34-gt-r-ff8fb2251dfa4bb9979e7022c5a6666c) |
-| 08 | 2002 BMW M5 (E39) | BMW M5 | Half-disc | Black / Caramel | $38,500 | 96,200 mi | [BlackSnow02](https://sketchfab.com/3d-models/bmw-e39-free-531a5a93da5d493d9918eb36f011c20d) |
-| 09 | 2010 Lamborghini Gallardo LP560-4 | ランボルギーニ ガヤルド | Arch | Matte gray / Black | $139,000 | 18,700 mi | [temp0.crazy](https://sketchfab.com/3d-models/lamborghini-gallardo-2010-ff0eb2242d0e42eb8b7034b4db639e56) |
+| No. | Car | Japanese accent | Frame | Paint / interior | Price | Mileage | Location | 3D model (CC-BY) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 01 | 1975 Datsun 240K GT (C110), Kuwait-delivered | ケンメリ スカイライン | Arch | Silver Blue Metallic / Black vinyl | $38,500 | 88,900 mi | Utrecht, Netherlands | [Lionsharp Studios](https://sketchfab.com/3d-models/b2303a552b444e5b8637fdf5169b41cb) (CC BY-SA) |
+| 02 | 1972 Triumph TR6 (CP), 150 bhp injection | トライアンフ TR6 | Circle | Pure White / Black leather | $34,000 | 61,200 mi | Baden-Württemberg, Germany | [Alexios_Apokaukos](https://sketchfab.com/3d-models/69e5de3f68804fbc900557b7740b680c) |
+| 03 | 1976 Porsche 911 Turbo (930), 3.0 | ポルシェ 930 ターボ | Square | Copper Brown Metallic / Tan leather | $245,000 | 54,300 mi | Düsseldorf, Germany | [Lionsharp Studios](https://sketchfab.com/3d-models/8568d9d14a994b9cae59499f0dbed21e) |
+| 04 | 1993 Peugeot 205 CJ | プジョー 205 カブリオレ | Half-disc | Blanc Meije / Grey cloth | $9,800 | 68,400 mi | Barcelona, Spain | [maxipub](https://sketchfab.com/3d-models/ff2b04cf7da94cbdbd277fe23b7204b8) |
+| 05 | 1991 Honda NSX (NA1), automatic | ホンダ NSX | Arch | Formula Red / Black leather | $92,000 | 58,600 mi | Leicestershire, England | [Lexyc16](https://sketchfab.com/3d-models/honda-nsx-1990-1cc15628a00a4739a6b6c01128927c8d) |
+| 06 | 1993 Jaguar XJ220 | ジャガー XJ220 | Circle | Maroon metallic / Cream leather | $585,000 | 3,900 mi | Lakeland, Florida | [comrade1280](https://sketchfab.com/3d-models/jaguar-xj220-1991-d99bb7b0fc0e4e3c9553246679dd067f) |
+| 07 | 1997 Honda Integra Type R (DB8) | インテグラ タイプR | Square | Championship White / Black | $46,000 | 82,300 mi | Saitama, Japan | [myedsu](https://sketchfab.com/3d-models/honda-integra-db8-type-r-06f0eba84e9745e9aec41a985ccac915) |
+| 08 | 1999 Lotus Elise Sport 135 (S1) | ロータス エリーゼ | Half-disc | Silver metallic / Pink Corbeau seats | $36,500 | 47,800 mi | Norfolk, England | [sa3d](https://sketchfab.com/3d-models/75e9045ac1af4cdbb69318108c81edfd) |
+| 09 | 1998 Fiat Barchetta | フィアット バルケッタ | Arch | Rosso Speed / Black cloth | $12,500 | 54,100 mi | Pinerolo, Italy | [ngon_3d](https://sketchfab.com/3d-models/1f4a33656cca442885dc708c38bb3332) |
+| 10 | 2002 Subaru Impreza WRX Wagon (GG) | インプレッサ WRX ワゴン | Circle | WR Blue Pearl / Black cloth | $14,900 | 118,400 mi | Edmonton, Canada | [ilvskf](https://sketchfab.com/3d-models/fa2c8e1d265443e982b90f964c2b3e02) |
+| 11 | 2002 BMW M5 (E39) | BMW M5 | Square | Carbon Black Metallic / Black leather | $36,500 | 96,200 mi | Kent, England | [BlackSnow02](https://sketchfab.com/3d-models/bmw-e39-free-531a5a93da5d493d9918eb36f011c20d) |
+| 12 | 2008 Lamborghini Gallardo LP 560-4 | ランボルギーニ ガヤルド | Half-disc | Nero / Nero leather | $129,000 | 21,400 mi | Flanders, Belgium | [temp0.crazy](https://sketchfab.com/3d-models/lamborghini-gallardo-2010-ff0eb2242d0e42eb8b7034b4db639e56) |
+| 13 | 2007 Mazda MX-5 (NC) | マツダ ロードスター | Arch | Brilliant Black / Black leather | $11,900 | 52,700 mi | Brisbane, Australia | [Res1n](https://sketchfab.com/3d-models/96056443d55c4afaa90099e9e1d45d9b) |
 
 **Chapters per listing**
 
@@ -205,7 +209,7 @@ The Index is an overlay on any route, not a page.
 | 01 Overview | Huge cut-off Didone name, year, chassis code, price, mileage in mi and km, location; the Japanese market name set vertically in Mincho | Core fields |
 | 02 The Take | One 80–120 word house-curator paragraph in a Monocle tone, plus one pull quote | `take` |
 | 03 Specification | Spec sheet in mono numerals, the architectural elevation drawing, the equipment list | `spec`, `equipment` |
-| 04 Modifications | Only for modified cars (the E36 M3) | `modifications` |
+| 04 Modifications | Only for modified cars (the Eunos Roadster) | `modifications` |
 | 05 Condition | Auction-sheet diagram with coded marks, the signal-orange grade seal, flaw notes with photos | `condition` |
 | 06 Provenance | Owners, a service-history timeline, items included in the sale | `provenance` |
 | 07 Gallery | 12–20 matched seller photos on a rail | `photos` |
@@ -213,7 +217,7 @@ The Index is an overlay on any route, not a page.
 
 Condition marks use the standard Japanese auction-sheet vocabulary: A for scratches, U for dents, W for repaired or wavy panels, S for rust and X for parts needing replacement, each with a severity digit.
 
-**Data schema** (`lib/cars.ts`, one typed array; no CMS)
+**Data schema** (`lib/cars.ts`, one typed array; no CMS). This is the planning sketch; the implemented types in `lib/cars.ts` win. Shot 0 changes: the pipeline renames model materials to the slots below (mapping in `content/models.json`), so cars no longer carry `slots`; specs store official PS, kW, hp, N·m and lb-ft figures; `marketName` and `steering` were added; photos and model credits load from `content/photos.json` and `content/models.json`.
 
 ```ts
 export type FramePrimitive = 'arch' | 'circle' | 'square' | 'half-disc';
@@ -378,8 +382,8 @@ Routes only set metadata, so a URL change never remounts the canvas; the store i
 2. **DOM drives, 3D follows.** Each frame, and the listing stage, is a DOM element tracked by a drei `<View>`. GSAP animates the element; the scissored view follows it every frame. Views more than one frame outside the viewport skip rendering.
 3. **Frame masks.** The visible frame shape is a stencil mask built from the 128-point outline with drei's `Mask` and `useMask`; morphing a frame interpolates those points.
 4. **Veil.** A per-view uniform drives fog toward the cyclorama color plus a full-view mist quad, using the formula in the motion spec.
-5. **Materials from data.** On load, each mesh's material name maps to a slot. `paint` becomes a `MeshPhysicalMaterial` with clearcoat 1, clearcoat roughness 0.04 and roughness 0.3 (matte: roughness 0.65, no clearcoat), metalness by finish. `glass` is tinted, transparent and reflective without a transmission pass, so the interior color reads through cheaply.
-6. **Lighting.** A procedural studio (three's `RoomEnvironment` through PMREM, nothing to download) plus one soft key light. Each car gets a baked top-down shadow texture on a plane that turns with it.
+5. **Materials.** Each model keeps its author's materials; the pipeline bakes the repairs into the file (transmission replaced by clear or tinted glossy lenses, near-opaque glass made see-through, matte tyres, no clear coat on black trim and interiors). At runtime only `paint` is replaced, from the listing (`lib/materials.ts`): solid paint is pigment under a clear coat (specular off, clearcoat 1, clearcoat roughness 0.02); metallic paint keeps metalness 0.6.
+6. **Lighting.** Poly Haven's `studio_small_09` at 1K with a dark floor, a narrow overhead softbox and two side strips, rendered once per renderer into one shared environment map (`components/three/StudioLook.tsx`), plus one soft key light, under ACES. Each car gets a baked top-down shadow texture on a plane that turns with it.
 7. **The morph.** On select, GSAP Flip animates the frame element into the listing-stage rect while `router.push` updates the URL and the store switches the chrome to listing mode; Back runs the timeline in reverse. React's `<ViewTransition>` now works in Next 16.3 without config, but it is used only for DOM-only crossfades; the 3D morph stays on Flip because the canvas lives outside page snapshots.
 8. **Horizontal scroll.** On desktop the document scrolls vertically while a pinned track translates sideways (Lenis plus ScrollTrigger), keeping native keyboard and scrollbar behavior; `gestureOrientation: 'both'` accepts sideways trackpad swipes too. Carousel and listing each own a Lenis instance; only the active one runs, and the carousel's position is restored on return. Phones use a native `overflow-x` scroller with `scroll-snap-type: x mandatory`.
 9. **Loading.** The gate is static HTML and CSS. Cars 1–3 load behind it, the rest stream in carousel order during idle time, and the next car in either direction is always preloaded.
@@ -625,7 +629,14 @@ Thirty decisions shaped this PRD, all settled with you in the planning session o
 | Hosting | Vercel, vercel.app URL | — |
 | Analytics | Vercel Web Analytics | Page views only on the Hobby plan |
 | Capture | Attract mode plus `?capture` | — |
-| Emblems | Full color, small | — |
+| Emblems | Full color, small | Lotus has none: no freely licensed Lotus Cars mark exists (2026-10-07) |
+| Lineup, revised (2026-10-07) | Thirteen cars, 1972–2008, replacing the nine | See the lineup table and `docs/lineup.md`; the Datsun's model is CC BY-SA |
+| Model quality (2026-10-07) | Hero files ship (up to 400k triangles, 2K textures) | Desktop, screen-recorded showcase; 60 fps measured across the 13-car walk on an Intel Arc laptop |
+| Record mode (2026-10-07) | `?record` loads and warms every car behind the gate and pins the pixel ratio | The gate's Enter buttons wait for all 13 |
+| Detail page overhaul (2026-10-08) | `docs/overhaul.md` overrides this PRD for the car detail page: motion vocabulary, listing layout and chapters, the entry "morph", the camera | Everything else here stands until the showroom redesign |
+| Clip-path exception (2026-10-08) | `clip-path: inset()` may animate, for image reveals only | Named exception to the motion non-negotiable; everything else still animates `transform`, `opacity` and `filter: blur()` (≤ 8 px) |
+| GSAP (2026-10-08) | GSAP with ScrollTrigger, SplitText and Flip joins the stack; Lenis stays | All plugins are free since 2025; version checked on npm at install (3.15.0) |
+| Satoshi exception (2026-10-08) | Satoshi (ITF Free Font License) allowed for the "figma" theme, self-hosted with `next/font/local` | Named exception to the OFL-only rule; licence kept in `app/fonts/satoshi`; credit on `/credits`. Staatliches is OFL. Two themes (`?theme=current` or `figma`) are built side by side until the user picks one |
 
 ## Sources
 
