@@ -1,8 +1,8 @@
 # Arcade UI overhaul: the car detail page
 
 Planning document for the overhaul, written with the user on 2026-10-08 and executed later by a separate session
-(Sonnet) one shot at a time. Status: **steps 1–5 approved; step 6 (the build list) written, awaiting review.** Nothing here has
-been built.
+(Sonnet) one shot at a time. Status: **built, shots 6a–6h** (2026-10-10); the per-shot status blocks in step 6 record how
+the build differs from the plan. "After the overhaul" is what comes next.
 
 How to use this file: each step below is reviewed by the user before the next is written. The build (step 6) runs
 shot by shot, and each shot stops at its gate for review. Where this file and `docs/PRD.md` disagree, this file wins
@@ -994,6 +994,106 @@ programmatically, not by ear).
   4.49 MB: ask the user before changing them).
 - **Gate:** every P0 and P1 fixed; the user compares the two themes and picks one (or keeps both for later); the
   user's final review.
+
+#### 6h status (2026-10-10)
+
+Run in a claude.ai cloud sandbox, not on the Windows laptop: Node 22, bundled Chromium only (no system Chrome), **no
+GPU** (SwiftShader WebGL, about 1 fps with a car on screen). `.cache/` is gitignored, so none of the earlier check
+scripts came with the clone; `detail-walk.mjs`, `detail-perf.mjs` and `js-size.mjs` were rewritten for the bundled
+Chromium (`CHROME_PATH` or `--chrome` for the laptop), plus new `a11y.mjs`, `a11y2.mjs`, `a11y3.mjs` and
+`a11y-tree.mjs`. `npm run check`'s smoke tests ran through a local config (bundled Chromium, 90 s expect timeout);
+`playwright.config.ts` is unchanged.
+
+Audit protocol, whole page, both themes: `frontend-design` self-critique; `/impeccable critique` (dual sub-agents:
+design review, and the detector, whose CLI scan came back clean and whose browser findings were all false positives
+or outside the page apart from the two folded in below); `/impeccable audit`; `web-design-guidelines`; `break-ui` with
+the real worst cases (Gallardo LP 560-4's wrapping name, the Lotus without an emblem, the eight six-photo cars, the
+$9.8k Peugeot and the $585k Jaguar, the Subaru's six-line summary); and an accessibility pass (the full Tab path both
+ways, focus rings on light and dark, the overlays, the accessibility tree read as one document).
+
+Fixed (each verified once, by walk screenshot or by polling the DOM):
+
+- **Placeholder labels on the live page:** "C: SPECS" and "SLIDESHOW" still printed on the two dark panels
+  (`Blocks.tsx` rendered every non-field block's label). No label text now.
+- **Keyboard path:** from the hero, Tab jumped straight into the price charts' dots about ten viewports away, with an
+  invisible focus ring (they weren't in 6d's inert list); at the slideshow stop "See all of this car's images" took
+  focus off screen. The page now follows focus (`onFocusIn` in `Detail.tsx`: the track scrolls the focused control's
+  block into view), and **6d's `inert` margin is gone**: once focus moved the page, the margin made "See all…"
+  unreachable by Tab, and it hid every far control from screen readers too. Tab now walks Showroom, Sound, Jump to
+  specs, the equipment button, the three charts, See all…, Inquire… and back, every stop on screen with its ring
+  (ink on light, paper on dark). Recorded in the PRD's decision log.
+- **Dialogs:** Tab from outside an auto-opened enquiry sidebar walked the page behind the scrim (it now enters the
+  dialog); closing either dialog dropped focus to `<body>` (it now returns to the opener); Escape on a focused chart
+  dot also left the page (it now stops at the chart).
+- **Screen-reader text:** the B headline, the about paragraph, the summary quote, "Our take" and "To keep in mind"
+  carried their text only in `aria-label` on a `<p>` over `aria-hidden` split pieces, which screen readers ignore: all
+  five read as empty paragraphs. Each now has a visually hidden copy beside the hidden pieces. The chart dots were
+  focusable inside `aria-hidden` SVGs (now labelled groups); the spec tables were `dt`/`dd` with no `dl`; "About the
+  car", "Listed car specifications" and a hidden "Price comparison" are now `h2`s; `stripSummary` moved next to the
+  strip it summarises; marketplace names read as slugs ("lot-twelve") in labels, tooltips and the hidden table.
+- **Contrast (figma theme):** light `.detail-label`, the comparison line and the enquiry disclaimer measured 4.03:1
+  (the 6g figure of 4.68:1 was against paper, not the beige card); now 75% ink (5.25:1 on the card). The dark pill
+  over light photo areas measured 4.2:1; now 72% ink (5.8:1 over white). Tick labels' floor 9 → 11 px.
+- **1024 × 640, the narrowest supported size:** the about paragraph ran off the bottom (now `height: auto`, as 6f did
+  for "Our take"); the price module overflowed its cards because the charts' heights were fixed px inside `--u`
+  cards, and the SVGs letterboxed against their HTML ticks at other widths. The charts now scale uniformly with their
+  card's width (`useChartScale`). The spec bar's mileage no longer truncates.
+- **Smaller visual bugs:** the price strip's verdict label overlapped the dots at 1920 and on the Peugeot and Jaguar
+  (bottom-anchored now); "See all…" ran 43u off the grid and off screen at frame 12; the Gallardo's spec row read
+  "Gallardo LP 560-4 · LP 560-4".
+- **The enquiry auto-open** could still fire after a wheel flick back from section E (only keyboard navigation
+  cancelled it); its delayed call now checks the scroll's target first. Not reproducible as a race in this sandbox
+  (at 1 fps the sidebar is already open before a scripted scroll back), so verified by reading only.
+
+Checks: typecheck, lint and build pass; 5 of 6 smoke tests passed in the full run and the sixth ("steps through its
+sections") hit its own hard-coded 15 s limit on the software renderer, then passed on its one re-run in 34.5 s (35.7 s
+at the 6h baseline). JS over the wire, compressed (`js-size.mjs`, new method, not comparable to 6d's): 449 KB before
+any interaction, 146 KB more on opening a listing.
+
+**Performance was not measured.** No frame-rate figure from a GPU-less sandbox means anything; `detail-perf.mjs` was
+rewritten and run here only to prove it works end to end (it did: the run completed and printed the renderer it
+measured, SwiftShader, at 1.4 fps; the script prints the GL renderer so a software run can't pass for a real one).
+The decisive run is the user's, on the laptop:
+`npm run build`, `npx next start -p 3200`, then `node .cache/detail-perf.mjs --chrome` at `--w 1440 --h 960` and
+`--w 1920 --h 1080`, each with `--theme figma` and `--theme current`.
+
+Decided by the user at the gate (2026-10-10), and built:
+
+- **Theme: figma.** Recorded in the PRD; `?theme=current` still works until removed.
+- **Non-modal auto-open.** The scroll-triggered enquiry opens without the scrim, without `aria-modal`, without taking
+  focus, with the page behind still live, and closes when the visitor scrolls away from E; the button still opens the
+  modal (scrim, focus into Name, Tab trapped), and pressing it while the non-modal panel is up adds the scrim without
+  re-sliding the panel. Verified by polling the dialog's state in both motion modes. Found on the way: under reduced
+  motion the sidebar's and the gallery's scrims faded to opacity 1 (a solid ink page), not 0.4; both fixed. The panel
+  (420 px) still covers the end of "A new home" at 1440.
+- **M7 depth drift** stays unwired for now (`depthDrift` in `lib/detail-fx.ts`).
+
+From the user's review after the gate (same day), and built:
+
+- **Hero spacing:** make · year sits exactly 24 px below the name's last line, and "Jump to specs" exactly 12 px below
+  make · year, for any name length (literal px, like the grid's margins). The old reposition measured the name's
+  box, which keeps the block's fixed 430u height, so a one-line name ("TR6") had several lines of empty space
+  under it; it now measures the last rendered line. A stray `position: relative` on `.detail-jump` (it overrode the
+  button's `absolute`) also put the button 2 px low at 1024 × 640; removed. Measured 24/12 px on the TR6, Porsche
+  and Gallardo at 1440, the Gallardo at 1024 × 640 and the MX-5 at 1920 × 1080.
+- **A2's swap timing:** the first swap waited for nothing and played as the slot entered on the right. It now starts
+  when A2's left edge reaches 25% of the screen's width and, at a quarter-viewport step, finishes as the slot
+  reaches the left edge, still fully on screen (polled: clip `inset(0)` at 100%, 50% and 25%, mid-wipe at 12.5%,
+  done at 0). The B photo and the slideshow slot keep step 2's cadence (half a viewport, starting on entry).
+
+Not fixed, for the user (critique findings that are design calls, or outside 6h):
+
+1. The non-modal enquiry panel covers the end of "A new home"; a slimmer panel would clear it.
+2. `?theme=current` can be removed now that figma is picked.
+3. The scatter and history have no axis labels, and `price-more`'s `justify-between` leaves a gap mid-card at 1440 and
+   1920; section D reads more dashboard than brochure.
+4. Six-photo cars repeat section A's photos in the slideshow (the known 6g trade-off).
+5. At 1920 × 1080 the larger car (6c's 16:9 trade-off) runs under "Scroll for more".
+6. P2/P3 polish: focus the first invalid field on submit; tooltips' `role="status"` regions mount with their content
+   (unreliably announced); the arrows in link labels are read aloud; form inputs have no `name`; the gallery's rounded
+   corners against the square-cornered system; the current theme uses no signal orange on the detail page.
+7. `DESIGN.md` and `.impeccable/design.json` were regenerated from the figma theme (`/impeccable document`, scan
+   mode, north star "The Stuttgart Brochure", chosen by the user).
 
 ### After the overhaul
 

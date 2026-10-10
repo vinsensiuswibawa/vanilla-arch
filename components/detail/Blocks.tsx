@@ -8,8 +8,8 @@ import { BLOCKS, styleOf, type Layer } from "@/lib/detail-layout";
  */
 export function Blocks({ layer }: { layer: Layer }) {
   return BLOCKS.filter((b) => b.layer === layer && !b.real).map((b) => (
-    <div key={b.id} aria-hidden className={`blk blk-${b.kind}`} data-block={b.id} data-tone={b.tone} style={styleOf(b)}>
-      {b.kind === "field" || b.kind === "surface" ? null : b.label}
-    </div>
+    // No label text: since 6g every remaining placeholder is a field, surface or panel, and the panels' labels
+    // ("C: specs", "Slideshow") were still printing on the live page (found by /impeccable critique, 6h).
+    <div key={b.id} aria-hidden className={`blk blk-${b.kind}`} data-block={b.id} data-tone={b.tone} style={styleOf(b)} />
   ));
 }

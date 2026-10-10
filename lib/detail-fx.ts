@@ -148,13 +148,15 @@ export function barExit(el: HTMLElement, q: number) {
 /** M11: a panel arrives from the right over a scrim. Returns `{ open, close }`, both built paused (GSAP
  * tweens and timelines autoplay on creation otherwise, which would run the open and close animations at the
  * same time the instant this factory is called) — the caller plays whichever one it needs. */
-export function sidebar(panel: Targets, scrim: Targets, reduced: boolean) {
-  const open = reduced
-    ? gsap.fromTo([panel, scrim], { opacity: 0 }, { opacity: 1, duration: reducedTokens.sidebarFade, ease: ease.fade, paused: true })
-    : gsap
-        .timeline({ paused: true })
-        .fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: effect.sidebar.duration, ease: ease.reveal })
-        .fromTo(scrim, { opacity: 0 }, { opacity: effect.sidebar.scrimOpacity, duration: effect.sidebar.scrimDuration, ease: ease.fade }, 0);
+export function sidebar(panel: Targets, scrim: Targets, reduced: boolean, withScrim = true) {
+  // `withScrim: false` is the enquiry's scroll-triggered, non-modal open (user, 6h): the panel alone, so the
+  // finale (frame 14) stays visible beside it. Under reduced motion the scrim fades to the same 0.4 as the full
+  // version (before 6h it faded to 1: a solid ink page behind the panel).
+  const open = gsap.timeline({ paused: true });
+  if (reduced) open.fromTo(panel, { opacity: 0 }, { opacity: 1, duration: reducedTokens.sidebarFade, ease: ease.fade });
+  else open.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: effect.sidebar.duration, ease: ease.reveal });
+  if (withScrim)
+    open.fromTo(scrim, { opacity: 0 }, { opacity: effect.sidebar.scrimOpacity, duration: reduced ? reducedTokens.sidebarFade : effect.sidebar.scrimDuration, ease: ease.fade }, 0);
   const close = reduced
     ? gsap.to([panel, scrim], { opacity: 0, duration: reducedTokens.sidebarFade, ease: ease.fade, paused: true })
     : gsap

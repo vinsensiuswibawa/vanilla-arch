@@ -11,13 +11,14 @@
 import { scaleLinear, scaleSqrt } from "d3-scale";
 import { line as shapeLine } from "d3-shape";
 import gsap from "gsap";
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { CarWithAssets } from "@/lib/cars";
 import {
   bucketStep,
   comparisonLine,
   getComparables,
   historyTakeaway,
+  marketplaceName,
   mileageTakeaway,
   priceBuckets,
   stripSummary,
@@ -36,6 +37,23 @@ const W = 564;
 const ease = "cubic-bezier(0.215, 0.61, 0.355, 1)"; // --ease-reveal
 
 const pct = (x: number) => `${(x / W) * 100}%`;
+
+/** The chart's rendered width over `W`: every px height and offset below is drawn at the 564 reference and
+ * multiplied by this, so the SVG (whose viewBox is W wide) scales uniformly with its card. Before 6h the heights
+ * were fixed px inside `--u`-sized cards: at 1024 x 640 the price module overflowed its card (the captions fell
+ * outside it), and wherever the width and height disagreed the SVG letterboxed, drifting off its HTML ticks. */
+function useChartScale() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [k, setK] = useState(1);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setK(el.clientWidth / W || 1));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return [ref, k] as const;
+}
 
 /** M1-timing mark reveal (step 5: "its marks fade and rise in (M1 timing)"): opacity and a small rise, not
  * the line-mask `yPercent` M1 uses for text (marks have no mask to rise out from). */
@@ -114,6 +132,9 @@ function PriceStrip({
       event.preventDefault();
       setActive(Math.max(0, i - 1));
     } else if (event.key === "Escape") {
+      // Escape leaves the chart, not the page (6h: it bubbled to Experience.tsx's window listener, which
+      // treats any Escape as "back to the showroom").
+      event.stopPropagation();
       setHoverMid(null);
       (event.currentTarget as SVGCircleElement).blur();
     }
@@ -121,11 +142,14 @@ function PriceStrip({
 
   const hovered = buckets.find((b) => b.mid === hoverMid);
   const lineY = 46;
+  const [box, k] = useChartScale();
 
   return (
-    <div className="relative" style={{ height: 96 }}>
-      <Rule top={lineY} />
-      <svg data-mark-group viewBox={`0 0 ${W} 72`} width="100%" height={72} style={{ display: "block", overflow: "visible" }} aria-hidden>
+    <div ref={box} className="relative" style={{ height: 96 * k }}>
+      <Rule top={lineY * k} />
+      {/* A labelled group, not aria-hidden (6h): the dots inside are focusable, and focusable content under
+          aria-hidden is announced as nothing. */}
+      <svg data-mark-group viewBox={`0 0 ${W} 72`} width="100%" height={72 * k} style={{ display: "block", overflow: "visible" }} role="group" aria-label="Comparable listings by price; arrow keys move between price groups">
         {buckets.map((b, i) => (
           <circle
             key={b.mid}
@@ -159,13 +183,16 @@ function PriceStrip({
         ))}
       </svg>
       {ticks.map((t) => (
-        // 70%, not 55%: same AA-contrast fix as `Caption` — small mono numerals need the same floor.
-        <span key={t} className="absolute font-mono" style={{ left: pct(x(t)), top: 58, transform: "translateX(-50%)", fontSize: "max(9px, calc(10 * var(--u)))", color: "color-mix(in srgb, var(--color-ink) 70%, transparent)" }}>
+        // 70%, not 55%: same AA-contrast fix as `Caption` — small mono numerals need the same floor. 11px floor
+        // (6h): at 9–10px these were the page's smallest text.
+        <span key={t} className="absolute font-mono" style={{ left: pct(x(t)), top: 58 * k, transform: "translateX(-50%)", fontSize: "max(11px, calc(11 * var(--u)))", color: "color-mix(in srgb, var(--color-ink) 70%, transparent)" }}>
           {formatPrice(t)}
         </span>
       ))}
-      {/* The car's own label, above its ring. */}
-      <div data-mark className="absolute text-center" style={{ left: pct(x(price)), top: 0, transform: "translateX(-50%)", whiteSpace: "nowrap" }}>
+      {/* The car's own label, above its ring: anchored by its bottom, clear of the largest dot (r 13), so a
+          larger label grows upward instead of into the dots (6h: it overlapped them at 1920 and on the Peugeot
+          and Jaguar). */}
+      <div data-mark className="absolute text-center" style={{ left: pct(x(price)), bottom: (96 - lineY + 13 + 3) * k, transform: "translateX(-50%)", whiteSpace: "nowrap" }}>
         <p className="font-mono" style={{ fontSize: "max(11px, calc(13 * var(--u)))" }}>{formatPrice(price)}</p>
         <p className="detail-label" style={{ letterSpacing: "var(--label-tracking)" }}>{VERDICT_LABEL[verdict]}</p>
       </div>
@@ -175,7 +202,7 @@ function PriceStrip({
           className="absolute z-10 rounded px-3 py-2 text-left"
           style={{
             left: pct(x(hovered.mid)),
-            top: 58 + 14,
+            top: (58 + 14) * k,
             transform: `translateX(${x(hovered.mid) < W / 2 ? "0" : "-100%"})`,
             background: "var(--color-paper)",
             boxShadow: "0 2px 12px color-mix(in srgb, var(--color-ink) 18%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 16%, transparent)",
@@ -225,17 +252,21 @@ function PriceScatter({ price, mileageMi, listings }: { price: number; mileageMi
       setActive(Math.max(0, i - 1));
       refs.current[Math.max(0, i - 1)]?.focus();
     } else if (event.key === "Escape") {
+      // Escape leaves the chart, not the page (6h: it bubbled to Experience.tsx's window listener, which
+      // treats any Escape as "back to the showroom").
+      event.stopPropagation();
       setHoverIdx(null);
       (event.currentTarget as SVGCircleElement).blur();
     }
   };
 
   const hovered = hoverIdx !== null ? listings[hoverIdx] : null;
+  const [box, k] = useChartScale();
 
   return (
-    <div className="relative" style={{ height: H + 18 }}>
-      <Rule top={H} />
-      <svg data-mark-group viewBox={`0 0 ${W} ${H}`} width="100%" height={H} style={{ display: "block", overflow: "visible" }} aria-hidden>
+    <div ref={box} className="relative" style={{ height: (H + 18) * k }}>
+      <Rule top={H * k} />
+      <svg data-mark-group viewBox={`0 0 ${W} ${H}`} width="100%" height={H * k} style={{ display: "block", overflow: "visible" }} role="group" aria-label="Comparable listings by mileage and price; arrow keys move between listings">
         {trendPath && <path data-mark d={trendPath} fill="none" stroke="color-mix(in srgb, var(--color-ink) 45%, transparent)" strokeWidth={1.5} strokeDasharray="4 4" />}
         {listings.map((l, i) => (
           <circle
@@ -260,7 +291,7 @@ function PriceScatter({ price, mileageMi, listings }: { price: number; mileageMi
             onBlur={() => setHoverIdx(null)}
             onKeyDown={(event) => move(event, i)}
             role="img"
-            aria-label={`${l.marketplace}, ${l.year}, ${formatMiles(l.mileageMi)}, ${formatPrice(l.priceUsd)}`}
+            aria-label={`${marketplaceName(l.marketplace)}, ${l.year}, ${formatMiles(l.mileageMi)}, ${formatPrice(l.priceUsd)}`}
           />
         ))}
         <circle data-mark cx={x(mileageMi)} cy={y(price)} r={8} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center" }} />
@@ -271,7 +302,7 @@ function PriceScatter({ price, mileageMi, listings }: { price: number; mileageMi
           className="absolute z-10 rounded px-3 py-2 text-left"
           style={{
             left: pct(x(hovered.mileageMi)),
-            top: y(hovered.priceUsd) - 8,
+            top: (y(hovered.priceUsd) - 8) * k,
             transform: `translate(${x(hovered.mileageMi) < W / 2 ? "12px" : "calc(-100% - 12px)"}, -100%)`,
             background: "var(--color-paper)",
             boxShadow: "0 2px 12px color-mix(in srgb, var(--color-ink) 18%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 16%, transparent)",
@@ -280,7 +311,7 @@ function PriceScatter({ price, mileageMi, listings }: { price: number; mileageMi
             minWidth: 150,
           }}
         >
-          <p>{hovered.marketplace}</p>
+          <p>{marketplaceName(hovered.marketplace)}</p>
           <p className="font-mono">
             {hovered.year} · {formatMiles(hovered.mileageMi)} · {formatPrice(hovered.priceUsd)}
           </p>
@@ -317,20 +348,24 @@ function PriceHistory({ price, history }: { price: number; history: HistoryPoint
       setActive(Math.max(0, i - 1));
       refs.current[Math.max(0, i - 1)]?.focus();
     } else if (event.key === "Escape") {
+      // Escape leaves the chart, not the page (6h: it bubbled to Experience.tsx's window listener, which
+      // treats any Escape as "back to the showroom").
+      event.stopPropagation();
       setHoverIdx(null);
       (event.currentTarget as SVGCircleElement).blur();
     }
   };
 
   const hovered = hoverIdx !== null ? history[hoverIdx] : null;
+  const [box, k] = useChartScale();
 
   return (
-    <div className="relative" style={{ height: H + 4 }}>
-      <Rule top={H} />
+    <div ref={box} className="relative" style={{ height: (H + 4) * k }}>
+      <Rule top={H * k} />
       {/* The line draws along its length via the clip geometry's own `scaleX` (step 5: "tied to scaleX of a
           clip, which is an allowed transform") — the clip rect scales, the path inside it never does, so the
           line reveals left to right without distorting. */}
-      <svg data-mark-group viewBox={`0 0 ${W} ${H}`} width="100%" height={H} style={{ display: "block", overflow: "visible" }} aria-hidden>
+      <svg data-mark-group viewBox={`0 0 ${W} ${H}`} width="100%" height={H * k} style={{ display: "block", overflow: "visible" }} role="group" aria-label="Median asking price by quarter; arrow keys move between quarters">
         <clipPath id={`${uid}-clip`}>
           <rect data-rule x={0} y={0} width={W} height={H} style={{ transformBox: "fill-box", transformOrigin: "left" }} />
         </clipPath>
@@ -368,7 +403,7 @@ function PriceHistory({ price, history }: { price: number; history: HistoryPoint
           className="absolute z-10 rounded px-3 py-2 text-left"
           style={{
             left: pct(x(history.indexOf(hovered))),
-            top: y(hovered.medianUsd) - 8,
+            top: (y(hovered.medianUsd) - 8) * k,
             transform: `translate(${x(history.indexOf(hovered)) < W / 2 ? "8px" : "calc(-100% - 8px)"}, -100%)`,
             background: "var(--color-paper)",
             boxShadow: "0 2px 12px color-mix(in srgb, var(--color-ink) 18%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 16%, transparent)",
@@ -409,7 +444,7 @@ function DataTable({ price, listings, history }: { price: number; listings: List
           </tr>
           {listings.map((l, i) => (
             <tr key={i}>
-              <td>{l.marketplace}</td>
+              <td>{marketplaceName(l.marketplace)}</td>
               <td>{l.year}</td>
               <td>{formatMiles(l.mileageMi)}</td>
               <td>{formatPrice(l.priceUsd)}</td>
@@ -445,16 +480,20 @@ export function PriceCard({ car, hoverMid, setHoverMid }: { car: CarWithAssets; 
   const { listings, history } = getComparables(car.slug);
   return (
     <div data-price-card className="flex h-full flex-col">
+      <h2 className="sr-only">Price comparison</h2>
       <p data-mark className="font-mono" style={{ fontSize: "var(--type-price)", lineHeight: 1 }}>
         {formatPrice(car.priceUsd)}
       </p>
-      <p data-mark className="mt-2" style={{ fontSize: "max(12px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 65%, transparent)" }}>
+      {/* 75%, not 65% (6h): 65% measured 4.03:1 on the figma theme's card, under AA. */}
+      <p data-mark className="mt-2" style={{ fontSize: "max(12px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 75%, transparent)" }}>
         {comparisonLine(listings)}
       </p>
       <div className="mt-4">
         <PriceStrip price={car.priceUsd} listings={listings} hoverMid={hoverMid} setHoverMid={setHoverMid} />
       </div>
       <Caption>Larger dots mean more listings at that price. Illustrative data.</Caption>
+      {/* Read right after the strip it summarises (6h: it sat at the end of the further datasets). */}
+      <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
       <DataTable price={car.priceUsd} listings={listings} history={history} />
     </div>
   );
@@ -493,7 +532,6 @@ export function PriceMore({ car, hoverMid, setHoverMid }: { car: CarWithAssets; 
         </div>
         <Caption>Median of {listings.length} comparable listings&rsquo; asking price by quarter. Illustrative data.</Caption>
       </section>
-      <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
     </div>
   );
 }

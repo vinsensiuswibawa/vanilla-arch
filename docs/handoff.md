@@ -1,69 +1,57 @@
-# Session handoff (2026-10-08)
+# Session handoff (2026-10-10, after shot 6h)
 
-Start the next session by reading this file, then `docs/lineup.md` (lineup, rejections, pipeline) and
-`docs/shots/shot-1.md`. Nothing is committed since `3be503b`: Shot 0, Shot 1, the lab and the 13-car integration are
-all uncommitted. Don't deploy. Commit only when asked.
+Start the next session by reading this file, then `docs/overhaul.md` (the detail page's plan and the 6c–6h status
+blocks), `CLAUDE.md` and `AGENTS.md`. The working rule stands (user, 2026-10-08): before touching anything, state what
+you are going to do and wait for a go; verify once, then report; no build-measure-tweak loops.
 
-**Next work: the UI overhaul of the car detail page.** The full plan is in `docs/overhaul.md` (decisions, research,
-motion, layout, camera, content, and the ordered shot list in step 6), with the visual reference in
-`docs/storyboard/README.md` and the approved copy in `docs/overhaul-copy.md`. Start at shot 6a, one shot per session,
-and stop at each gate.
-
-**Working rule (user, 2026-10-08):** before touching anything, state what you are going to do and wait for a go.
-Avoid repeated build-and-measure loops; the previous session spent most of its budget on them.
+**The detail page overhaul is complete** (shots 6a–6h). Everything is on GitHub,
+`vinsensiuswibawa/vanilla-arch`. Shot 6h's work (fixes from the full audit and accessibility pass, document updates)
+is in the working tree until the user asks for a commit.
 
 ## Where things stand
 
-- **The lineup is 13 cars and is integrated into the showroom.** The user closed the two open slots and ships 13.
-  `content/lineup.json` drives the pipeline; `lib/cars.ts` holds the 13 listings (real specs, fiction listings,
-  paint and location matched to each photo set).
-- **Pipeline:** `npm run models:fetch` (Sketchfab to `raw/<slug>.glb`), `npm run models` (`scripts/models/optimize.mjs`
-  to `public/models/<slug>.glb` hero and `<slug>.lod1.glb`, material repairs baked in), `--lab` adds the 110k
-  comparison file to `public/lab`. `content/models.json` and `scripts/models/lab.mjs` are gone.
-- **One look everywhere:** `components/three/StudioLook.tsx` (HDRI `public/hdri/studio_small_09_1k.hdr`, dark floor,
-  softboxes, one shared PMREM per renderer, key light), `components/three/BakedShadow.tsx`, listing paint from
-  `lib/materials.ts`, ACES in the showroom, studio and lab.
-- **Photos:** 87 in `public/photos`, credits in `content/photos.json`. `scripts/photos/fetch.mjs` now also takes
-  direct Openverse/Flickr picks (`{ url, credit, license, licenseUrl, sourceUrl }`). Thin sets: Peugeot 2,
-  Porsche 3, Datsun 3.
-- **Emblems:** 12 in `content/emblems.json` / `public/emblems`. The Lotus has none (no freely licensed Lotus Cars
-  mark); `emblem` is optional and the chrome skips it. The Triumph mark is the motorcycle-era wordmark.
-- **Stills:** all 13 regenerated in `public/stills` (with a dev server already running, use
-  `STUDIO_URL=http://localhost:3000 node scripts/stills.mjs`; Next 16 refuses a second dev server).
-- **Record mode:** `/?record` mounts and warms all 13 cars behind the gate, holds the Enter buttons until all are
-  loaded (about 7–9 s on the laptop), and pins the pixel ratio (no PerformanceMonitor switches mid-take).
-- **Measured (production build, Intel Arc 130T, D3D11, hero files):** 60.0 fps average across the 13-car walk, p99
-  frame 16.9 ms at pixel ratio 1 and 2, no frames over 50 ms in either direction. Script: `.cache/record-run.mjs
-  --headed` against `next start -p 3200`. Note: Playwright screenshots stall the page ~100 ms; never time a walk
-  that takes screenshots.
-- **Fixes this session:** `runtime.veil` was sized for 9 cars (now `CAR_COUNT`); the AudioContext is built while
-  the gate idles (`prepare()` in `lib/audio.ts`), which removed a ~200 ms stall on Enter.
-- **Checks:** `npm run check` passes (typecheck, lint, build, 5/5 smoke tests updated for the 13-car order).
+- **The detail page** (`components/detail/`, `lib/detail*.ts`, `lib/choreography.ts`, `lib/comparables.ts`): hero,
+  sections A–E, the camera's four poses and three transitions, the price charts, slideshow, gallery placeholder and
+  enquiry sidebar, all with real content for the 13 cars. Default theme `figma`; `?theme=current` opens the other.
+- **Theme:** the user picked **figma** at the 6h gate. `?theme=current` still works until someone removes it.
+  `DESIGN.md` and `.impeccable/design.json` were regenerated from it in 6h.
+- **Keyboard:** the page follows focus (6h). Tab walks every control from the hero to the enquiry and back; arrows,
+  Page Up/Down, Home and End step by section; Escape leaves (or closes an open overlay first).
+- **Checks:** `npm run check` (typecheck, lint, build, 6 smoke tests). Detail-page scripts in `.cache/` (gitignored,
+  so they don't travel with a fresh clone; 6h rewrote them for the bundled Chromium, `CHROME_PATH` overrides it):
+  `detail-walk.mjs` (14 storyboard positions, `--theme`, `--w/--h`, `--slug`, `--at`), `detail-perf.mjs` (production
+  build on port 3200, record mode, steady wheel, rAF frame times; `--chrome` uses the system Chrome on the laptop),
+  `js-size.mjs`, `a11y.mjs`/`a11y2.mjs`/`a11y3.mjs`/`a11y-tree.mjs` (keyboard path, focus rings, overlays, tree).
+- **Performance:** last trusted numbers are from the Intel Arc laptop (6g: 60.0 fps, one frame over 50 ms). Shot 6h
+  ran in a cloud sandbox with no GPU (software WebGL, about 1 fps), where no frame-rate figure means anything: run
+  `.cache/detail-perf.mjs --chrome` at 1440 and 1920, both themes, on the laptop for the final measurement.
 
 ## Open, for the user
 
-1. **Budgets.** CLAUDE.md and the PRD still say ≤ 120k triangles and ≤ 2.5 MB per car. The hero files ship up to
-   400k and 4.49 MB (Datsun); 30 MB in total. Decide whether to rewrite the caps to the hero figures.
-2. **Gate lift** still drops 2–4 frames (50–117 ms) during its 1200 ms fade with `filter: blur(8px)`. Removing or
-   shortening the blur is a motion-spec change.
-3. **`/review-animations`** on Shot 1 (user-invoked gate).
-4. **Claude Doc sync:** the PRD lineup table, materials, lighting and decision log were edited locally; mirror them to
-   the canonical Claude Doc.
-5. **UI shell overhaul** and the veil question (memory: `project-ui-shell-overhaul.md`).
+1. **`DESIGN.md`** was regenerated in 6h from the figma theme ("The Stuttgart Brochure"); review it.
+2. **`/review-animations`** on 6h's motion changes (the non-modal enquiry open, focus-follow scrolling, A2's later
+   swap; user-invoked).
+3. **The non-modal enquiry panel** still covers the end of "A new home" at 1440 (420 px wide); a slimmer panel would
+   clear it.
+4. **Remove `?theme=current`** (tokens, Bodoni and Host Grotesk loading) now that figma is picked, or keep it.
+5. **M7 depth drift** (left for later by the user) (behind-layer type at 0.9× the page's speed) is in `lib/detail-fx.ts` but was never wired.
+6. **Section D's charts** have no axis labels on the scatter and history; the price module reads more dashboard than
+   brochure (critique, 6h).
+7. **What counts toward the 350 KB "initial" JS budget** (6d), and whether `content/shapes.json` (236 KB raw) slims.
+8. **Commit the `.cache/` check scripts** somewhere tracked (e.g. `scripts/detail/`) so they travel with the repo.
+9. **Claude Doc sync:** mirror the PRD's 2026-10-10 decision-log rows and budget note to the canonical Claude Doc.
 
-## Still to build (Shot 2/3 scope)
+## Next work ("After the overhaul" in `docs/overhaul.md`)
 
-- `/credits`: every CC BY model and photo, the CC BY-SA note for the Datsun, the Gallardo's extra credits (Velstyde,
-  young-chief), Poly Haven, emblems. The user said to ignore licence problems for now.
-- Favicon (the one remaining 404).
-- `lineup.json` `colors` are lab swatches only; the listing paint comes from `lib/cars.ts`.
+- The showroom (carousel) redesign under the same principles, passing a `CarHandoff` from whatever its camera becomes.
+- The equipment and history overlay, the full gallery and `/credits` designed properly.
+- `PRODUCT.md` still describes the original nine-car lineup and an eight-chapter listing; refresh it with
+  `/impeccable init` (or by hand) before the showroom redesign.
 
 ## Environment notes
 
-- The Bash tool fails with "Stream closed"; use PowerShell plus Write and Edit. Write scripts to `.cache/*.mjs`
-  rather than `node -e` with complex quoting. PowerShell writes UTF-8 BOMs; write JSON from node.
-- Commons rate-limits hard (HTTP 429 for minutes). `scripts/photos/commons.mjs` now batches 20 titles and retries 8
-  times; Openverse (`scripts/photos/search.mjs`) is the fallback.
-- A dev server may already be running on :3000 from an earlier session; reuse it.
-- Lab: `/lab/<slug>` defaults to the shipping file; `lod=budget|phone|raw`, `look`, `tone`, `view`, `paint`, `still=1`,
-  `bg=none`. HDRI alternatives stay in `public/lab/hdri`.
+- Windows laptop: PowerShell plus the Write and Edit tools (the Bash tool fails there); PowerShell writes UTF-8 BOMs,
+  so write JSON from Node. Start the dev server in its own window; Next 16 refuses a second dev server per folder.
+- Cloud sandbox (claude.ai/code): bundled Chromium only, no GPU. `playwright.config.ts` uses `channel: "chrome"`, so
+  run the smoke tests through a local config (6h used `.cache/playwright.local.config.ts`: bundled Chromium, 90 s
+  expect timeout). The Impeccable launcher lost its exec bit in the clone: run it as `sh .claude/skills/impeccable/scripts/impeccable`.

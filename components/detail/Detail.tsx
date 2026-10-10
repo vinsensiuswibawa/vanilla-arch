@@ -34,12 +34,11 @@ const SHAPES = shapes as unknown as Record<string, ShapeData>;
 const PILL = { x: 24 + 56, y: 24 + 18 };
 /** The spec bar leaves over the end of section A and the start of T1: a scroll range, in u, around T1's start. */
 const BAR_EXIT = { before: 487, after: 146 };
-/** Control blocks that can be focused: the only ones made `inert` while they sit far down the track. */
-const CONTROL_IDS = ["jump", "c-overlay", "s-all", "inquire"];
-/** The hero name's margin to make/year, and make/year's own size and margin to "Jump to specs" (module
- * scope so both the render and the layout effect's post-measurement reposition, below, share one number).
- * 24u (user, 2026-10-10): the site's one blanket margin value, used everywhere else too. */
-const NAME_GAP = 24;
+/** Make/year sits exactly 24px below the name's last line of text, and "Jump to specs" exactly 12px below
+ * make/year (user, after 6h), at any width and for any name length. Literal px, like the grid's margins, not
+ * `--u`. Module scope so the render's first-paint estimate and the layout effect's measured reposition share them. */
+const MAKE_GAP_PX = 24;
+const JUMP_GAP_PX = 12;
 const MAKE_SIZE = 24;
 const JUMP_SIZE = 12;
 const EMBLEM_WIDTH = 140;
@@ -62,7 +61,8 @@ function photoGroup(car: CarWithAssets, start: number, count: number): Photo[] {
  * matching the bottom bar's price. */
 const specRowsLeft = (car: CarWithAssets): [string, string, boolean?][] => [
   ["Make", car.make],
-  ["Model", `${car.model} · ${car.chassis}`],
+  // The chassis only when the model name doesn't already carry it ("Gallardo LP 560-4 · LP 560-4", 6h).
+  ["Model", car.model.includes(car.chassis) ? car.model : `${car.model} · ${car.chassis}`],
   ["Mileage", `${formatMiles(car.mileageMi)} · ${formatKilometres(car.mileageMi)}`, true],
   ["Location", car.location],
   ["Body style", car.bodyStyle],
@@ -207,16 +207,16 @@ function Page({ car }: { car: CarWithAssets }) {
   const a1Inner = useRef<HTMLDivElement>(null);
   const a3Frame = useRef<HTMLDivElement>(null);
   const a3Inner = useRef<HTMLDivElement>(null);
-  const aboutLabel = useRef<HTMLParagraphElement>(null);
+  const aboutLabel = useRef<HTMLHeadingElement>(null);
   const headline = useRef<HTMLParagraphElement>(null);
   const headlineChars = useRef<HTMLSpanElement[][]>([]);
   const aboutBodyP = useRef<HTMLParagraphElement>(null);
   const aboutBodyInner = useRef<HTMLSpanElement>(null);
   const cBandFrame = useRef<HTMLDivElement>(null);
   const cBandInner = useRef<HTMLDivElement>(null);
-  const cLabel = useRef<HTMLParagraphElement>(null);
-  const tableA = useRef<HTMLDivElement>(null);
-  const tableB = useRef<HTMLDivElement>(null);
+  const cLabel = useRef<HTMLHeadingElement>(null);
+  const tableA = useRef<HTMLDListElement>(null);
+  const tableB = useRef<HTMLDListElement>(null);
   const cOverlay = useRef<HTMLButtonElement>(null);
   const summaryRef = useRef<HTMLParagraphElement>(null);
   const cTake = useRef<HTMLDivElement>(null);
@@ -239,7 +239,9 @@ function Page({ car }: { car: CarWithAssets }) {
   const [hoverMid, setHoverMid] = useState<number | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
-  const [enquiryAutoFocus, setEnquiryAutoFocus] = useState(false);
+  const [enquiryModal, setEnquiryModal] = useState(false);
+  /** The scroll-triggered, non-modal enquiry is open: the tick closes it once the visitor heads away from E. */
+  const enquiryAuto = useRef(false);
 
   useLayoutEffect(() => {
     if (phase === "showroom") heading.current?.focus({ preventScroll: true });
@@ -332,9 +334,19 @@ function Page({ car }: { car: CarWithAssets }) {
       let widest = defaultWidth;
       for (const word of words) widest = Math.max(widest, word.scrollWidth);
       nameEl.style.width = `${widest}px`;
-      const nameBottomPx = nameEl.getBoundingClientRect().bottom - rootEl.getBoundingClientRect().top;
-      if (make.current) make.current.style.top = `${nameBottomPx + NAME_GAP * u}px`;
-      if (jumpBtn.current) jumpBtn.current.style.top = `${nameBottomPx + (NAME_GAP + MAKE_SIZE + NAME_GAP) * u}px`;
+      // The last line's bottom, not the h2's: the h2 keeps its block's fixed 430u height, so measuring the box
+      // left a one-line name ("TR6") with a gap of several lines below it (user, after 6h).
+      // Measured in viewport px, then written relative to each element's own positioned container: make/year
+      // sits in the behind layer and "Jump to specs" in the front one, which can sit a couple of px apart (2 px
+      // at 1024 x 640). Heights from the unrounded rect, not `offsetHeight`.
+      const lines = nameEl.querySelectorAll<HTMLElement>(":scope > span");
+      const textBottom = (lines[lines.length - 1] ?? nameEl).getBoundingClientRect().bottom;
+      const top = (el: HTMLElement) => (el.offsetParent as HTMLElement | null)?.getBoundingClientRect().top ?? 0;
+      const makeEl = make.current;
+      if (!makeEl) return;
+      makeEl.style.top = `${textBottom + MAKE_GAP_PX - top(makeEl)}px`;
+      const makeBottom = top(makeEl) + parseFloat(makeEl.style.top) + makeEl.getBoundingClientRect().height;
+      if (jumpBtn.current) jumpBtn.current.style.top = `${makeBottom + JUMP_GAP_PX - top(jumpBtn.current)}px`;
     };
     layout();
 
@@ -486,13 +498,14 @@ function Page({ car }: { car: CarWithAssets }) {
       // told it to close (found by the smoke test: "Jump to specs" became unclickable after Home).
       setGalleryOpen(false);
       setEnquiryOpen(false);
-      setEnquiryAutoFocus(false);
+      setEnquiryModal(false);
       // Also cancels the sidebar's pending auto-open (the `gsap.delayedCall` scheduled after M9 fires, below):
       // closing an overlay that isn't open yet is a no-op, so without this a visitor who reached section E,
       // then navigated away inside that ~2 s window, would see the sidebar pop open later at a completely
       // different section — reproduced by the smoke test once the auto-open's own delay made this window real.
       for (const t of delayedCalls) t.kill();
       delayedCalls.length = 0;
+      enquiryAuto.current = false;
       lenis.scrollTo(to, reduced ? { immediate: true, force: true } : { duration: scrollFeel.jump, easing: revealOut, force: true });
     };
     jump.current = () => scrollTo(stops[STOPS.findIndex((stop) => stop.id === "specs")]);
@@ -533,7 +546,7 @@ function Page({ car }: { car: CarWithAssets }) {
 
     revealOnce(cLabel.current, effect.lineRise.trigger, () => lineRise(cLabel.current!, reduced));
 
-    const wireSpecTable = (tableEl: HTMLDivElement | null, extra: Element[] = []) => {
+    const wireSpecTable = (tableEl: HTMLElement | null, extra: Element[] = []) => {
       if (!tableEl) return;
       const texts = Array.from(tableEl.querySelectorAll<HTMLElement>("[data-spec-text]"));
       const rules = Array.from(tableEl.querySelectorAll<HTMLElement>("[data-spec-rule]"));
@@ -635,8 +648,17 @@ function Page({ car }: { car: CarWithAssets }) {
     // the sidebar covers it (the same bug above, just worse at the very end of the track, where there's no
     // further scroll distance left to space them apart). A fixed delay after the text starts revealing does.
     revealOnce(fieldETrigger.current, 0.1, () => {
-      // auto-open: no autoFocus (see Enquiry.tsx's `autoFocus` prop and the comment on its effect)
-      delayedCalls.push(gsap.delayedCall(reduced ? 0.3 : 2, () => setEnquiryOpen(true)));
+      // The scroll-triggered open is non-modal: no scrim, no focus move (see Enquiry.tsx's `modal` prop).
+      // Only if the visitor is still headed for section E when it fires (the scroll's target, not the lagged
+      // track): `scrollTo` cancels the call for keyboard navigation, but a wheel flick back within the 2 s
+      // still opened it over section D (6h).
+      delayedCalls.push(
+        gsap.delayedCall(reduced ? 0.3 : 2, () => {
+          if (lenis.targetScroll < travel - 0.25 * rootEl.clientWidth) return;
+          enquiryAuto.current = true;
+          setEnquiryOpen(true);
+        }),
+      );
     });
 
     // The leave fade (step 2): the page and the canvas (showing only this car, since the showroom's own
@@ -654,8 +676,6 @@ function Page({ car }: { car: CarWithAssets }) {
     let section = "";
     let progressWritten = -1;
     let barWritten = -1;
-    const controlEls = CONTROL_IDS.map(block).map((b) => ({ b, el: rootEl.querySelector<HTMLElement>(`[data-block="${b.id}"]`) }));
-    const MARGIN = 2000; // u: a control becomes tabbable about a viewport and a bit before it arrives
     const tick = (time: number) => {
       const dt = Math.min(0.05, Math.max(0, time - last));
       last = time;
@@ -669,11 +689,10 @@ function Page({ car }: { car: CarWithAssets }) {
       let at = 0;
       for (let i = 0; i < stops.length; i++) if (x >= stops[i] - 4) at = i;
       if (STOPS[at].id !== section) rootEl.dataset.section = section = STOPS[at].id;
-
-      for (const { b, el } of controlEls) {
-        if (!el) continue;
-        const near = x + MARGIN >= b.x * u && x - MARGIN <= (b.x + b.w) * u;
-        if (el.inert === near) el.inert = !near;
+      // The non-modal enquiry doesn't block the wheel, so it leaves when the visitor scrolls away from E.
+      if (enquiryAuto.current && lenis.targetScroll < travel - 0.5 * detail.viewport.w) {
+        enquiryAuto.current = false;
+        setEnquiryOpen(false);
       }
 
       const written = Math.round((x / travel) * 10_000);
@@ -691,17 +710,21 @@ function Page({ car }: { car: CarWithAssets }) {
       }
       // M3: the summary brightens from its left edge at 90% of the viewport to its centre at 45%.
       if (!reduced && summaryChars.length) scrollText(summaryChars, clamp01((x - summaryStart) / (summaryEnd - summaryStart)));
-      // M5: a swap slot's cadence is one step per half-viewport of travel while it's on screen (docs/overhaul.md
-      // step 2), expressed as a float index into its timelines; each timeline's own progress is that index
-      // clamped to its [0, 1] step, so scrolling back unwinds exactly the same path.
-      const stepSwap = (swap: typeof a2Swap) => {
+      // M5: a swap slot's cadence is one step per `step` of the viewport's width of travel (half, docs/overhaul.md
+      // step 2), starting once the slot's left edge reaches `start` of the viewport's width (1: as it enters),
+      // expressed as a float index into its timelines; each timeline's own progress is that index clamped to its
+      // [0, 1] step, so scrolling back unwinds exactly the same path.
+      const stepSwap = (swap: typeof a2Swap, start = 1, step = 0.5) => {
         if (!swap.timelines.length) return;
         const vw = detail.viewport.w;
-        const traveled = vw - swap.left + x;
-        const idx = Math.min(swap.timelines.length, Math.max(0, traveled / (vw / 2)));
+        const traveled = start * vw - (swap.left - x);
+        const idx = Math.min(swap.timelines.length, Math.max(0, traveled / (step * vw)));
         for (let i = 0; i < swap.timelines.length; i++) swap.timelines[i].progress(clamp01(idx - i));
       };
-      stepSwap(a2Swap);
+      // A2 waits until its left edge is a quarter of the way across the screen, so the first photo can be seen
+      // before it wipes away (user, after 6h: it was swapping as it entered); a quarter-viewport step then
+      // finishes the first swap as the slot reaches the left edge, still fully on screen.
+      stepSwap(a2Swap, 0.25, 0.25);
       stepSwap(bPhotoSwap);
       stepSwap(sSwap);
       // M6: the photo drifts against the scroll while it crosses the viewport; off under reduced motion.
@@ -749,6 +772,25 @@ function Page({ car }: { car: CarWithAssets }) {
     };
     window.addEventListener("keydown", onKey);
 
+    // The page follows focus: Tab walks every control from the hero to the enquiry in DOM order, and the browser
+    // can't scroll a transformed track to an off-screen one, so this brings the focused control's block into
+    // view with the 24u margin (WCAG 2.4.11). It replaces 6d's `inert` margin (6h): that hid far controls from
+    // Tab and from screen readers, still let near-but-off-screen ones take an invisible focus ring (the chart
+    // dots ten viewports out, "See all…" at x ≈ 1926 px), and, once focus moved the page, could make the very
+    // next control inert, so "See all of this car's images" became unreachable by Tab.
+    const onFocusIn = (event: FocusEvent) => {
+      const target = event.target as Element;
+      const owner = frontEl.contains(target) ? target.closest<HTMLElement>("[data-block]") : null;
+      if (!owner?.dataset.block) return;
+      const r = target.getBoundingClientRect();
+      const vw = rootEl.clientWidth;
+      if (r.left >= 0 && r.right <= vw) return;
+      const b = block(owner.dataset.block);
+      const to = r.right > vw ? Math.min(travel, (b.x + b.w + 24) * u - vw) : Math.max(0, (b.x - 24) * u);
+      lenis.scrollTo(to, reduced ? { immediate: true, force: true } : { duration: scrollFeel.jump, easing: revealOut, force: true });
+    };
+    rootEl.addEventListener("focusin", onFocusIn);
+
     // Drag turns the car about the vertical axis in the hero only; it hands back to the turntable after 1.2 s.
     let dragging = false;
     let lastX = 0;
@@ -786,6 +828,7 @@ function Page({ car }: { car: CarWithAssets }) {
       lenis.destroy();
       resize.disconnect();
       window.removeEventListener("keydown", onKey);
+      rootEl.removeEventListener("focusin", onFocusIn);
       dragEl?.removeEventListener("pointerdown", onDown);
       dragEl?.removeEventListener("pointermove", onMove);
       dragEl?.removeEventListener("pointerup", onUp);
@@ -836,21 +879,18 @@ function Page({ car }: { car: CarWithAssets }) {
   const sTallPhoto = photoGroup(car, dStart, 1)[0] as Photo | undefined;
   const sSwapPhotos = photoGroup(car, dStart + 1, swapCount);
   const sThirdPhoto = photoGroup(car, dStart + 1 + swapCount, 1)[0] as Photo | undefined;
-  // Make/year and "Jump to specs" follow the name's actual line count, with a 12u margin between each
-  // block (user, 2026-10-09), so a one-line name (NSX, M5...) doesn't leave the gap a fixed y would for
-  // the storyboard's three-line reference ("911 / TURBO / COUPE"). Name: 160px at 0.95 leading (--display-
-  // leading) = 152u/line. Make/year and jump set `lineHeight: 1` so their own box height is just their
-  // font size, keeping the 12u gaps exact rather than at the mercy of each font's default leading.
-  // This is the first-paint estimate only: the layout effect measures the name's actual rendered height
-  // (after any shrink-to-fit) and repositions make/year and jump from that (user, 2026-10-10: a name whose
-  // line wrapped an extra time, e.g. the Gallardo's "LP 560-4", left this estimate too short).
+  // Make/year and "Jump to specs" follow the name's actual line count (MAKE_GAP_PX below the name, JUMP_GAP_PX
+  // below make/year), so a one-line name (NSX, M5, TR6) doesn't leave the gap a fixed y would. Name: 160u at
+  // 0.95 leading = 152u per line; make/year and jump set `lineHeight: 1` so their boxes are just their font
+  // size. This is the first-paint estimate only: the layout effect measures the name's last rendered line
+  // (which catches a wrapped extra line, e.g. the Gallardo's "LP 560-4") and repositions both from that.
   const nameBottom = 100 + car.heroName.length * (160 * 0.95);
-  const makeTop = nameBottom + NAME_GAP;
+  const makeTop = `calc(${u(nameBottom)} + ${MAKE_GAP_PX}px)`;
   // The emblem's right edge lines up with "Scroll for more"'s (user, 2026-10-09), computed from the
   // scroll-cue block's own right edge rather than a fixed left x, so it holds regardless of box width.
   const scrollCueBlock = block("scroll-cue");
   const emblemLeft = scrollCueBlock.x + scrollCueBlock.w - EMBLEM_WIDTH;
-  const jumpTop = makeTop + MAKE_SIZE + NAME_GAP;
+  const jumpTop = `calc(${u(nameBottom)} + ${MAKE_GAP_PX + JUMP_GAP_PX}px + max(16px, ${u(MAKE_SIZE)}))`;
   const leave = (event: MouseEvent) => {
     event.preventDefault();
     leaveDetail(() => router.push("/", { scroll: false }));
@@ -877,7 +917,7 @@ function Page({ car }: { car: CarWithAssets }) {
           <p
             ref={make}
             className="font-condensed absolute overflow-hidden"
-            style={{ ...styleOf(block("hero-make")), top: u(makeTop), lineHeight: 1, textTransform: "var(--label-case)", letterSpacing: "var(--label-tracking)", fontSize: `max(16px, ${u(MAKE_SIZE)})` }}
+            style={{ ...styleOf(block("hero-make")), top: makeTop, lineHeight: 1, textTransform: "var(--label-case)", letterSpacing: "var(--label-tracking)", fontSize: `max(16px, ${u(MAKE_SIZE)})` }}
           >
             {car.make} · {car.year}
           </p>
@@ -921,7 +961,7 @@ function Page({ car }: { car: CarWithAssets }) {
                   data-block="jump"
                   data-tone="light"
                   className="detail-jump absolute"
-                  style={{ ...styleOf(block("jump")), top: u(jumpTop), lineHeight: 1, fontSize: `max(12px, ${u(JUMP_SIZE)})`, textTransform: "var(--label-case)", letterSpacing: "var(--label-tracking)" }}
+                  style={{ ...styleOf(block("jump")), top: jumpTop, lineHeight: 1, fontSize: `max(12px, ${u(JUMP_SIZE)})`, textTransform: "var(--label-case)", letterSpacing: "var(--label-tracking)" }}
                   ref={jumpBtn}
                   onClick={() => jump.current()}
                 >
@@ -979,7 +1019,9 @@ function Page({ car }: { car: CarWithAssets }) {
 
                 {/* B: about the car, over the roof field's front surface (6d's "about-surface" decision):
                     the label and headline (M2) rise first, then the paragraph's real wrapped lines (M1). */}
-                <p
+                {/* The visible section labels are the page's h2s (6h): without them the only heading a screen-reader
+                    user could jump between was the hidden h1. */}
+                <h2
                   ref={aboutLabel}
                   data-block="about-label"
                   data-tone="light"
@@ -987,20 +1029,20 @@ function Page({ car }: { car: CarWithAssets }) {
                   style={{ ...styleOf(block("about-label")), lineHeight: 1, fontSize: "max(11px, var(--type-label))", letterSpacing: "var(--label-tracking)", textTransform: "var(--label-case)" }}
                 >
                   About the car
-                </p>
-                {/* Not a heading: the page's only two headings are the hidden h1 (the car's full title) and
-                    the hero's h2 (the car name, itself aria-hidden — same reasoning as here) — a visible h3
-                    with no h2 in the accessibility tree would skip a level for no navigational benefit,
-                    since this editorial line isn't a landmark a screen-reader user would jump to (found by
-                    /impeccable critique, 6f). */}
+                </h2>
+                {/* Not a heading: "About the car" above is this section's h2 (6h); this editorial line is its
+                    display copy, not a landmark a screen-reader user would jump to. */}
                 <p
                   ref={headline}
-                  aria-label={car.headline.join(" ")}
                   data-block="headline"
                   data-tone="light"
                   className="font-display absolute"
                   style={{ ...styleOf(block("headline")), fontSize: "var(--type-headline)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)" }}
                 >
+                  {/* Readable text beside the aria-hidden split pieces, not an aria-label: screen readers ignore
+                      aria-label on a plain paragraph, so this headline, the about text, the summary and the two
+                      closing paragraphs all read as empty (found in the 6h accessibility-tree pass). */}
+                  <span className="sr-only">{car.headline.join(" ")}</span>
                   {car.headline.map((text, li) => (
                     <span key={li} aria-hidden className="block overflow-hidden">
                       <span className="block">{charRiseLine(text, li, headlineChars)}</span>
@@ -1011,10 +1053,12 @@ function Page({ car }: { car: CarWithAssets }) {
                   ref={aboutBodyP}
                   data-block="about-body"
                   data-tone="light"
-                  aria-label={car.about}
                   className="font-text absolute"
-                  style={{ ...styleOf(block("about-body")), fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}
+                  // height auto (6h): bottom-anchored with the block's fixed 120u, the 13px text floor ran past the
+                  // bottom edge at 1024 x 640 (the c-take/c-keep fix from 6f, same cause).
+                  style={{ ...styleOf(block("about-body")), height: "auto", fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}
                 >
+                  <span className="sr-only">{car.about}</span>
                   <span aria-hidden ref={aboutBodyInner}>
                     {car.about}
                   </span>
@@ -1033,10 +1077,10 @@ function Page({ car }: { car: CarWithAssets }) {
                     </div>
                   </div>
                 )}
-                <p ref={cLabel} data-block="c-label" data-tone="dark" className="detail-label absolute overflow-hidden" style={{ ...styleOf(block("c-label")), lineHeight: 1 }}>
+                <h2 ref={cLabel} data-block="c-label" data-tone="dark" className="detail-label absolute overflow-hidden" style={{ ...styleOf(block("c-label")), lineHeight: 1 }}>
                   Listed car specifications
-                </p>
-                <div ref={tableA} data-block="c-table-a" data-tone="dark" className="absolute flex h-full flex-col" style={{ ...styleOf(block("c-table-a")), color: "var(--color-paper)" }}>
+                </h2>
+                <dl ref={tableA} data-block="c-table-a" data-tone="dark" className="absolute flex h-full flex-col" style={{ ...styleOf(block("c-table-a")), color: "var(--color-paper)" }}>
                   {specRowsLeft(car).map(([label, value, numeral]) => (
                     <div key={label} className="relative flex flex-1 items-baseline justify-between gap-3">
                       <dt data-spec-text className="detail-label shrink-0 overflow-hidden">
@@ -1048,8 +1092,8 @@ function Page({ car }: { car: CarWithAssets }) {
                       <div data-spec-rule aria-hidden className="absolute inset-x-0 bottom-0 h-px origin-left" style={{ background: "color-mix(in srgb, var(--color-paper) 30%, transparent)" }} />
                     </div>
                   ))}
-                </div>
-                <div ref={tableB} data-block="c-table-b" data-tone="dark" className="absolute flex h-full flex-col" style={{ ...styleOf(block("c-table-b")), color: "var(--color-paper)" }}>
+                </dl>
+                <dl ref={tableB} data-block="c-table-b" data-tone="dark" className="absolute flex h-full flex-col" style={{ ...styleOf(block("c-table-b")), color: "var(--color-paper)" }}>
                   {specRowsRight(car).map(([label, value, numeral]) => (
                     <div key={label} className="relative flex flex-1 items-baseline justify-between gap-3">
                       <dt data-spec-text className="detail-label shrink-0 overflow-hidden">
@@ -1061,7 +1105,7 @@ function Page({ car }: { car: CarWithAssets }) {
                       <div data-spec-rule aria-hidden className="absolute inset-x-0 bottom-0 h-px origin-left" style={{ background: "color-mix(in srgb, var(--color-paper) 30%, transparent)" }} />
                     </div>
                   ))}
-                </div>
+                </dl>
                 {/* Placeholder only: opens nothing yet (docs/overhaul.md, "Overlays and later pieces"). */}
                 <button
                   ref={cOverlay}
@@ -1086,19 +1130,20 @@ function Page({ car }: { car: CarWithAssets }) {
                 </button>
                 <p
                   ref={summaryRef}
-                  aria-label={car.summary}
                   data-block="c-summary"
                   data-tone="dark"
                   className="font-display absolute"
                   style={{ ...styleOf(block("c-summary")), color: "var(--color-paper)", fontSize: "var(--type-summary)", lineHeight: "var(--display-leading)" }}
                 >
+                  <span className="sr-only">{car.summary}</span>
                   <span aria-hidden>{scrollTextWords(car.summary, reduced)}</span>
                 </p>
                 <div ref={cTake} data-block="c-take" data-tone="dark" className="absolute" style={{ ...styleOf(block("c-take")), height: "auto", color: "var(--color-paper)" }}>
                   <p ref={cTakeLabel} className="detail-label overflow-hidden" style={{ lineHeight: 1 }}>
                     Our take
                   </p>
-                  <p aria-label={car.ourTake} className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
+                  <p className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
+                    <span className="sr-only">{car.ourTake}</span>
                     <span aria-hidden ref={cTakeBody}>
                       {car.ourTake}
                     </span>
@@ -1108,7 +1153,8 @@ function Page({ car }: { car: CarWithAssets }) {
                   <p ref={cKeepLabel} className="detail-label overflow-hidden" style={{ lineHeight: 1 }}>
                     To keep in mind
                   </p>
-                  <p aria-label={car.toKeepInMind} className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
+                  <p className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
+                    <span className="sr-only">{car.toKeepInMind}</span>
                     <span aria-hidden ref={cKeepBody}>
                       {car.toKeepInMind}
                     </span>
@@ -1175,8 +1221,9 @@ function Page({ car }: { car: CarWithAssets }) {
                   className="font-display absolute text-left"
                   style={{ ...styleOf(block("inquire")), fontSize: "max(16px, calc(28 * var(--u)))", lineHeight: 1.15 }}
                   onClick={() => {
+                    enquiryAuto.current = false;
                     setEnquiryOpen(true);
-                    setEnquiryAutoFocus(true);
+                    setEnquiryModal(true);
                   }}
                 >
                   Inquire about this car here →
@@ -1188,7 +1235,8 @@ function Page({ car }: { car: CarWithAssets }) {
               <div ref={bar} className="detail-bar absolute inset-x-0 bottom-0 flex items-center justify-between gap-6 px-6" style={{ height: "calc(var(--u) * 68)" }}>
                 <dl ref={facts} className="flex min-w-0 items-baseline gap-x-5 overflow-hidden whitespace-nowrap">
                   {factRows.map(([term, value]) => (
-                    <div key={term} className="flex min-w-0 items-baseline gap-2">
+                    // Mileage never truncates (6h: "54,300 …" at 1024 wide); the text facts give way instead.
+                    <div key={term} className={`flex min-w-0 items-baseline gap-2 ${term === "Mileage" ? "shrink-0" : ""}`}>
                       <dt className="detail-label">{term}</dt>
                       <dd className="min-w-0 truncate" style={{ fontSize: "max(13px, calc(17 * var(--u)))" }}>{value}</dd>
                     </div>
@@ -1208,10 +1256,11 @@ function Page({ car }: { car: CarWithAssets }) {
       <Enquiry
         car={car}
         open={enquiryOpen}
-        autoFocus={enquiryAutoFocus}
+        modal={enquiryModal}
         onClose={() => {
+          enquiryAuto.current = false;
           setEnquiryOpen(false);
-          setEnquiryAutoFocus(false);
+          setEnquiryModal(false);
         }}
       />
     </>

@@ -5,7 +5,9 @@
 // here →" or, once per visit, by scrolling section E 40% into view (both wired from Detail.tsx).
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { CarWithAssets } from "@/lib/cars";
+import gsap from "gsap";
 import { sidebar } from "@/lib/detail-fx";
+import { effect } from "@/lib/detail-motion";
 import { enquiryMessage } from "@/lib/format";
 
 interface Fields {
@@ -29,13 +31,24 @@ function validate(fields: Fields): FieldErrors {
   return errors;
 }
 
-export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets; open: boolean; autoFocus: boolean; onClose: () => void }) {
+/**
+ * `modal`: opened by "Inquire about this car here →" — scrim, focus into Name, Tab trapped. Otherwise it is the
+ * scroll-triggered open (user, 6h): no scrim, no `aria-modal`, focus left where it is and the page behind still
+ * live, so the finale (frame 14) stays visible beside the panel instead of dimmed under it.
+ */
+export function Enquiry({ car, open, modal, onClose }: { car: CarWithAssets; open: boolean; modal: boolean; onClose: () => void }) {
   const titleId = useId();
   const panel = useRef<HTMLDivElement>(null);
   const scrim = useRef<HTMLDivElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
+  /** True while the panel is on screen, so switching a non-modal open to modal adds the scrim instead of
+   * sliding the panel in again. */
+  const shown = useRef(false);
+  /** Where focus was when the panel opened, so closing hands it back (6h: it fell to <body>, and the next Tab
+   * started over from the top of the page). */
+  const opener = useRef<HTMLElement | null>(null);
   const [fields, setFields] = useState<Fields>({ name: "", email: "", phone: "", message: enquiryMessage(car) });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [sent, setSent] = useState(false);
@@ -53,23 +66,35 @@ export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets;
     const scrimEl = scrim.current;
     if (!panelEl || !scrimEl) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const { open: openTween, close } = sidebar(panelEl, scrimEl, reduced);
+    const { open: openTween, close } = sidebar(panelEl, scrimEl, reduced, modal);
     if (open) {
       wasOpen.current = true;
-      openTween.play(0);
+      const active = document.activeElement as HTMLElement | null;
+      opener.current = active && active !== document.body && !panelEl.contains(active) ? active : null;
+      if (!shown.current) openTween.play(0);
+      else {
+        // Already on screen (a non-modal open, now opened by the button): building the tweens above re-applied
+        // the hidden starting state, so jump the panel back to open and fade only the scrim in.
+        openTween.progress(1);
+        if (modal) gsap.fromTo(scrimEl, { opacity: 0 }, { opacity: effect.sidebar.scrimOpacity, duration: effect.sidebar.scrimDuration, ease: "sine.out" });
+      }
+      shown.current = true;
       // Only when opened by the button: the scroll-triggered auto-open (step 3, section E 40% into view)
       // must not also steal keyboard focus into the name field — that's an unrequested context change
       // (WCAG 3.2.5) and it silently broke the page's own Home/End section-stepping, since the keyboard
       // handler correctly ignores its shortcuts while focus sits in a text field (found by the smoke test).
-      if (autoFocus) nameInput.current?.focus();
+      if (modal) nameInput.current?.focus();
     } else if (wasOpen.current) {
+      shown.current = false;
+      const active = document.activeElement;
+      if (!active || active === document.body || panelEl.contains(active)) opener.current?.focus({ preventScroll: true });
       close.play(0);
     }
     return () => {
       openTween.kill();
       close.kill();
     };
-  }, [open, autoFocus]);
+  }, [open, modal]);
 
   useEffect(() => {
     if (!open) return;
@@ -84,7 +109,7 @@ export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets;
         onClose();
         return;
       }
-      if (event.key !== "Tab") return;
+      if (event.key !== "Tab" || !modal) return;
       const panelEl = panel.current;
       if (!panelEl) return;
       const focusable = Array.from(panelEl.querySelectorAll<HTMLElement>('button, a[href], input, textarea, select, [tabindex]:not([tabindex="-1"])')).filter(
@@ -93,7 +118,12 @@ export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets;
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
+      // Focus still outside the panel: the first Tab enters the dialog rather than walking the page behind the
+      // scrim, which `aria-modal` says is unreachable (6h).
+      if (!panelEl.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
       } else if (!event.shiftKey && document.activeElement === last) {
@@ -103,7 +133,7 @@ export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets;
     };
     window.addEventListener("keydown", onKey, { capture: true });
     return () => window.removeEventListener("keydown", onKey, { capture: true });
-  }, [open, onClose]);
+  }, [open, modal, onClose]);
 
   // A fresh form (and focus) each time the sidebar opens for a new car; `open` resets on every mount of
   // `Page` anyway (Detail.tsx's `key={car.slug}`), but the sidebar component itself persists across opens
@@ -129,16 +159,16 @@ export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets;
   };
 
   return (
-    <div aria-hidden={!open} inert={!open} className="fixed inset-0 z-50" style={{ pointerEvents: open ? "auto" : "none" }}>
+    <div aria-hidden={!open} inert={!open} className="fixed inset-0 z-50" style={{ pointerEvents: open && modal ? "auto" : "none" }}>
       <div ref={scrim} onClick={onClose} className="absolute inset-0" style={{ opacity: 0, background: "var(--color-ink)" }} />
       <div
         ref={panel}
         role="dialog"
-        aria-modal="true"
+        aria-modal={modal}
         aria-labelledby={titleId}
         data-tone="light"
         className="absolute inset-y-0 right-0 flex w-full flex-col overflow-y-auto"
-        style={{ maxWidth: 420, background: "var(--color-paper)" }}
+        style={{ maxWidth: 420, background: "var(--color-paper)", pointerEvents: open ? "auto" : "none" }}
       >
         <div className="flex items-center justify-between gap-4 px-6 py-5" style={{ borderBottom: "1px solid color-mix(in srgb, var(--color-ink) 14%, transparent)" }}>
           <h2 id={titleId} className="font-display" style={{ fontSize: "max(16px, calc(22 * var(--u)))" }}>
@@ -211,7 +241,8 @@ export function Enquiry({ car, open, autoFocus, onClose }: { car: CarWithAssets;
               <button type="submit" className="detail-pill mt-2">
                 Send enquiry
               </button>
-              <p className="mt-3" style={{ fontSize: "max(11px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 60%, transparent)" }}>
+              {/* 75%, not 60% (6h): 60% measured 4.03:1 on the figma theme's paper, under AA. */}
+              <p className="mt-3" style={{ fontSize: "max(11px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 75%, transparent)" }}>
                 This is a concept: nothing will be sent, and no one will reply.
               </p>
             </form>

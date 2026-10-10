@@ -488,7 +488,9 @@ button.blk-control:hover {
 }
 [data-pill-tone="dark"] .detail-pill {
   color: var(--color-paper);
-  background: color-mix(in srgb, var(--color-ink) 62%, transparent);
+  /* 72%, not 62% (6h): over a light patch of a seller photo, 62% left paper text at 4.2:1 in the figma theme;
+     72% holds 5.8:1 even over pure white. */
+  background: color-mix(in srgb, var(--color-ink) 72%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 30%, transparent);
 }
 [data-pill-tone="dark"] .detail-pill:focus-visible {
@@ -513,7 +515,9 @@ button.blk-control:hover {
    default, unlike other elements); reset all of it so its text sits flush left, aligned with the name and
    make/year above it (user, 2026-10-09: it was reading as indented/centred). */
 .detail-jump {
-  position: relative;
+  /* No `position: relative` here (removed after 6h): it overrode the button's `absolute`, so its top was
+     offset from its static position in the flow (2 px low at 1024 x 640). `absolute` anchors the ::after
+     underline just as well. */
   padding: 0;
   border: 0;
   background: none;
@@ -557,7 +561,9 @@ button.blk-control:hover {
    of the near-invisible paper-on-paper it would otherwise render (found visually: labels were present in the
    DOM but unreadable). */
 [data-tone="light"] .detail-label {
-  color: color-mix(in srgb, var(--color-ink) 65%, transparent);
+  /* 75%, not 65% (6h): 65% measured 4.03:1 on the figma theme's beige card (#dbd7cb), under AA's 4.5:1; the
+     6g note's 4.68:1 was against paper, not the card. 75% is 5.25:1 on the card and 6.42:1 on paper. */
+  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
 }
 
 /* The enquiry sidebar's form fields (6g): a bottom hairline, not a bordered box — the page's own vocabulary

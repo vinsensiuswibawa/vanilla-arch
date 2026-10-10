@@ -15,6 +15,9 @@ export function Gallery({ car, open, onClose }: { car: CarWithAssets; open: bool
   const scrim = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
+  /** Where focus was when the panel opened, so closing hands it back (6h: it fell to <body>, and the next Tab
+   * started over from the top of the page). */
+  const opener = useRef<HTMLElement | null>(null);
 
   // `useLayoutEffect`, not `useEffect`, and no hardcoded `transform`/`opacity` in the JSX below: see the
   // identical comment in Enquiry.tsx — GSAP must be the one to set the hidden starting state (here, on first
@@ -27,14 +30,20 @@ export function Gallery({ car, open, onClose }: { car: CarWithAssets; open: bool
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (open) {
       wasOpen.current = true;
+      const active = document.activeElement as HTMLElement | null;
+      opener.current = active && active !== document.body && !panelEl.contains(active) ? active : null;
       closeBtn.current?.focus();
       if (reduced) {
-        gsap.to([panelEl, scrimEl], { opacity: 1, duration: reducedTokens.sidebarFade, ease: ease.fade });
+        // The scrim to 0.4 like the full version, not 1 (6h: a solid ink page behind the gallery).
+        gsap.to(panelEl, { opacity: 1, duration: reducedTokens.sidebarFade, ease: ease.fade });
+        gsap.to(scrimEl, { opacity: effect.sidebar.scrimOpacity, duration: reducedTokens.sidebarFade, ease: ease.fade });
       } else {
         gsap.fromTo(panelEl, { yPercent: 100 }, { yPercent: 0, duration: effect.sidebar.duration, ease: ease.reveal });
         gsap.fromTo(scrimEl, { opacity: 0 }, { opacity: effect.sidebar.scrimOpacity, duration: effect.sidebar.scrimDuration, ease: ease.fade });
       }
     } else if (wasOpen.current) {
+      const active = document.activeElement;
+      if (!active || active === document.body || panelEl.contains(active)) opener.current?.focus({ preventScroll: true });
       const duration = reduced ? reducedTokens.sidebarFade : effect.sidebar.leaveDuration;
       if (reduced) {
         gsap.to([panelEl, scrimEl], { opacity: 0, duration, ease: ease.fade });
@@ -70,7 +79,12 @@ export function Gallery({ car, open, onClose }: { car: CarWithAssets; open: bool
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
+      // Focus still outside the panel (the scroll-triggered auto-open doesn't take it): the first Tab enters
+      // the dialog rather than walking the page behind the scrim, which `aria-modal` says is unreachable (6h).
+      if (!panelEl.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
       } else if (!event.shiftKey && document.activeElement === last) {

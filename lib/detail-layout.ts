@@ -99,7 +99,9 @@ export const BLOCKS: Block[] = [
   { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11324, y: 24, w: 607, h: "inset" },
   { id: "s-swap", layer: "front", kind: "photo", tone: "dark", label: "Swap slot", real: true, x: 11780, y: 240, w: 465, h: 480 },
   { id: "s-third", layer: "front", kind: "photo", tone: "dark", label: "Third photo", real: true, x: 12288, y: 24, w: 720, h: 400 },
-  { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12731, bottom: 24, w: 320, h: 28 },
+  // Right edge on the third photo's right edge (13008), as in frame 12; at 12731 it ran 43u past it and its
+  // arrow sat off screen at the frame-12 position (6h).
+  { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12688, bottom: 24, w: 320, h: 28 },
 
   { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14950, y: 430, w: 240, h: 100 },
 ];

@@ -440,10 +440,12 @@ npx @gltf-transform/cli optimize raw/nsx.glb public/models/nsx.glb \
 
 WebP keeps the toolchain simple. Switch `--texture-compress` to `ktx2` (needs KTX-Software installed) if phone GPU memory gets tight.
 
+The desktop model figures are a loose guideline, not a cap (decision log, 2026-10-10): this is a desktop showcase, and the hero files ship up to about 400k triangles and 4.5 MB (the Datsun, 4.49 MB). The real gate is the frame rate.
+
 | Budget | Desktop | Phone |
 | --- | --- | --- |
-| GLB per car | ≤ 2.5 MB, aim for 1.5 MB | ≤ 1 MB (lighter LOD) |
-| Triangles per car | ≤ 120k | ≤ 40k |
+| GLB per car | Guideline: hero files up to about 4.5 MB (was ≤ 2.5 MB) | ≤ 1 MB (lighter LOD) |
+| Triangles per car | Guideline: up to about 400k (was ≤ 120k) | ≤ 40k |
 | Draw calls per car | ≤ 25 | ≤ 15 |
 | Textures | ≤ 1024 px | ≤ 512 px |
 | First view: 3 cars plus app JS | ≤ 6 MB | ≤ 3 MB |
@@ -637,6 +639,11 @@ Thirty decisions shaped this PRD, all settled with you in the planning session o
 | Clip-path exception (2026-10-08) | `clip-path: inset()` may animate, for image reveals only | Named exception to the motion non-negotiable; everything else still animates `transform`, `opacity` and `filter: blur()` (≤ 8 px) |
 | GSAP (2026-10-08) | GSAP with ScrollTrigger, SplitText and Flip joins the stack; Lenis stays | All plugins are free since 2025; version checked on npm at install (3.15.0) |
 | Satoshi exception (2026-10-08) | Satoshi (ITF Free Font License) allowed for the "figma" theme, self-hosted with `next/font/local` | Named exception to the OFL-only rule; licence kept in `app/fonts/satoshi`; credit on `/credits`. Staatliches is OFL. Two themes (`?theme=current` or `figma`) are built side by side until the user picks one |
+| Model budget (2026-10-10) | The per-car model budget is a loose guideline, not a cap: the hero files (up to about 400k triangles and 4.5 MB) stand | The site is a desktop LinkedIn/X showcase; 60 fps on the Intel Arc laptop is the gate that matters. Phone LOD budgets unchanged |
+| Detail page keyboard path (2026-10-10) | The detail page follows keyboard focus: Tab walks every control from the hero to the enquiry, and the track scrolls to whatever takes focus | Replaces shot 6d's `inert` margin, which hid far controls from Tab and screen readers and could strand "See all of this car's images" (shot 6h) |
+| Detail page overhaul complete (2026-10-10) | Shots 6a–6h built the detail page in `docs/overhaul.md` | The showroom redesign, the equipment and history overlay, the real gallery and `/credits` come next ("After the overhaul") |
+| Theme (2026-10-10) | The "figma" direction wins: Satoshi for text and display, Staatliches for condensed labels, deep teal ink on off-white, slate panels | Picked by the user at the 6h gate. `?theme=current` still opens the other system until it is removed; `DESIGN.md` is regenerated from the figma theme |
+| Enquiry auto-open (2026-10-10) | Scrolling to section E opens the enquiry as a non-modal panel (no scrim, focus stays put, closes when the visitor scrolls away); the button opens it as a modal with the scrim | Picked by the user at the 6h gate, so the finale (frame 14) is never dimmed. Amends step 3's "opens both ways" |
 
 ## Sources
 

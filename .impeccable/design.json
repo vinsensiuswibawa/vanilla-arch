@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T12:00:00Z",
+  "title": "Design System: Arcade",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Warm Paper", "canonical": "#fffdf9", "tonalRamp": ["#2b2a27", "#4d4b46", "#706d66", "#959189", "#bab6ad", "#dcd9d1", "#f2f0ea", "#fffdf9"] },
+      "ink": { "role": "primary", "displayName": "Deep Teal Ink", "canonical": "#102e30", "tonalRamp": ["#0a1e1f", "#102e30", "#24494b", "#3e6567", "#5e8486", "#86a5a6", "#b3c7c8", "#dde7e7"] },
+      "slate-panel": { "role": "neutral", "displayName": "Slate Panel", "canonical": "#2c3638", "tonalRamp": ["#151a1b", "#2c3638", "#455052", "#606b6d", "#7d878a", "#9da6a8", "#c0c7c8", "#e3e7e8"] },
+      "brochure-beige": { "role": "neutral", "displayName": "Brochure Beige", "canonical": "#dbd7cb", "tonalRamp": ["#2e2c26", "#4f4c43", "#726e62", "#969184", "#b9b4a7", "#dbd7cb", "#ebe8e0", "#f8f6f1"] },
+      "studio-field": { "role": "neutral", "displayName": "Studio Field", "canonical": "#ededed", "tonalRamp": ["#262626", "#474747", "#6b6b6b", "#8f8f8f", "#b3b3b3", "#d4d4d4", "#ededed", "#fafafa"] },
+      "mist-700": { "role": "neutral", "displayName": "Mist 700", "canonical": "#4a5f61" },
+      "signal-text": { "role": "neutral", "displayName": "Signal Text", "canonical": "#c2541b" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The car name in the hero, and 'Give it / A new home', uppercase, behind the car." },
+      "headline": { "displayName": "Headline", "purpose": "The about section's three-line headline." },
+      "title": { "displayName": "Summary", "purpose": "The specification section's summary quote, sentence case, scroll-to-reveal." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs and form text." },
+      "label": { "displayName": "Label", "purpose": "Uppercase terms, captions, chart heads, pills." },
+      "condensed": { "displayName": "Condensed", "purpose": "Staatliches small heads: make · year, 'About the car'." },
+      "numerals": { "displayName": "Numerals", "purpose": "Prices and mileage, tabular figures." }
+    },
+    "shadows": [
+      { "name": "tooltip-lift", "value": "0 2px 12px color-mix(in srgb, #102e30 18%, transparent)", "purpose": "Chart tooltips only; the system is otherwise flat." }
+    ],
+    "motion": [
+      { "name": "ease-reveal", "value": "cubic-bezier(0.215, 0.61, 0.355, 1)", "purpose": "Text rises, image clips, sidebars arriving (power3.out)." },
+      { "name": "ease-settle", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The car arriving from the carousel (expo.out)." },
+      { "name": "ease-travel", "value": "cubic-bezier(0.8, 0, 0.45, 1)", "purpose": "Camera transitions inside their scroll range." },
+      { "name": "ease-swap", "value": "cubic-bezier(0.25, 0.46, 0.45, 0.94)", "purpose": "The image-swap wipe (power2.out)." },
+      { "name": "ease-fade", "value": "cubic-bezier(0.39, 0.575, 0.565, 1)", "purpose": "Opacity-only chrome (sine.out)." },
+      { "name": "ease-leave", "value": "cubic-bezier(0.55, 0.085, 0.68, 0.53)", "purpose": "Closing sidebars and overlays (power2.in)." },
+      { "name": "dur-reveal", "value": "0.9s", "purpose": "Line rise." },
+      { "name": "dur-sidebar", "value": "0.8s", "purpose": "Sidebar arriving; 0.5s leaving." }
+    ],
+    "breakpoints": [
+      { "name": "min", "value": "1024px x 640px" },
+      { "name": "tuned", "value": "1080px, 1440px, 1920px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pill (light ground)",
+      "kind": "button",
+      "refersTo": "pill",
+      "description": "Chrome control: the back pill and sound toggle on light sections.",
+      "html": "<button class=\"ds-pill\"><span aria-hidden=\"true\">←</span> Showroom</button>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; gap: 0.5rem; height: 36px; padding: 0 14px; border: 0; border-radius: 9999px; font: 400 13px/1 Satoshi, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: #102e30; background: color-mix(in srgb, #fffdf9 72%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, #102e30 22%, transparent); backdrop-filter: blur(8px); transition: color 0.3s, background-color 0.3s; cursor: pointer; } .ds-pill:focus-visible { outline: 2px solid #102e30; outline-offset: 2px; }"
+    },
+    {
+      "name": "Pill (dark ground)",
+      "kind": "button",
+      "refersTo": "pill-on-dark",
+      "description": "The same pill over the slate panels and photos.",
+      "html": "<button class=\"ds-pill-dark\">Sound off</button>",
+      "css": ".ds-pill-dark { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 0; border-radius: 9999px; font: 400 13px/1 Satoshi, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: #fffdf9; background: color-mix(in srgb, #102e30 72%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, #fffdf9 30%, transparent); backdrop-filter: blur(8px); cursor: pointer; } .ds-pill-dark:focus-visible { outline: 2px solid #fffdf9; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline button (dark)",
+      "kind": "button",
+      "refersTo": "outline-button-on-dark",
+      "description": "In-page action on the specification panel.",
+      "html": "<div style=\"background:#2c3638;padding:24px\"><button class=\"ds-outline\">See equipment and ownership history</button></div>",
+      "css": ".ds-outline { min-height: 44px; padding: 0 20px; border: 0; border-radius: 9999px; background: transparent; color: #fffdf9; box-shadow: inset 0 0 0 1px #fffdf9; font: 400 12px Satoshi, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; } .ds-outline:focus-visible { outline: 2px solid #fffdf9; outline-offset: 2px; }"
+    },
+    {
+      "name": "Jump link",
+      "kind": "custom",
+      "refersTo": "pill",
+      "description": "Text link whose underline draws in from the left on hover and focus.",
+      "html": "<button class=\"ds-jump\">Jump to specs →</button>",
+      "css": ".ds-jump { position: relative; padding: 0; border: 0; background: none; font: 400 12px/1 Satoshi, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: #102e30; cursor: pointer; } .ds-jump::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.39, 0.575, 0.565, 1); } .ds-jump:hover::after, .ds-jump:focus-visible::after { transform: scaleX(1); } .ds-jump:focus-visible { outline: 2px solid #102e30; outline-offset: 2px; }"
+    },
+    {
+      "name": "Hairline field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form field: a label above, a single bottom hairline, no box.",
+      "html": "<label class=\"ds-field\"><span>Email</span><input type=\"email\" /></label>",
+      "css": ".ds-field { display: block; } .ds-field span { display: block; margin-bottom: 4px; font: 400 12px Satoshi, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, #102e30 75%, transparent); } .ds-field input { display: block; width: 100%; padding: 8px 2px; border: 0; border-bottom: 1px solid color-mix(in srgb, #102e30 30%, transparent); border-radius: 0; background: transparent; font: 400 15px Satoshi, system-ui, sans-serif; color: #102e30; } .ds-field input:focus-visible { outline: 2px solid #102e30; outline-offset: 2px; }"
+    },
+    {
+      "name": "Price card",
+      "kind": "card",
+      "refersTo": "price-card",
+      "description": "Beige, square card holding the price and the price strip.",
+      "html": "<div class=\"ds-card\"><p class=\"ds-price\">$245,000</p><p class=\"ds-line\">Compared with 45 similar listings across Torquewell, Halden and Lot Twelve.</p></div>",
+      "css": ".ds-card { background: #dbd7cb; padding: 20px; color: #102e30; } .ds-price { margin: 0; font: 400 56px/1 Satoshi, system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-line { margin: 8px 0 0; font: 400 12px Satoshi, system-ui, sans-serif; color: color-mix(in srgb, #102e30 75%, transparent); }"
+    },
+    {
+      "name": "Spec bar",
+      "kind": "custom",
+      "refersTo": "spec-bar",
+      "description": "The slate bar across the bottom of the hero: facts left, price right.",
+      "html": "<div class=\"ds-bar\"><dl><div><dt>Mileage</dt><dd>54,300 mi</dd></div><div><dt>Engine</dt><dd>3.0 L flat-six</dd></div></dl><p><span>Price as listed</span> <b>$245,000</b></p></div>",
+      "css": ".ds-bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; padding: 0 24px; background: #2c3638; color: #fffdf9; font-family: Satoshi, system-ui, sans-serif; } .ds-bar dl { display: flex; gap: 20px; margin: 0; } .ds-bar dl div { display: flex; gap: 8px; align-items: baseline; } .ds-bar dt, .ds-bar span { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, #fffdf9 70%, transparent); } .ds-bar dd { margin: 0; font-size: 17px; } .ds-bar p { margin: 0; } .ds-bar b { font-weight: 400; font-size: 26px; font-variant-numeric: tabular-nums; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Stuttgart Brochure",
+    "overview": "Arcade reads like a German sales brochure that turns its own pages. Each car's listing is one long horizontal spread: a cover with the name set huge behind the car, photo spreads, a magazine 'About' page, a dark specification sheet, a price page and a closing call to action. The grid is strict (five columns, 24 px margins and gutters, everything sized in one unit drawn at 1440 × 960), the ink is a deep teal rather than black, and the paper is a barely warm off-white. Nothing is decorated; hierarchy comes from scale, case and the layer the type sits on.\n\nThe car is the photograph. The one persistent 3D model moves through four camera poses as the page scrolls, and the page's dark panels pass over it and reveal it again. Type and fields sit behind the car; photos, panels and controls sit in front. Seller photos are unretouched and the cars carry all of the colour.\n\nMotion is unhurried and masked: text rises from under a line, photos open with a clip, everything long and power3.out. Scroll-tied effects reverse with the scroll; triggered reveals play once.",
+    "keyCharacteristics": [
+      "Deep teal ink on warm paper, slate panels, one beige card; no saturated UI colour.",
+      "Huge uppercase Satoshi display with tight tracking, condensed Staatliches for small heads.",
+      "A five-column grid at a single scale unit, with 24 px margins at every size.",
+      "Three layers: type behind the car, the car, photos and panels in front.",
+      "Square corners on everything that holds content; full pills only for controls."
+    ],
+    "rules": [
+      { "name": "The Car Carries the Colour Rule", "body": "The UI stays in ink, paper, slate, beige and field. Saturation belongs to the cars, their photos and the small full-colour maker emblems.", "section": "colors" },
+      { "name": "The Translucent Ink Floor", "body": "Secondary text is ink mixed with transparency, never below 75% on beige or paper (5.25:1 on the card) and 70% for captions on paper; the dark pill is ink at 72% so paper text holds 5.8:1 even over a white photo.", "section": "colors" },
+      { "name": "The Floor Rule", "body": "Every --u-scaled size carries a pixel floor, so the brochure scales down to 1024 × 640 without text falling below legibility.", "section": "typography" },
+      { "name": "The Three Layers Rule", "body": "Anything the car may pass over goes in the behind layer; anything that may cover the car goes in front. Every fact in 3D also exists as DOM text.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every size on the --u scale with a pixel floor, and every margin at 24 px.",
+      "Do put type the car may cross in the behind layer and anything that may cover it in front.",
+      "Do reveal text from under a line mask and photos with clip-path: inset(); travel at most one line or ~15% of a photo.",
+      "Do say a verdict or a state in words; colour is never the only cue.",
+      "Do keep secondary text at 75% ink or more on beige and paper."
+    ],
+    "donts": [
+      "Don't add UI colour: no accent fills, no coloured buttons; the cars carry the colour.",
+      "Don't round content corners (photos, panels, cards, fields); pills are for controls only.",
+      "Don't use shadows for depth; use the layers and the studio.",
+      "Don't animate layout properties; DOM motion is transform, opacity, filter: blur() (≤ 8 px) and, for image reveals only, clip-path: inset().",
+      "Don't cover the finale: the scroll-triggered enquiry opens without a scrim; only the button's open is modal.",
+      "Don't use Gran Turismo assets, logos or music; GT4 is a reference for feel only."
+    ]
+  }
+}
