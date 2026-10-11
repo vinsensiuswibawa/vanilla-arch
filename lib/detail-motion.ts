@@ -43,6 +43,9 @@ export const effect = {
   barExit: { share: 0.3 }, // M10: last 30 % of the bar's travel, over section A's final 25 %
   sidebar: { duration: 0.8, scrimDuration: 0.6, scrimOpacity: 0.4, leaveDuration: 0.5 }, // M11
   chromeFade: { duration: 0.6, ease: ease.fade }, // M12
+  // M13 (7b, user-approved): the price module's tab switch. The incoming panel's text, chart box and caption rise 8 px
+  // while fading in; dots grow from 0.85 (never from 0); the history line draws along its clip, then its points fade.
+  tabSwitch: { duration: 0.3, ease: ease.reveal, y: 8, stagger: 0.05, dotScale: 0.85, dotStagger: 0.012, scatterDelay: 0.05, pointsDuration: 0.2 },
 } as const;
 
 /** The hero entry from the carousel, one 2.4 s timeline (step 2): seconds from the start. */

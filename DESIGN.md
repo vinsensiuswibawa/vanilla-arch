@@ -227,15 +227,17 @@ buttons. Hairlines are 1 px at 22–30% ink (or paper on dark) and draw in from 
 
 ### Cards / Containers
 
-- **Price card (7a):** one tall brochure-beige card, square, 32u padding (20 px floor), holding the price, the
-  comparison line and three tabs (Price spread, Price vs mileage, Price history), one chart per tab. A narrow
-  title column to its right carries only "Price comparison" in the condensed label face and is otherwise empty.
+- **Price card (7a, 7b):** one tall brochure-beige card, square, 32u padding (20 px floor). Its headline is the
+  verdict in the display face (64u, uppercase), then the price in mono with "cheaper than N% of M comparable
+  listings", the comparison line and three tabs, one chart per tab. The "Price comparison" title in the condensed
+  label face sits above the card, so it is read first.
 - **Price tabs:** left-aligned labels in uppercase text face, 44 px touch height, 32u apart; inactive ink at 75%,
-  active ink with a 2 px bar flush with the tab's bottom edge, a 22%-ink hairline under the row; switching is
-  instant.
-- **Price strip (7a):** a 1 px baseline at 22% ink; filled ink dots (area ∝ listing count, radius 1.2–4% of the
-  chart width, 72% opacity); this car an ink ring labelled with its price and verdict in words; five price ticks
-  below; a four-column Lowest / Median / Highest / Listings row under a hairline at the foot of the chart.
+  active ink; one 2 px ink bar slides under the active tab (0.3 s, `reveal`) over a 22%-ink hairline; keyboard
+  switches are instant.
+- **Price strip (7a, 7b):** a 1 px baseline at 22% ink; filled ink dots (area ∝ listing count, radius 1.6–5.5% of the
+  chart width, 72% opacity); this car an ink ring with a 2 px ink pin rising to a "This car" and price label; up to
+  four price ticks (dropped when they would touch); a four-column Lowest / Median / Highest / Listings row (mono, 24u)
+  under a hairline below the chart.
 - **Dark panels:** slate, full height, with paper type and 30%-paper hairlines.
 
 ### Inputs / Fields
@@ -260,8 +262,8 @@ down and out as the camera begins its first move.
 ### The Price Strip (signature)
 
 One hairline across the card; comparable listings grouped into price steps, each a filled ink dot whose area tracks
-its count; this car an ink ring with its price and a verdict in words ("Good value", "Fair price", "Above market")
-above it. Four mono ticks below, a caption saying the data is illustrative.
+its count; this car an ink ring on a pin that rises to its price. The verdict in words ("Good value", "Fair price",
+"Above market") is the card's headline above it. Up to four mono ticks below, a caption saying the data is illustrative.
 
 ## Do's and Don'ts
 

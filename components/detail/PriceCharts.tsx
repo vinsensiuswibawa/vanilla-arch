@@ -17,12 +17,14 @@ import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, 
 import type { CarWithAssets } from "@/lib/cars";
 import {
   bucketStep,
+  cheaperThanShare,
   comparisonLine,
   getComparables,
   historyTakeaway,
   marketplaceName,
   mileageTakeaway,
   priceBuckets,
+  spreadTakeaway,
   stripSummary,
   trendAt,
   trendLine,
@@ -31,6 +33,7 @@ import {
   type HistoryPoint,
   type Listing,
 } from "@/lib/comparables";
+import { effect, ease as gsapEase, reduced as reducedTokens } from "@/lib/detail-motion";
 import { formatMiles, formatPrice } from "@/lib/format";
 
 const ease = "cubic-bezier(0.215, 0.61, 0.355, 1)"; // --ease-reveal
@@ -38,15 +41,20 @@ const u = (n: number) => `calc(${n} * var(--u))`;
 const ink = (pct: number) => `color-mix(in srgb, var(--color-ink) ${pct}%, transparent)`;
 const TICK_FONT = "max(11px, calc(11 * var(--u)))";
 
-/** The chart box's size in CSS px. Measured synchronously on mount (so the first commit after it already has
- * marks) and then on every resize. */
+/** The chart box's size in CSS px, plus the tick font's computed px size (the box sets `font-size: TICK_FONT`,
+ * so tick labels can be measured without a DOM probe). Measured synchronously on mount (so the first commit
+ * after it already has marks) and then on every resize. */
 function useChartSize() {
   const ref = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState({ width: 0, height: 0 });
+  const [size, setSize] = useState({ width: 0, height: 0, font: 11 });
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const measure = () => setSize((prev) => (prev.width === el.clientWidth && prev.height === el.clientHeight ? prev : { width: el.clientWidth, height: el.clientHeight }));
+    const measure = () =>
+      setSize((prev) => {
+        const font = parseFloat(getComputedStyle(el).fontSize) || 11;
+        return prev.width === el.clientWidth && prev.height === el.clientHeight && prev.font === font ? prev : { width: el.clientWidth, height: el.clientHeight, font };
+      });
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
@@ -79,13 +87,13 @@ function Caption({ children }: { children: ReactNode }) {
   // 70%, not 60%: measured contrast at 60% was 4.03:1 against the card background, under WCAG AA's 4.5:1
   // floor for normal-size text (found live-testing). 70% matches `.detail-label`'s own ratio.
   return (
-    <p style={{ marginTop: u(12), fontSize: "max(10px, var(--type-label))", color: ink(70) }}>{children}</p>
+    <p data-tab-in style={{ marginTop: u(12), fontSize: "max(10px, var(--type-label))", color: ink(70) }}>{children}</p>
   );
 }
 
 function Takeaway({ children }: { children: ReactNode }) {
   return (
-    <p data-mark className="detail-label">
+    <p data-mark data-tab-in className="detail-label">
       <span style={{ textTransform: "none", letterSpacing: 0, fontFamily: "var(--font-text)", fontSize: "max(13px, var(--type-body))", color: "var(--color-ink)" }}>{children}</span>
     </p>
   );
@@ -100,6 +108,28 @@ function TickLabel({ x, y, w = 60, h = 14, align = "center", children }: { x: nu
       {children}
     </div>
   );
+}
+
+/** 7b's tick-overlap rule: every tick label is estimated at 0.62 em per character, clamped inside the box, and
+ * dropped when it would start less than `gap` px after the previous kept label ends (7a showed "$38,0$40,000"). */
+function placeTicks(ticks: { key: string | number; x: number; text: string }[], width: number, font: number, gap = 8) {
+  const placed: { key: string | number; text: string; left: number; w: number }[] = [];
+  let prevRight = -Infinity;
+  for (const t of ticks) {
+    const w = Math.ceil(t.text.length * 0.62 * font);
+    const left = Math.max(0, Math.min(width - w, t.x - w / 2));
+    if (left < prevRight + gap) continue;
+    placed.push({ key: t.key, text: t.text, left, w });
+    prevRight = left + w;
+  }
+  return placed;
+}
+
+/** Price-axis labels in thousands. When the ticks fall on half-thousands (the $9k to $12k cars) a whole-number
+ * label would repeat itself ("$9k, $9k"), so every label gets one decimal. */
+function priceTickText(ticks: number[]) {
+  const decimals = ticks.some((t) => t % 1000 !== 0) ? 1 : 0;
+  return (t: number) => `$${(t / 1000).toFixed(decimals)}k`;
 }
 
 /** One chart's tooltip: HTML, flipped to the other side of the target past the plot's midpoint. */
@@ -184,33 +214,41 @@ const median = (values: number[]) => {
 
 // ---- Tab 1: the price spread (strip) ------------------------------------------------------------------------
 
-function PriceStrip({ price, listings, width, height }: { price: number; listings: Listing[]; width: number; height: number }) {
+function PriceStrip({ price, listings, width, height, font }: { price: number; listings: Listing[]; width: number; height: number; font: number }) {
   const step = bucketStep(price);
   const buckets = useMemo(() => priceBuckets(listings, step), [listings, step]);
   const prices = useMemo(() => listings.map((l) => l.priceUsd), [listings]);
-  const verdict = verdictFor(price, prices);
   const domain = useMemo(() => {
     const all = [...prices, price];
     const span = Math.max(...all) - Math.min(...all);
     return [Math.min(...all) - span * 0.06, Math.max(...all) + span * 0.06];
   }, [prices, price]);
   const x = useMemo(() => scaleLinear().domain(domain).range([0, width]), [domain, width]);
-  const rMin = 0.012 * width;
-  const rMax = 0.04 * width;
+  const rMin = 0.016 * width;
+  const rMax = 0.055 * width;
   const r = useMemo(() => scaleSqrt().domain([0, Math.max(...buckets.map((b) => b.count))]).range([rMin, rMax]), [buckets, rMin, rMax]);
-  const baseline = 0.42 * height;
-  const ticks = x.ticks(5);
+  const baseline = 0.74 * height; // 7b asked for 0.62; 0.74 after measuring a ~100 px dead band under the ticks (user approved)
+  const ringR = 0.03 * width + 2;
+  const ticks = placeTicks(
+    x.ticks(4).map((t) => ({ key: t, x: x(t), text: formatPrice(t) })),
+    width,
+    font,
+  );
   const { hover, setHover, bind } = useMarks(buckets.length, 0);
   const hovered = hover !== null ? buckets[hover] : null;
   const tipText = hovered ? `${formatPrice(hovered.mid - step / 2)} to ${formatPrice(hovered.mid + step / 2)}: ${hovered.count} listing${hovered.count === 1 ? "" : "s"}` : "";
 
-  // The car's label, bottom-anchored above the biggest possible dot and clamped inside the box.
+  // This car's pin: a 2 px line from the ring's top up to 28 px below the box's top (taller when the label
+  // is, at large sizes), with the label centred on it and clamped inside the box.
   const labelRef = useRef<HTMLDivElement>(null);
-  const [labelW, setLabelW] = useState(0);
+  const [label, setLabel] = useState({ w: 0, h: 0 });
   useLayoutEffect(() => {
-    if (labelRef.current) setLabelW(labelRef.current.offsetWidth);
-  }, [price, width]);
-  const labelLeft = Math.max(0, Math.min(width - labelW, x(price) - labelW / 2));
+    const el = labelRef.current;
+    if (el) setLabel((prev) => (prev.w === el.offsetWidth && prev.h === el.offsetHeight ? prev : { w: el.offsetWidth, h: el.offsetHeight }));
+  }, [price, width, height]);
+  const pinX = x(price);
+  const lineTop = Math.max(28, label.h);
+  const labelLeft = Math.max(0, Math.min(width - label.w, pinX - label.w / 2));
 
   const hitHeight = Math.min(height, baseline + rMax + 12 + 28);
   const onMove = (event: ReactPointerEvent<SVGRectElement>) => {
@@ -223,15 +261,6 @@ function PriceStrip({ price, listings, width, height }: { price: number; listing
     setHover(Math.abs(dx) <= limit ? best : null);
   };
 
-  const lowest = Math.min(...prices);
-  const highest = Math.max(...prices);
-  const stats: [string, string][] = [
-    ["Lowest", formatPrice(lowest)],
-    ["Median", formatPrice(median(prices))],
-    ["Highest", formatPrice(highest)],
-    ["Listings", String(listings.length)],
-  ];
-
   return (
     <>
       <Rule top={baseline} />
@@ -242,6 +271,7 @@ function PriceStrip({ price, listings, width, height }: { price: number; listing
           <circle
             key={b.mid}
             data-mark
+            data-dot
             cx={x(b.mid)}
             cy={baseline}
             r={r(b.count)}
@@ -251,31 +281,19 @@ function PriceStrip({ price, listings, width, height }: { price: number; listing
             {...bind(i, `${formatPrice(b.mid - step / 2)} to ${formatPrice(b.mid + step / 2)}: ${b.count} listing${b.count === 1 ? "" : "s"}`)}
           />
         ))}
-        {/* "This car" is always an ink ring, never colour (step 5's own wording). */}
-        <circle data-mark cx={x(price)} cy={baseline} r={0.024 * width + 2} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center", pointerEvents: "none" }} />
+        {/* "This car" is always an ink ring, never colour (step 5's own wording), with a pin rising from it. */}
+        <circle data-mark cx={pinX} cy={baseline} r={ringR} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center", pointerEvents: "none" }} />
+        <line data-mark x1={pinX} x2={pinX} y1={lineTop} y2={baseline - ringR} stroke="var(--color-ink)" strokeWidth={2} style={{ pointerEvents: "none" }} />
         <rect x={0} y={0} width={width} height={hitHeight} fill="transparent" style={{ pointerEvents: "all" }} onPointerMove={onMove} onPointerLeave={() => setHover(null)} />
       </svg>
       {ticks.map((t) => (
-        <TickLabel key={t} x={Math.max(0, Math.min(width - 60, x(t) - 30))} y={baseline + rMax + 12}>
-          {formatPrice(t)}
+        <TickLabel key={t.key} x={t.left} y={baseline + rMax + 12} w={t.w}>
+          {t.text}
         </TickLabel>
       ))}
-      <div ref={labelRef} data-mark className="absolute text-center" style={{ left: labelLeft, bottom: height - (baseline - rMax - 8), whiteSpace: "nowrap" }}>
-        <p className="font-mono" style={{ fontSize: "max(11px, calc(13 * var(--u)))" }}>{formatPrice(price)}</p>
-        <p className="detail-label" style={{ letterSpacing: "var(--label-tracking)" }}>{VERDICT_LABEL[verdict]}</p>
-      </div>
-      <div className="absolute bottom-0 left-0 w-full">
-        <Rule top={0} />
-        <dl className="grid grid-cols-4" style={{ paddingTop: 16 }}>
-          {stats.map(([label, value]) => (
-            <div key={label} data-mark>
-              <dt className="detail-label">{label}</dt>
-              <dd className="font-mono" style={{ fontSize: "max(15px, calc(20 * var(--u)))", whiteSpace: "nowrap" }}>
-                {value}
-              </dd>
-            </div>
-          ))}
-        </dl>
+      <div ref={labelRef} data-mark className="absolute text-center" style={{ left: labelLeft, bottom: height - lineTop, whiteSpace: "nowrap" }}>
+        <p className="detail-label" style={{ letterSpacing: "var(--label-tracking)" }}>This car</p>
+        <p className="font-mono" style={{ fontSize: "max(11px, calc(13 * var(--u)))", lineHeight: 1.2 }}>{formatPrice(price)}</p>
       </div>
       {hovered && (
         <Tip x={x(hovered.mid)} y={baseline + rMax + 12 + 22} width={width} mid={width / 2}>
@@ -294,11 +312,37 @@ function PriceStrip({ price, listings, width, height }: { price: number; listing
   );
 }
 
+/** Tab 1's stat row: below the strip, hairline above, values at 24u (7b asked for 32u; six-figure prices collided, user approved 24u). */
+function StripStats({ listings }: { listings: Listing[] }) {
+  const prices = listings.map((l) => l.priceUsd);
+  const stats: [string, string][] = [
+    ["Lowest", formatPrice(Math.min(...prices))],
+    ["Median", formatPrice(median(prices))],
+    ["Highest", formatPrice(Math.max(...prices))],
+    ["Listings", String(listings.length)],
+  ];
+  return (
+    <div data-tab-in className="relative" style={{ marginTop: u(16) }}>
+      <Rule top={0} />
+      <dl className="flex justify-between" style={{ paddingTop: 16 }}>
+        {stats.map(([name, value]) => (
+          <div key={name} data-mark>
+            <dt className="detail-label">{name}</dt>
+            <dd className="font-mono" style={{ fontSize: "max(18px, calc(24 * var(--u)))", lineHeight: 1.1, whiteSpace: "nowrap" }}>
+              {value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
 // ---- Tab 2: price vs mileage (scatter) ----------------------------------------------------------------------
 
 const MARGIN = { top: 8, right: 8, bottom: 36, left: 56 };
 
-function PriceScatter({ price, mileageMi, listings, width, height }: { price: number; mileageMi: number; listings: Listing[]; width: number; height: number }) {
+function PriceScatter({ price, mileageMi, listings, width, height, font }: { price: number; mileageMi: number; listings: Listing[]; width: number; height: number; font: number }) {
   const trend = useMemo(() => trendLine(listings), [listings]);
   const xDomain = useMemo(() => [0, Math.max(mileageMi, ...listings.map((l) => l.mileageMi)) * 1.05], [listings, mileageMi]);
   const yDomain = useMemo(() => {
@@ -311,9 +355,14 @@ function PriceScatter({ price, mileageMi, listings, width, height }: { price: nu
   const bottom = height - MARGIN.bottom;
   const x = useMemo(() => scaleLinear().domain(xDomain).range([left, right]), [xDomain, left, right]);
   const y = useMemo(() => scaleLinear().domain(yDomain).range([bottom, top]), [yDomain, bottom, top]);
-  const xTicks = x.ticks(4);
+  const xTicks = placeTicks(
+    x.ticks(4).map((t) => ({ key: t, x: x(t), text: `${Math.round(t / 1000)}k mi` })),
+    width,
+    font,
+  );
   // A tick within 16 px of the top would sit under the "Asking price" axis title: drop it.
   const yTicks = y.ticks(4).filter((t) => y(t) >= top + 16);
+  const yText = priceTickText(yTicks);
   const trendPath = shapeLine<number>()
     .x((d) => x(d))
     .y((d) => y(trendAt(trend, d)))([xDomain[0], xDomain[1]]);
@@ -360,12 +409,12 @@ function PriceScatter({ price, mileageMi, listings, width, height }: { price: nu
       </svg>
       {yTicks.map((t) => (
         <TickLabel key={t} x={0} y={y(t) - 7} w={left - 8} align="right">
-          ${Math.round(t / 1000)}k
+          {yText(t)}
         </TickLabel>
       ))}
       {xTicks.map((t) => (
-        <TickLabel key={t} x={x(t) - 30} y={bottom + 4}>
-          {Math.round(t / 1000)}k mi
+        <TickLabel key={t.key} x={t.left} y={bottom + 4} w={t.w}>
+          {t.text}
         </TickLabel>
       ))}
       <p data-mark className="detail-label absolute" style={{ left: 0, top: 0, whiteSpace: "nowrap", lineHeight: 1 }}>
@@ -391,7 +440,7 @@ function PriceScatter({ price, mileageMi, listings, width, height }: { price: nu
 
 // ---- Tab 3: price history (line) ----------------------------------------------------------------------------
 
-function PriceHistory({ price, history, width, height }: { price: number; history: HistoryPoint[]; width: number; height: number }) {
+function PriceHistory({ price, history, width, height, font }: { price: number; history: HistoryPoint[]; width: number; height: number; font: number }) {
   const uid = useId();
   const left = MARGIN.left;
   const right = width - MARGIN.right;
@@ -404,6 +453,7 @@ function PriceHistory({ price, history, width, height }: { price: number; histor
     return scaleLinear().domain([Math.min(...values) * 0.96, Math.max(...values) * 1.04]).range([bottom, top]);
   }, [history, price, bottom, top]);
   const yTicks = y.ticks(4);
+  const yText = priceTickText(yTicks);
   const path = shapeLine<HistoryPoint>()
     .x((_, i) => x(i))
     .y((d) => y(d.medianUsd))(history);
@@ -415,6 +465,11 @@ function PriceHistory({ price, history, width, height }: { price: number; histor
     setHover(Math.max(0, Math.min(last, Math.round(x.invert(px)))));
   };
   const tickIdx = [0, Math.min(10, last), last].filter((v, i, all) => all.indexOf(v) === i);
+  const quarterTicks = placeTicks(
+    tickIdx.map((i) => ({ key: i, x: x(i), text: history[i].quarter })),
+    width,
+    font,
+  );
 
   return (
     <>
@@ -423,7 +478,7 @@ function PriceHistory({ price, history, width, height }: { price: number; histor
       ))}
       <svg data-mark-group width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="absolute left-0 top-0" style={{ overflow: "visible" }} role="group" aria-label="Median asking price by quarter; arrow keys move between quarters">
         <clipPath id={`${uid}-clip`}>
-          <rect data-rule x={0} y={0} width={width} height={height} style={{ transformBox: "fill-box", transformOrigin: "left" }} />
+          <rect data-rule data-clip x={0} y={0} width={width} height={height} style={{ transformBox: "fill-box", transformOrigin: "left" }} />
         </clipPath>
         <line x1={left} x2={right} y1={y(price)} y2={y(price)} stroke={ink(50)} strokeWidth={1.5} strokeDasharray="5 5" style={{ pointerEvents: "none" }} />
         {hovered && <line x1={x(hover!)} x2={x(hover!)} y1={top} y2={bottom} stroke={ink(30)} strokeWidth={1} style={{ pointerEvents: "none" }} />}
@@ -446,12 +501,12 @@ function PriceHistory({ price, history, width, height }: { price: number; histor
       </svg>
       {yTicks.map((t) => (
         <TickLabel key={t} x={0} y={y(t) - 7} w={left - 8} align="right">
-          ${Math.round(t / 1000)}k
+          {yText(t)}
         </TickLabel>
       ))}
-      {tickIdx.map((i) => (
-        <TickLabel key={i} x={i === last ? width - 64 : x(i) - 32} y={bottom + 4} w={64} align={i === last ? "right" : "center"}>
-          {history[i].quarter}
+      {quarterTicks.map((t) => (
+        <TickLabel key={t.key} x={t.left} y={bottom + 4} w={t.w}>
+          {t.text}
         </TickLabel>
       ))}
       <div data-mark className="absolute flex items-baseline gap-2" style={{ right: MARGIN.right, bottom: height - y(price) + 4, whiteSpace: "nowrap" }}>
@@ -526,53 +581,170 @@ function DataTable({ price, listings, history }: { price: number; listings: List
   );
 }
 
-// ---- The module: price, comparison line, tabs ---------------------------------------------------------------
+// ---- The module: verdict, price line, comparison line, tabs -------------------------------------------------
 
-/** The chart box: fills what the panel leaves, measures itself, and renders its chart once it has a size. */
-function ChartBox({ children }: { children: (size: { width: number; height: number }) => ReactNode }) {
+/** The chart box: fills what the panel leaves, measures itself, renders its chart once it has a size, and then
+ * reports itself ready (`onReady` runs in the commit that first holds the chart's marks, before paint, which
+ * is when a tab switch can set the marks' starting state without a flash). */
+function ChartBox({ minHeight, onReady, children }: { minHeight: string; onReady?: (box: HTMLElement) => void; children: (size: { width: number; height: number; font: number }) => ReactNode }) {
   const [ref, size] = useChartSize();
+  const ready = size.width > 0 && size.height > 0;
+  const readyRef = useRef(onReady);
+  useLayoutEffect(() => {
+    readyRef.current = onReady;
+  });
+  useLayoutEffect(() => {
+    if (ready && ref.current) readyRef.current?.(ref.current);
+  }, [ready, ref]);
   return (
-    <div ref={ref} className="relative" style={{ marginTop: u(16), flex: 1, minHeight: `max(220px, ${u(220)})` }}>
-      {size.width > 0 && size.height > 0 && children(size)}
+    <div ref={ref} data-tab-in className="relative" style={{ marginTop: u(16), flex: 1, minHeight, fontSize: TICK_FONT }}>
+      {ready && children(size)}
     </div>
   );
 }
 
 const TABS = ["Price spread", "Price vs mileage", "Price history"] as const;
 
-/** Section D's `price-module` block: the price, the comparison line and three tabs (WAI-ARIA tabs pattern,
- * automatic activation). Only the active panel's content is mounted, so a chart always measures a visible box. */
-export function PriceModule({ car }: { car: CarWithAssets }) {
+const prefersReduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/** A mark's resting opacity: its own SVG `opacity` attribute (the hover dim lives there) or 1. */
+const restOpacity = (_: number, el: Element) => parseFloat(el.getAttribute("opacity") ?? "1");
+/** What a switch tween leaves behind on an element; cleared so React's own attributes govern again (6h). */
+const SWITCH_PROPS = "opacity,transform";
+
+/** Section D's `price-module` block: the verdict as the headline, the price line, the comparison line and three
+ * tabs (WAI-ARIA tabs pattern, automatic activation). Only the active panel's content is mounted, so a chart
+ * always measures a visible box. `renderVerdict` is Detail.tsx's char-rise markup, so M2 can reveal the headline. */
+export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; renderVerdict: (text: string) => ReactNode }) {
   const { listings, history } = getComparables(car.slug);
   const base = useId();
   const [tab, setTab] = useState(0);
+  const tabNow = useRef(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const tablist = useRef<HTMLDivElement>(null);
+  const indicator = useRef<HTMLDivElement>(null);
+  const animated = useRef<Element[]>([]);
+  const running = useRef<gsap.core.Timeline | null>(null);
+  const pointerSwitch = useRef(false);
   const trend = trendLine(listings);
+  const prices = listings.map((l) => l.priceUsd);
+  const verdict = VERDICT_LABEL[verdictFor(car.priceUsd, prices)];
 
-  const select = (to: number) => {
-    const next = (to + TABS.length) % TABS.length;
-    setTab(next);
-    tabRefs.current[next]?.focus();
+  /** M13's indicator: one bar moved with `x` and `scaleX` (a 1 px wide element scaled to the tab's width). */
+  const place = (to: number, animate: boolean) => {
+    const bar = indicator.current;
+    const button = tabRefs.current[to];
+    if (!bar || !button) return;
+    const vars = { x: button.offsetLeft, scaleX: button.offsetWidth };
+    if (animate) gsap.to(bar, { ...vars, duration: effect.tabSwitch.duration, ease: effect.tabSwitch.ease, overwrite: "auto" });
+    else {
+      gsap.killTweensOf(bar);
+      gsap.set(bar, vars);
+    }
+  };
+  useLayoutEffect(() => {
+    const list = tablist.current;
+    if (!list) return;
+    place(tabNow.current, false);
+    const observer = new ResizeObserver(() => place(tabNow.current, false));
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, []);
+  useLayoutEffect(
+    () => () => {
+      running.current?.kill();
+      gsap.killTweensOf(animated.current);
+      if (indicator.current) gsap.killTweensOf(indicator.current);
+    },
+    [],
+  );
+
+  /** Interruption (M13): stop whatever the previous switch animated and put it at its end state. */
+  const settle = () => {
+    running.current?.kill();
+    running.current = null;
+    gsap.killTweensOf(animated.current);
+    gsap.set(animated.current, { clearProps: SWITCH_PROPS });
+    animated.current = [];
+  };
+
+  /** Plays the incoming panel's entrance once its chart's marks exist. Pointer switches only. */
+  const playSwitch = (box: HTMLElement) => {
+    const panel = box.closest<HTMLElement>('[role="tabpanel"]');
+    if (!panel) return;
+    const content = Array.from(panel.querySelectorAll<HTMLElement>("[data-tab-in]"));
+    const circles = Array.from(panel.querySelectorAll<SVGCircleElement>("svg[data-mark-group] circle[data-mark]"));
+    const dots = Array.from(panel.querySelectorAll<SVGCircleElement>("circle[data-dot]"));
+    const clip = panel.querySelector<SVGRectElement>("rect[data-clip]");
+    animated.current = [...content, ...circles, ...(clip ? [clip] : [])];
+    const t = effect.tabSwitch;
+    if (prefersReduced()) {
+      running.current = gsap.timeline().fromTo(animated.current.filter((el) => el !== clip), { opacity: 0 }, { opacity: restOpacity, duration: reducedTokens.fade, ease: gsapEase.fade, clearProps: SWITCH_PROPS }, 0);
+      return;
+    }
+    const tl = gsap.timeline({ defaults: { ease: t.ease } });
+    tl.fromTo(content, { opacity: 0, y: t.y }, { opacity: 1, y: 0, duration: t.duration, stagger: t.stagger, clearProps: SWITCH_PROPS }, 0);
+    if (tabNow.current === 0) {
+      tl.fromTo(dots, { opacity: 0, scale: t.dotScale }, { opacity: restOpacity, scale: 1, duration: t.duration, stagger: t.dotStagger, clearProps: SWITCH_PROPS }, 0);
+    } else if (tabNow.current === 1) {
+      tl.fromTo(circles, { opacity: 0 }, { opacity: restOpacity, duration: t.duration, clearProps: SWITCH_PROPS }, t.scatterDelay);
+    } else if (clip) {
+      tl.fromTo(clip, { scaleX: 0 }, { scaleX: 1, duration: t.duration, clearProps: SWITCH_PROPS }, 0);
+      tl.fromTo(circles, { opacity: 0 }, { opacity: restOpacity, duration: t.pointsDuration, clearProps: SWITCH_PROPS }, ">");
+    }
+    running.current = tl;
+  };
+  const onChartReady = (box: HTMLElement) => {
+    if (!pointerSwitch.current) return;
+    pointerSwitch.current = false;
+    playSwitch(box);
+  };
+
+  /** Pointer clicks animate; keyboard switches (arrows, Home, End) are instant: no animation on keyboard-initiated
+   * actions (/review-animations). */
+  const switchTo = (to: number, viaPointer: boolean) => {
+    if (to === tabNow.current) return;
+    settle();
+    tabNow.current = to;
+    pointerSwitch.current = viaPointer;
+    place(to, viaPointer && !prefersReduced());
+    setTab(to);
   };
   const onTabKey = (event: ReactKeyboardEvent<HTMLButtonElement>, i: number) => {
     const to = event.key === "ArrowRight" ? i + 1 : event.key === "ArrowLeft" ? i - 1 : event.key === "Home" ? 0 : event.key === "End" ? TABS.length - 1 : null;
     if (to === null) return;
     // preventDefault keeps Detail.tsx's window onKey from also stepping the page between sections.
     event.preventDefault();
-    select(to);
+    const next = (to + TABS.length) % TABS.length;
+    switchTo(next, false);
+    tabRefs.current[next]?.focus();
   };
 
   const panelStyle: CSSProperties = { marginTop: u(24), flex: 1, minHeight: 0 };
   return (
     <>
-      <p data-mark className="font-mono" style={{ fontSize: "var(--type-price)", lineHeight: 1 }}>
-        {formatPrice(car.priceUsd)}
+      {/* The verdict is the section's headline (7b): the answer first, in the page's display voice. The text is
+          in the sr-only copy once; the aria-hidden pieces are M2's character spans (same markup as section B). */}
+      <p className="font-display" style={{ fontFamily: "var(--t-display)", fontSize: "max(32px, calc(64 * var(--u)))", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)", fontWeight: 400 }}>
+        <span className="sr-only">{verdict}</span>
+        <span aria-hidden className="block overflow-hidden">
+          <span className="block">{renderVerdict(verdict)}</span>
+        </span>
       </p>
+      <div data-mark className="flex flex-wrap items-baseline" style={{ marginTop: u(16), columnGap: u(12) }}>
+        <span className="font-mono" style={{ fontSize: "max(20px, calc(32 * var(--u)))", lineHeight: 1 }}>
+          {formatPrice(car.priceUsd)}
+        </span>
+        <span style={{ fontSize: "max(13px, var(--type-body))", color: ink(75) }}>
+          cheaper than {Math.round(cheaperThanShare(car.priceUsd, prices) * 100)}% of {listings.length} comparable listings
+        </span>
+      </div>
+      {/* The full sentence once, for screen readers; the header says it in pieces. */}
+      <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
       {/* 75%, not 65% (6h): 65% measured 4.03:1 on the figma theme's card, under AA. */}
       <p data-mark style={{ marginTop: u(8), fontSize: "max(12px, var(--type-label))", lineHeight: 1.4, color: ink(75) }}>
         {comparisonLine(listings)}
       </p>
-      <div role="tablist" aria-label="Price comparison datasets" className="relative flex" style={{ marginTop: u(24), gap: u(32) }}>
+      <div ref={tablist} role="tablist" aria-label="Price comparison datasets" className="relative flex" style={{ marginTop: u(32), gap: u(32) }}>
         {TABS.map((label, i) => (
           <button
             key={label}
@@ -586,13 +758,14 @@ export function PriceModule({ car }: { car: CarWithAssets }) {
             aria-controls={`${base}-panel-${i}`}
             tabIndex={tab === i ? 0 : -1}
             className="price-tab"
-            onClick={() => setTab(i)}
+            onClick={() => switchTo(i, true)}
             onKeyDown={(event) => onTabKey(event, i)}
           >
             {label}
           </button>
         ))}
         <div data-rule aria-hidden className="absolute bottom-0 left-0 h-px w-full origin-left" style={{ background: ink(22) }} />
+        <div ref={indicator} aria-hidden className="absolute bottom-0 left-0 origin-left" style={{ width: 1, height: 2, background: "var(--color-ink)" }} />
       </div>
       {TABS.map((label, i) => (
         <div
@@ -605,20 +778,21 @@ export function PriceModule({ car }: { car: CarWithAssets }) {
         >
           {tab === i && (
             <>
-              {i === 0 && <Takeaway>{stripSummary(car.priceUsd, listings)}</Takeaway>}
+              {i === 0 && <Takeaway>{spreadTakeaway(listings)}</Takeaway>}
               {i === 1 && <Takeaway>{mileageTakeaway(car.priceUsd, car.mileageMi, trend)}</Takeaway>}
               {i === 2 && <Takeaway>{historyTakeaway(car.chassis, history)}</Takeaway>}
-              <ChartBox>
-                {({ width, height }) =>
+              <ChartBox minHeight={i === 0 ? "max(200px, calc(200 * var(--u)))" : "max(220px, calc(220 * var(--u)))"} onReady={onChartReady}>
+                {({ width, height, font }) =>
                   i === 0 ? (
-                    <PriceStrip price={car.priceUsd} listings={listings} width={width} height={height} />
+                    <PriceStrip price={car.priceUsd} listings={listings} width={width} height={height} font={font} />
                   ) : i === 1 ? (
-                    <PriceScatter price={car.priceUsd} mileageMi={car.mileageMi} listings={listings} width={width} height={height} />
+                    <PriceScatter price={car.priceUsd} mileageMi={car.mileageMi} listings={listings} width={width} height={height} font={font} />
                   ) : (
-                    <PriceHistory price={car.priceUsd} history={history} width={width} height={height} />
+                    <PriceHistory price={car.priceUsd} history={history} width={width} height={height} font={font} />
                   )
                 }
               </ChartBox>
+              {i === 0 && <StripStats listings={listings} />}
               <Caption>
                 {i === 0 && "Larger dots mean more listings at that price. Illustrative data."}
                 {i === 1 && "Illustrative data; a straight trend line fit to the comparables above."}

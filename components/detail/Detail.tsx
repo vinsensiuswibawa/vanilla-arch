@@ -211,6 +211,7 @@ function Page({ car }: { car: CarWithAssets }) {
   const priceTitle = useRef<HTMLHeadingElement>(null);
   const headline = useRef<HTMLParagraphElement>(null);
   const headlineChars = useRef<HTMLSpanElement[][]>([]);
+  const priceVerdictChars = useRef<HTMLSpanElement[][]>([]);
   const aboutBodyP = useRef<HTMLParagraphElement>(null);
   const aboutBodyInner = useRef<HTMLSpanElement>(null);
   const cBandFrame = useRef<HTMLDivElement>(null);
@@ -625,7 +626,17 @@ function Page({ car }: { car: CarWithAssets }) {
     // starting state is set a frame later; the section is screens away from the viewport at that point.
     const priceModuleEl = rootEl.querySelector<HTMLElement>('[data-block="price-module"]');
     const prepareFrame = requestAnimationFrame(() => {
-      if (priceModuleEl) revealOnce(priceModuleEl, 0.8, prepareChartReveal(priceModuleEl, reduced));
+      if (priceModuleEl) {
+        // 7b: the verdict headline is the section's M2, started with the rest of the module's reveal.
+        const verdictLines = priceVerdictChars.current.filter((l) => l.length);
+        if (reduced) gsap.set(live(verdictLines.flat()), { opacity: 0 });
+        else gsap.set(verdictLines.flat(), { yPercent: effect.charRise.yPercent });
+        const playCharts = prepareChartReveal(priceModuleEl, reduced);
+        revealOnce(priceModuleEl, 0.8, () => {
+          playCharts();
+          charRise(verdictLines, reduced);
+        });
+      }
     });
     // The section title rises like "About the car" (M1); it starts hidden under its own overflow mask.
     if (priceTitle.current) gsap.set(priceTitle.current, reduced ? { opacity: 0 } : { yPercent: effect.lineRise.yPercent });
@@ -1184,9 +1195,9 @@ function Page({ car }: { car: CarWithAssets }) {
                   data-block="price-module"
                   data-tone="light"
                   className="absolute box-border flex flex-col"
-                  style={{ ...styleOf(block("price-module")), background: "var(--color-card)", padding: "max(20px, calc(32 * var(--u)))" }}
+                  style={{ ...styleOf(block("price-module")), height: "calc(100% - calc(var(--u) * 76))", background: "var(--color-card)", padding: "max(20px, calc(32 * var(--u)))" }}
                 >
-                  <PriceModule car={car} />
+                  <PriceModule car={car} renderVerdict={(text) => charRiseLine(text, 0, priceVerdictChars)} />
                 </div>
 
                 {/* D: the slideshow (M4 on the single photos, M5 on the swap slot) and the gallery link. */}

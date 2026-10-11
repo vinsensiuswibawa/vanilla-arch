@@ -92,8 +92,8 @@ export const BLOCKS: Block[] = [
 
   // Runs up to the slideshow, so the side-view car stays hidden in the gap between them (frame 11).
   { id: "price-panel", layer: "front", kind: "surface", tone: "light", label: "D: price", x: 10553, w: 747, h: "full" },
-  { id: "price-module", layer: "front", kind: "card", tone: "light", label: "Price comparison", real: true, x: 10577, y: 24, w: 564, h: "inset" },
-  { id: "price-title", layer: "front", kind: "type", tone: "light", label: "Price comparison title", real: true, x: 11165, y: 56, w: 111, h: 24 },
+  { id: "price-module", layer: "front", kind: "card", tone: "light", label: "Price comparison", real: true, x: 10577, y: 52, w: 564, h: "inset" },
+  { id: "price-title", layer: "front", kind: "type", tone: "light", label: "Price comparison title", real: true, x: 10577, y: 24, w: 564, h: 16 },
 
   { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11300, w: 2100, h: "full" },
   { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11324, y: 24, w: 607, h: "inset" },

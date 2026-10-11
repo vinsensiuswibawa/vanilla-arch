@@ -115,6 +115,22 @@ export function stripSummary(price: number, listings: Listing[]): string {
   return `This car is priced at ${formatPrice(price)}, cheaper than ${pct}% of ${listings.length} comparable listings: ${VERDICT_LABEL[verdict].toLowerCase()}.`;
 }
 
+/** The q-th quantile of a list (0 to 1), linear interpolation between the two nearest sorted values. */
+export function quantile(values: number[], q: number): number {
+  const sorted = [...values].sort((x, y) => x - y);
+  const pos = (sorted.length - 1) * q;
+  const lo = Math.floor(pos);
+  const hi = Math.ceil(pos);
+  return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+}
+
+/** The price spread tab's takeaway (7b): the middle half of the comparables' asking prices. The verdict and the
+ * share cheaper now sit in the card's header, so this line says only where the bulk of the market is. */
+export function spreadTakeaway(listings: Listing[]): string {
+  const prices = listings.map((l) => l.priceUsd);
+  return `Half of the comparable listings ask between ${formatPrice(quantile(prices, 0.25))} and ${formatPrice(quantile(prices, 0.75))}.`;
+}
+
 /** The mileage/price scatter's one-line takeaway (step 5's example): "$12,400 below the trend for its
  * mileage." */
 export function mileageTakeaway(price: number, mileageMi: number, trend: { slope: number; intercept: number }): string {

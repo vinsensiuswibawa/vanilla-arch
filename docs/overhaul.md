@@ -199,6 +199,7 @@ feel unhurried. GSAP names are given; CSS equivalents are for non-GSAP transitio
 | M10 | Bar exit | The bottom spec bar slides down and out. | `yPercent` 0 → 100, opacity 1 → 0 over the last 30% of the bar's travel, `linear` | Scroll-tied, over section A's final 25% | Bottom spec bar |
 | M11 | Sidebar | A panel arrives from the right over a scrim. | Panel `xPercent` 100 → 0, 0.8 s, `reveal`; scrim opacity 0 → 0.4, 0.6 s, `fade`; closing 0.5 s, `leave` | Clicked, or (enquiry) section E reaching 40% | Enquiry form, equipment and history overlay (placeholders) |
 | M12 | Chrome fade | Small UI fades in place. | Opacity 0 → 1, 0.6 s, `fade` | With its sequence | Emblem, back link, "Scroll for more", "Jump to specs" |
+| M13 | Tab switch | The price module's tabs: the active-tab bar slides, the incoming panel rises in. (Added in 7b, user-approved.) | Indicator `x`/`scaleX`, 0.3 s, `reveal`, retargets mid-flight; panel text, chart box and caption opacity 0 → 1 and `y` 8 → 0, 0.3 s, `reveal`, stagger 0.05 s; dots scale 0.85 → 1 (stagger 0.012 s), scatter points fade, history line draws along its clip then its points fade | A pointer click on a tab (keyboard switches are instant; reduced motion: 0.3 s fade only) | The price module's three tabs |
 
 **Image-swap cadence (M5).** Everywhere (section A, section B's photo, the section D slideshow): scroll-tied, one
 swap per half-viewport of travel while the slot is on screen, so the visitor drives it and scrolling back reverses
@@ -1125,7 +1126,38 @@ Not fixed, for the user (critique findings that are design calls, or outside 6h)
   twelve cars, the hover on tabs 1 and 3, the reveal, the `.cache/` walk (the folder is not in a fresh clone),
   `/impeccable critique` and `audit`, `web-design-guidelines`, `break-ui`, and the user's `/review-animations`.
 
-### After the overhaul
+### 7b: Section D's price comparison, bolder
+
+#### 7b status (2026-10-11)
+
+- **Built:** the verdict is the section's headline (display face, 64u, M2 char rise started with the module's reveal);
+  `price-title` moved above the card (x 10577, y 24, w 564, h 16) and `price-module` starts at y 52 with its height set in
+  the JSX (`calc(100% - calc(var(--u) * 76))`); the camera, stops and `cueRanges` are untouched. The header is verdict,
+  price line ("cheaper than N% of M comparable listings", with the full sentence kept sr-only), comparison line, tabs.
+  Tab 1 has a p25–p75 takeaway (`spreadTakeaway`), a flex-fill strip box, a "This car" pin (ring, 2 px line, label) and a
+  bolder stat row below the strip box; the tick-overlap rule (`placeTicks`: 0.62 em per character, 8 px gap, clamped
+  inside the box) runs on all three tabs.
+- **M13 (tab switch)** is `effect.tabSwitch` in `lib/detail-motion.ts`: one indicator bar (`x`/`scaleX`, `overwrite:
+  "auto"`), the incoming panel's text, chart box, stat row and caption rising 8 px, dots scaling from 0.85, scatter
+  points fading, the history clip drawing. Pointer clicks animate; arrows, Home and End are instant; the previous
+  switch's tweens are killed and cleared before each one.
+- **Measured departures (both user-approved):** stat values 24u instead of 32u (at 32u the Porsche's $192,500 / $229,000
+  / $284,000 measured 153 px each in a 500 px row and collided); strip baseline 0.74 instead of 0.62 (a ~100 px empty
+  band under the ticks at 1440 × 960). Also: the pin line starts at `max(28, label height)` so the label never leaves the box,
+  and marks fade to their resting opacity (the dots' 0.72 and the scatter's 0.55 live in the SVG attribute), not to 1.
+- **Found and fixed:** price-axis labels repeated on the cheap cars ("$9k, $9k" on the Peugeot); ticks on half-thousands
+  now carry one decimal.
+- **Checked** (cloud sandbox, software WebGL, no timings): typecheck, lint, production build, the 6 smoke tests;
+  `impeccable detect` (clean); title above the card, verdict on one line, no tick overlap and no overflow on Mazda,
+  Porsche (1440 × 960), Jaguar (1024 × 640) and Peugeot (1920 × 1080 and 1440 × 960); the indicator's transform
+  matched the active tab after a click, three rapid clicks and ArrowRight; the arrow keys did not step the page; the
+  accessibility tree reads heading, verdict, price line, tab list, panel, tables.
+- **Not run:** the full 4 cars × 3 viewports matrix (each car was run at one or two sizes), the mid-flight appearance
+  of any tween (the sandbox renders about 1 fps, so no animation could be watched), reduced motion on the tab switch,
+  `/impeccable critique` (the two isolated sub-agents), `/impeccable audit`, `/impeccable polish`, the
+  `frontend-design` self-critique written out, and the user's `/review-animations` on M13 and the headline reveal.
+
+
 
 - The showroom (carousel) redesign under the same principles, passing a `CarHandoff` from whatever its camera
   becomes.

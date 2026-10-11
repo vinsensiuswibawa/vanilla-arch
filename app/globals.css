@@ -658,15 +658,6 @@ svg[data-mark-group] circle:focus-visible {
 .price-tab[aria-selected="true"] {
   color: var(--color-ink);
 }
-.price-tab[aria-selected="true"]::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--color-ink);
-}
 @media (hover: hover) and (pointer: fine) {
   .price-tab:hover {
     color: var(--color-ink);
