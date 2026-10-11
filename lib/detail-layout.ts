@@ -92,8 +92,8 @@ export const BLOCKS: Block[] = [
 
   // Runs up to the slideshow, so the side-view car stays hidden in the gap between them (frame 11).
   { id: "price-panel", layer: "front", kind: "surface", tone: "light", label: "D: price", x: 10553, w: 747, h: "full" },
-  { id: "price-card", layer: "front", kind: "card", tone: "light", label: "Price and strip chart", real: true, x: 10577, y: 24, w: 564, h: 326 },
-  { id: "price-more", layer: "front", kind: "card", tone: "light", label: "Further datasets", real: true, x: 10577, y: 374, w: 564, h: 562 },
+  { id: "price-module", layer: "front", kind: "card", tone: "light", label: "Price comparison", real: true, x: 10577, y: 24, w: 564, h: "inset" },
+  { id: "price-title", layer: "front", kind: "type", tone: "light", label: "Price comparison title", real: true, x: 11165, y: 56, w: 111, h: 24 },
 
   { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11300, w: 2100, h: "full" },
   { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11324, y: 24, w: 607, h: "inset" },
@@ -169,7 +169,7 @@ export function toneAt(x: number, y: number, height: number): Tone {
 export function cueRanges(u: number, vw: number, travel: number): [number, number][] {
   const end = (v: number) => Math.min(v, travel);
   const t1: [number, number] = [(block("a3").x + block("a3").w) * u, block("headline").x * u - 690 * u];
-  const t2: [number, number] = [(block("specs").x + block("specs").w) * u - 0.14 * vw, block("price-card").x * u - 851 * u];
+  const t2: [number, number] = [(block("specs").x + block("specs").w) * u - 0.14 * vw, block("price-module").x * u - 851 * u];
   const t3: [number, number] = [(block("slideshow").x + block("slideshow").w) * u - 0.16 * vw, end(ENQUIRY * u)];
   const out: [number, number][] = [];
   let floor = 0;

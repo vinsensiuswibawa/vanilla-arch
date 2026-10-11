@@ -639,3 +639,36 @@ svg[data-mark-group] circle:focus-visible {
   text-decoration-thickness: 2px;
   text-underline-offset: 0.18em;
 }
+
+/* Section D's price tabs (7a). Instant switching: no transition on the label or the indicator. */
+.price-tab {
+  position: relative;
+  height: max(44px, calc(44 * var(--u)));
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--t-text);
+  font-size: max(12px, var(--type-label));
+  text-transform: uppercase;
+  letter-spacing: var(--label-tracking);
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
+}
+.price-tab[aria-selected="true"] {
+  color: var(--color-ink);
+}
+.price-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .price-tab:hover {
+    color: var(--color-ink);
+  }
+}

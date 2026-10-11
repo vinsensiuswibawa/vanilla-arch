@@ -11,7 +11,7 @@ import { PerspectiveCamera } from "three";
 import { Blocks } from "@/components/detail/Blocks";
 import { Enquiry } from "@/components/detail/Enquiry";
 import { Gallery } from "@/components/detail/Gallery";
-import { PriceCard, PriceMore, prepareChartReveal } from "@/components/detail/PriceCharts";
+import { PriceModule, prepareChartReveal } from "@/components/detail/PriceCharts";
 import { CarName } from "@/components/experience/CarName";
 import { toggleSound } from "@/components/experience/Chrome";
 import shapes from "@/content/shapes.json";
@@ -208,6 +208,7 @@ function Page({ car }: { car: CarWithAssets }) {
   const a3Frame = useRef<HTMLDivElement>(null);
   const a3Inner = useRef<HTMLDivElement>(null);
   const aboutLabel = useRef<HTMLHeadingElement>(null);
+  const priceTitle = useRef<HTMLHeadingElement>(null);
   const headline = useRef<HTMLParagraphElement>(null);
   const headlineChars = useRef<HTMLSpanElement[][]>([]);
   const aboutBodyP = useRef<HTMLParagraphElement>(null);
@@ -236,7 +237,6 @@ function Page({ car }: { car: CarWithAssets }) {
   const phase = useArcade((state) => state.phase);
   const sound = useArcade((state) => state.sound);
   const router = useRouter();
-  const [hoverMid, setHoverMid] = useState<number | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [enquiryModal, setEnquiryModal] = useState(false);
@@ -621,12 +621,15 @@ function Page({ car }: { car: CarWithAssets }) {
     // Step 5: "when the section arrives (triggered at 80%)" — the strip's line draws, then its dots and the
     // further datasets' axes and marks, via `prepareChartReveal`'s own `data-rule`/`data-mark` lookup (the
     // same shape `wireSpecTable` already uses for section C's rules and text).
-    const priceCardEl = rootEl.querySelector<HTMLElement>('[data-block="price-card"]');
-    const priceMoreEl = rootEl.querySelector<HTMLElement>('[data-block="price-more"]');
-    for (const el of live([priceCardEl, priceMoreEl])) {
-      const play = prepareChartReveal(el as HTMLElement, reduced);
-      revealOnce(el, 0.8, play);
-    }
+    // The chart marks mount a commit after this effect (each chart measures its box first), so the hidden
+    // starting state is set a frame later; the section is screens away from the viewport at that point.
+    const priceModuleEl = rootEl.querySelector<HTMLElement>('[data-block="price-module"]');
+    const prepareFrame = requestAnimationFrame(() => {
+      if (priceModuleEl) revealOnce(priceModuleEl, 0.8, prepareChartReveal(priceModuleEl, reduced));
+    });
+    // The section title rises like "About the car" (M1); it starts hidden under its own overflow mask.
+    if (priceTitle.current) gsap.set(priceTitle.current, reduced ? { opacity: 0 } : { yPercent: effect.lineRise.yPercent });
+    revealOnce(priceTitle.current, effect.lineRise.trigger, () => lineRise(priceTitle.current!, reduced));
 
     // ---- Section E: "Give it" / "a new home" (M9, its first live use), and the enquiry sidebar (M11) -------
     if (giveIt.current) gsap.set(giveIt.current, reduced ? { opacity: 0 } : { xPercent: -effect.sideEntrance.xPercent, opacity: 0 });
@@ -825,6 +828,7 @@ function Page({ car }: { car: CarWithAssets }) {
       timeline.scrollTrigger?.kill();
       timeline.kill();
       for (const t of entryTweens) t.kill();
+      cancelAnimationFrame(prepareFrame);
       for (const t of triggers) t.kill();
       for (const t of delayedCalls) t.kill();
       for (const t of [...a2Swap.timelines, ...bPhotoSwap.timelines, ...sSwap.timelines]) t.kill();
@@ -1164,24 +1168,25 @@ function Page({ car }: { car: CarWithAssets }) {
                   </p>
                 </div>
 
-                {/* D: the price comparison and the two further datasets (docs/overhaul.md step 5/6g). The
+                {/* D: the price comparison in three tabs (docs/overhaul.md step 5, 7a). The
                     `--color-card` token (already in the theme, used nowhere else yet) gives the module the
                     storyboard's bounded card (frame 10) instead of floating the charts on the bare field. */}
-                <div
-                  data-block="price-card"
+                <h2
+                  ref={priceTitle}
+                  data-block="price-title"
                   data-tone="light"
-                  className="absolute box-border"
-                  style={{ ...styleOf(block("price-card")), background: "var(--color-card)", padding: "max(16px, calc(20 * var(--u)))" }}
+                  className="font-condensed absolute overflow-hidden"
+                  style={{ ...styleOf(block("price-title")), lineHeight: 1, fontSize: "max(11px, var(--type-label))", letterSpacing: "var(--label-tracking)", textTransform: "var(--label-case)" }}
                 >
-                  <PriceCard car={car} hoverMid={hoverMid} setHoverMid={setHoverMid} />
-                </div>
+                  Price comparison
+                </h2>
                 <div
-                  data-block="price-more"
+                  data-block="price-module"
                   data-tone="light"
-                  className="absolute box-border"
-                  style={{ ...styleOf(block("price-more")), background: "var(--color-card)", padding: "max(16px, calc(20 * var(--u)))" }}
+                  className="absolute box-border flex flex-col"
+                  style={{ ...styleOf(block("price-module")), background: "var(--color-card)", padding: "max(20px, calc(32 * var(--u)))" }}
                 >
-                  <PriceMore car={car} hoverMid={hoverMid} setHoverMid={setHoverMid} />
+                  <PriceModule car={car} />
                 </div>
 
                 {/* D: the slideshow (M4 on the single photos, M5 on the swap slot) and the gallery link. */}

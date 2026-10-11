@@ -1,17 +1,19 @@
 "use client";
 
-// Section D's price comparison (docs/overhaul.md step 5): the price strip, the mileage/price scatter with a
-// trend line, and the asking-price history. Hand-built SVG with d3-scale and d3-shape only, per the plan and
-// the `dataviz` skill; achromatic throughout — "this car" is always an ink ring or dashed ink line, never
-// colour (the plan's own wording), and the verdict is always words. Hairlines are plain HTML divs so the
-// existing M8 `ruleDraw` factory (built for the spec table's rule divs) works here unchanged; only the marks
-// and paths that need real geometry are SVG. Entrance motion (M8 for the rules/axes, M1-timing for the marks)
-// is wired from Detail.tsx via `prepareChartReveal`, which finds this file's `data-rule`/`data-mark` elements
-// by attribute, the same way `wireSpecTable` already finds `data-spec-rule`/`data-spec-text`.
+// Section D's price comparison (docs/overhaul.md step 5, rebuilt in shot 7a): one beige card holding the price,
+// the comparison line and three tabs, one chart per tab: the price spread (strip), price vs mileage (scatter)
+// and price history (line). Hand-built SVG with d3-scale and d3-shape only, per the plan and the `dataviz`
+// skill; achromatic throughout: "this car" is always an ink ring or dashed ink line, never colour, and the
+// verdict is always words. Charts draw in real CSS pixels: `useChartSize` measures the chart box and every
+// range, tick and overlay below is in those pixels, so nothing scales a drawing after the fact (6h: the old
+// viewBox scaling letterboxed against its HTML ticks). Hairlines are plain HTML divs so the existing M8
+// `ruleDraw` factory works here unchanged; only marks and paths that need real geometry are SVG. Entrance
+// motion is wired from Detail.tsx via `prepareChartReveal`, which finds this file's `data-rule`/`data-mark`
+// elements by attribute, the same way `wireSpecTable` finds `data-spec-rule`/`data-spec-text`.
 import { scaleLinear, scaleSqrt } from "d3-scale";
 import { line as shapeLine } from "d3-shape";
 import gsap from "gsap";
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import type { CarWithAssets } from "@/lib/cars";
 import {
   bucketStep,
@@ -31,28 +33,26 @@ import {
 } from "@/lib/comparables";
 import { formatMiles, formatPrice } from "@/lib/format";
 
-/** The charts' internal coordinate width, matching `price-card`/`price-more`'s u width (lib/detail-layout.ts),
- * so an SVG's `viewBox` and an HTML overlay positioned by percentage agree on where "x" is. */
-const W = 564;
 const ease = "cubic-bezier(0.215, 0.61, 0.355, 1)"; // --ease-reveal
+const u = (n: number) => `calc(${n} * var(--u))`;
+const ink = (pct: number) => `color-mix(in srgb, var(--color-ink) ${pct}%, transparent)`;
+const TICK_FONT = "max(11px, calc(11 * var(--u)))";
 
-const pct = (x: number) => `${(x / W) * 100}%`;
-
-/** The chart's rendered width over `W`: every px height and offset below is drawn at the 564 reference and
- * multiplied by this, so the SVG (whose viewBox is W wide) scales uniformly with its card. Before 6h the heights
- * were fixed px inside `--u`-sized cards: at 1024 x 640 the price module overflowed its card (the captions fell
- * outside it), and wherever the width and height disagreed the SVG letterboxed, drifting off its HTML ticks. */
-function useChartScale() {
+/** The chart box's size in CSS px. Measured synchronously on mount (so the first commit after it already has
+ * marks) and then on every resize. */
+function useChartSize() {
   const ref = useRef<HTMLDivElement>(null);
-  const [k, setK] = useState(1);
+  const [size, setSize] = useState({ width: 0, height: 0 });
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new ResizeObserver(() => setK(el.clientWidth / W || 1));
+    const measure = () => setSize((prev) => (prev.width === el.clientWidth && prev.height === el.clientHeight ? prev : { width: el.clientWidth, height: el.clientHeight }));
+    measure();
+    const observer = new ResizeObserver(measure);
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
-  return [ref, k] as const;
+  return [ref, size] as const;
 }
 
 /** M1-timing mark reveal (step 5: "its marks fade and rise in (M1 timing)"): opacity and a small rise, not
@@ -69,43 +69,122 @@ function dotGrow(targets: gsap.TweenTarget, reduced: boolean) {
   return gsap.fromTo(targets, { scale: 0 }, { scale: 1, duration: 0.6, ease, stagger: 0.02 });
 }
 
-/** A hairline that draws with M8 (`data-rule`, consumed by `prepareChartReveal` below via `lib/detail-fx.ts`'s
- * `ruleDraw`): same shape as section C's spec-table rules, just standalone rather than a row's bottom border. */
-function Rule({ top }: { top: number }) {
-  return <div data-rule aria-hidden className="absolute left-0 h-px w-full origin-left" style={{ top, background: "color-mix(in srgb, var(--color-ink) 22%, transparent)" }} />;
+/** A hairline that draws with M8 (`data-rule`, consumed by `prepareChartReveal` below via the same pattern as
+ * section C's spec-table rules). Positioned in px inside the nearest positioned ancestor. */
+function Rule({ top, left = 0, width, strength = 22 }: { top?: number; left?: number; width?: number | string; strength?: number }) {
+  return <div data-rule aria-hidden className="absolute h-px origin-left" style={{ top, left, width: width ?? "100%", background: ink(strength) }} />;
 }
 
-function Caption({ children }: { children: React.ReactNode }) {
+function Caption({ children }: { children: ReactNode }) {
   // 70%, not 60%: measured contrast at 60% was 4.03:1 against the card background, under WCAG AA's 4.5:1
-  // floor for normal-size text (found live-testing). 70% matches `.detail-label`'s own ratio, measured at 4.68:1.
+  // floor for normal-size text (found live-testing). 70% matches `.detail-label`'s own ratio.
   return (
-    <p className="mt-2" style={{ fontSize: "max(10px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 70%, transparent)" }}>
-      {children}
-    </p>
+    <p style={{ marginTop: u(12), fontSize: "max(10px, var(--type-label))", color: ink(70) }}>{children}</p>
   );
 }
 
-function Takeaway({ children }: { children: React.ReactNode }) {
+function Takeaway({ children }: { children: ReactNode }) {
   return (
-    <p data-mark className="detail-label" style={{ marginTop: 2 }}>
+    <p data-mark className="detail-label">
       <span style={{ textTransform: "none", letterSpacing: 0, fontFamily: "var(--font-text)", fontSize: "max(13px, var(--type-body))", color: "var(--color-ink)" }}>{children}</span>
     </p>
   );
 }
 
-// ---- The price strip --------------------------------------------------------------------------------------
+/** A tick label as an HTML box positioned in chart px. Carries no CSS transform, so the reveal's `y` rise
+ * (a GSAP transform) never fights a centring `translate`. */
+function TickLabel({ x, y, w = 60, h = 14, align = "center", children }: { x: number; y: number; w?: number; h?: number; align?: "center" | "left" | "right"; children: ReactNode }) {
+  const justify = align === "center" ? "center" : align === "left" ? "flex-start" : "flex-end";
+  return (
+    <div data-mark aria-hidden className="absolute flex items-center font-mono" style={{ left: x, top: y, width: w, height: h, justifyContent: justify, whiteSpace: "nowrap", fontSize: TICK_FONT, lineHeight: 1, color: ink(70) }}>
+      {children}
+    </div>
+  );
+}
 
-function PriceStrip({
-  price,
-  listings,
-  hoverMid,
-  setHoverMid,
-}: {
-  price: number;
-  listings: Listing[];
-  hoverMid: number | null;
-  setHoverMid: (mid: number | null) => void;
-}) {
+/** One chart's tooltip: HTML, flipped to the other side of the target past the plot's midpoint. */
+function Tip({ x, y, width, mid, center, children }: { x: number; y: number; width: number; mid: number; center?: boolean; children: ReactNode }) {
+  const flip = x > mid;
+  const style: CSSProperties = {
+    top: y,
+    ...(flip ? { right: width - x + 12 } : { left: x + 12 }),
+    transform: center ? "translateY(-50%)" : undefined,
+    background: "var(--color-paper)",
+    boxShadow: `0 2px 12px ${ink(18)}, inset 0 0 0 1px ${ink(16)}`,
+    fontSize: "max(11px, calc(12 * var(--u)))",
+    lineHeight: 1.4,
+    whiteSpace: "nowrap",
+    pointerEvents: "none",
+  };
+  return (
+    <div aria-hidden className="absolute z-10 rounded px-3 py-2 text-left" style={style}>
+      {children}
+    </div>
+  );
+}
+
+/** The hover/focus/roving state every chart shares: one Tab stop per chart, arrows move, Escape leaves the
+ * chart (not the page: it would otherwise bubble to Experience.tsx's window listener, 6h). */
+function useMarks(count: number, initial: number) {
+  const [active, setActive] = useState(Math.min(initial, count - 1));
+  const [hover, setHover] = useState<number | null>(null);
+  const refs = useRef<(SVGCircleElement | null)[]>([]);
+  const go = (to: number) => {
+    const next = Math.max(0, Math.min(count - 1, to));
+    setActive(next);
+    refs.current[next]?.focus();
+  };
+  const onKeyDown = (event: ReactKeyboardEvent<SVGCircleElement>, i: number) => {
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      event.preventDefault();
+      go(i + 1);
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      event.preventDefault();
+      go(i - 1);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      go(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      go(count - 1);
+    } else if (event.key === "Escape") {
+      event.stopPropagation();
+      setHover(null);
+      event.currentTarget.blur();
+    }
+  };
+  const bind = (i: number, label: string) => ({
+    ref: (el: SVGCircleElement | null) => {
+      refs.current[i] = el;
+    },
+    tabIndex: i === Math.min(active, count - 1) ? 0 : -1,
+    role: "img" as const,
+    "aria-label": label,
+    onFocus: () => {
+      setActive(i);
+      setHover(i);
+    },
+    onBlur: () => setHover(null),
+    onKeyDown: (event: ReactKeyboardEvent<SVGCircleElement>) => onKeyDown(event, i),
+  });
+  return { hover, setHover, bind };
+}
+
+/** The pointer position inside an SVG's own box, from a pointer event on one of its children. */
+function localPoint(event: ReactPointerEvent<SVGRectElement>) {
+  const box = (event.currentTarget.ownerSVGElement as SVGSVGElement).getBoundingClientRect();
+  return { x: event.clientX - box.left, y: event.clientY - box.top };
+}
+
+const median = (values: number[]) => {
+  const sorted = [...values].sort((a, b) => a - b);
+  const m = sorted.length >> 1;
+  return sorted.length % 2 ? sorted[m] : (sorted[m - 1] + sorted[m]) / 2;
+};
+
+// ---- Tab 1: the price spread (strip) ------------------------------------------------------------------------
+
+function PriceStrip({ price, listings, width, height }: { price: number; listings: Listing[]; width: number; height: number }) {
   const step = bucketStep(price);
   const buckets = useMemo(() => priceBuckets(listings, step), [listings, step]);
   const prices = useMemo(() => listings.map((l) => l.priceUsd), [listings]);
@@ -115,309 +194,282 @@ function PriceStrip({
     const span = Math.max(...all) - Math.min(...all);
     return [Math.min(...all) - span * 0.06, Math.max(...all) + span * 0.06];
   }, [prices, price]);
-  const x = useMemo(() => scaleLinear().domain(domain).range([10, W - 10]), [domain]);
-  const r = useMemo(() => scaleSqrt().domain([0, Math.max(...buckets.map((b) => b.count))]).range([3, 13]), [buckets]);
-  const ticks = x.ticks(4);
-  const [active, setActive] = useState(0);
-  const refs = useRef<(SVGCircleElement | null)[]>([]);
-  useEffect(() => {
-    if (document.activeElement && refs.current.includes(document.activeElement as SVGCircleElement)) refs.current[active]?.focus();
-  }, [active]);
+  const x = useMemo(() => scaleLinear().domain(domain).range([0, width]), [domain, width]);
+  const rMin = 0.012 * width;
+  const rMax = 0.04 * width;
+  const r = useMemo(() => scaleSqrt().domain([0, Math.max(...buckets.map((b) => b.count))]).range([rMin, rMax]), [buckets, rMin, rMax]);
+  const baseline = 0.42 * height;
+  const ticks = x.ticks(5);
+  const { hover, setHover, bind } = useMarks(buckets.length, 0);
+  const hovered = hover !== null ? buckets[hover] : null;
+  const tipText = hovered ? `${formatPrice(hovered.mid - step / 2)} to ${formatPrice(hovered.mid + step / 2)}: ${hovered.count} listing${hovered.count === 1 ? "" : "s"}` : "";
 
-  const move = (event: ReactKeyboardEvent<SVGCircleElement>, i: number) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      event.preventDefault();
-      setActive(Math.min(buckets.length - 1, i + 1));
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      event.preventDefault();
-      setActive(Math.max(0, i - 1));
-    } else if (event.key === "Escape") {
-      // Escape leaves the chart, not the page (6h: it bubbled to Experience.tsx's window listener, which
-      // treats any Escape as "back to the showroom").
-      event.stopPropagation();
-      setHoverMid(null);
-      (event.currentTarget as SVGCircleElement).blur();
-    }
+  // The car's label, bottom-anchored above the biggest possible dot and clamped inside the box.
+  const labelRef = useRef<HTMLDivElement>(null);
+  const [labelW, setLabelW] = useState(0);
+  useLayoutEffect(() => {
+    if (labelRef.current) setLabelW(labelRef.current.offsetWidth);
+  }, [price, width]);
+  const labelLeft = Math.max(0, Math.min(width - labelW, x(price) - labelW / 2));
+
+  const hitHeight = Math.min(height, baseline + rMax + 12 + 28);
+  const onMove = (event: ReactPointerEvent<SVGRectElement>) => {
+    const { x: px } = localPoint(event);
+    let best = 0;
+    for (let i = 1; i < buckets.length; i++) if (Math.abs(x(buckets[i].mid) - px) < Math.abs(x(buckets[best].mid) - px)) best = i;
+    const dx = px - x(buckets[best].mid);
+    const neighbour = buckets[best + (dx < 0 ? -1 : 1)];
+    const limit = Math.max(24, neighbour ? Math.abs(x(neighbour.mid) - x(buckets[best].mid)) / 2 : 0);
+    setHover(Math.abs(dx) <= limit ? best : null);
   };
 
-  const hovered = buckets.find((b) => b.mid === hoverMid);
-  const lineY = 46;
-  const [box, k] = useChartScale();
+  const lowest = Math.min(...prices);
+  const highest = Math.max(...prices);
+  const stats: [string, string][] = [
+    ["Lowest", formatPrice(lowest)],
+    ["Median", formatPrice(median(prices))],
+    ["Highest", formatPrice(highest)],
+    ["Listings", String(listings.length)],
+  ];
 
   return (
-    <div ref={box} className="relative" style={{ height: 96 * k }}>
-      <Rule top={lineY * k} />
+    <>
+      <Rule top={baseline} />
       {/* A labelled group, not aria-hidden (6h): the dots inside are focusable, and focusable content under
           aria-hidden is announced as nothing. */}
-      <svg data-mark-group viewBox={`0 0 ${W} 72`} width="100%" height={72 * k} style={{ display: "block", overflow: "visible" }} role="group" aria-label="Comparable listings by price; arrow keys move between price groups">
+      <svg data-mark-group width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="absolute left-0 top-0" style={{ overflow: "visible" }} role="group" aria-label="Comparable listings by price; arrow keys move between price groups">
         {buckets.map((b, i) => (
           <circle
             key={b.mid}
-            ref={(el) => {
-              refs.current[i] = el;
-            }}
             data-mark
-            tabIndex={i === active ? 0 : -1}
             cx={x(b.mid)}
-            cy={lineY}
+            cy={baseline}
             r={r(b.count)}
             fill="var(--color-ink)"
-            opacity={hoverMid === null || hoverMid === b.mid ? 0.72 : 0.22}
-            style={{ transformBox: "fill-box", transformOrigin: "center", outlineOffset: 3, cursor: "pointer" }}
-            onFocus={() => {
-              setActive(i);
-              setHoverMid(b.mid);
-            }}
-            onMouseEnter={() => setHoverMid(b.mid)}
-            onMouseLeave={() => setHoverMid(null)}
-            onBlur={() => setHoverMid(null)}
-            onKeyDown={(event) => move(event, i)}
-            role="img"
-            aria-label={`${formatPrice(b.mid - step / 2)} to ${formatPrice(b.mid + step / 2)}: ${b.count} listing${b.count === 1 ? "" : "s"}`}
+            opacity={hover === null || hover === i ? 0.72 : 0.22}
+            style={{ transformBox: "fill-box", transformOrigin: "center", outlineOffset: 3, pointerEvents: "none" }}
+            {...bind(i, `${formatPrice(b.mid - step / 2)} to ${formatPrice(b.mid + step / 2)}: ${b.count} listing${b.count === 1 ? "" : "s"}`)}
           />
         ))}
         {/* "This car" is always an ink ring, never colour (step 5's own wording). */}
-        <circle data-mark cx={x(price)} cy={lineY} r={9} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center" }} />
-        {ticks.map((t) => (
-          <line key={t} x1={x(t)} x2={x(t)} y1={lineY - 3} y2={lineY + 3} stroke="color-mix(in srgb, var(--color-ink) 35%, transparent)" strokeWidth={1} />
-        ))}
+        <circle data-mark cx={x(price)} cy={baseline} r={0.024 * width + 2} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center", pointerEvents: "none" }} />
+        <rect x={0} y={0} width={width} height={hitHeight} fill="transparent" style={{ pointerEvents: "all" }} onPointerMove={onMove} onPointerLeave={() => setHover(null)} />
       </svg>
       {ticks.map((t) => (
-        // 70%, not 55%: same AA-contrast fix as `Caption` — small mono numerals need the same floor. 11px floor
-        // (6h): at 9–10px these were the page's smallest text.
-        <span key={t} className="absolute font-mono" style={{ left: pct(x(t)), top: 58 * k, transform: "translateX(-50%)", fontSize: "max(11px, calc(11 * var(--u)))", color: "color-mix(in srgb, var(--color-ink) 70%, transparent)" }}>
+        <TickLabel key={t} x={x(t) - 30} y={baseline + rMax + 12}>
           {formatPrice(t)}
-        </span>
+        </TickLabel>
       ))}
-      {/* The car's own label, above its ring: anchored by its bottom, clear of the largest dot (r 13), so a
-          larger label grows upward instead of into the dots (6h: it overlapped them at 1920 and on the Peugeot
-          and Jaguar). */}
-      <div data-mark className="absolute text-center" style={{ left: pct(x(price)), bottom: (96 - lineY + 13 + 3) * k, transform: "translateX(-50%)", whiteSpace: "nowrap" }}>
+      <div ref={labelRef} data-mark className="absolute text-center" style={{ left: labelLeft, bottom: height - (baseline - rMax - 8), whiteSpace: "nowrap" }}>
         <p className="font-mono" style={{ fontSize: "max(11px, calc(13 * var(--u)))" }}>{formatPrice(price)}</p>
         <p className="detail-label" style={{ letterSpacing: "var(--label-tracking)" }}>{VERDICT_LABEL[verdict]}</p>
       </div>
+      <div className="absolute bottom-0 left-0 w-full">
+        <Rule top={0} />
+        <dl className="grid grid-cols-4" style={{ paddingTop: 16 }}>
+          {stats.map(([label, value]) => (
+            <div key={label} data-mark>
+              <dt className="detail-label">{label}</dt>
+              <dd className="font-mono" style={{ fontSize: "max(15px, calc(20 * var(--u)))", whiteSpace: "nowrap" }}>
+                {value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
       {hovered && (
-        <div
-          role="status"
-          className="absolute z-10 rounded px-3 py-2 text-left"
-          style={{
-            left: pct(x(hovered.mid)),
-            top: (58 + 14) * k,
-            transform: `translateX(${x(hovered.mid) < W / 2 ? "0" : "-100%"})`,
-            background: "var(--color-paper)",
-            boxShadow: "0 2px 12px color-mix(in srgb, var(--color-ink) 18%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 16%, transparent)",
-            fontSize: "max(11px, calc(12 * var(--u)))",
-            lineHeight: 1.4,
-            minWidth: 160,
-          }}
-        >
+        <Tip x={x(hovered.mid)} y={baseline + rMax + 12 + 22} width={width} mid={width / 2}>
           <p className="font-mono">
             {formatPrice(hovered.mid - step / 2)} – {formatPrice(hovered.mid + step / 2)}
           </p>
           <p>
             {hovered.count} listing{hovered.count === 1 ? "" : "s"}
           </p>
-        </div>
+        </Tip>
       )}
-    </div>
+      <div aria-live="polite" className="sr-only">
+        {tipText}
+      </div>
+    </>
   );
 }
 
-// ---- The price/mileage scatter -----------------------------------------------------------------------------
+// ---- Tab 2: price vs mileage (scatter) ----------------------------------------------------------------------
 
-function PriceScatter({ price, mileageMi, listings }: { price: number; mileageMi: number; listings: Listing[] }) {
-  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
-  const [active, setActive] = useState(0);
-  const refs = useRef<(SVGCircleElement | null)[]>([]);
+const MARGIN = { top: 8, right: 8, bottom: 36, left: 56 };
+
+function PriceScatter({ price, mileageMi, listings, width, height }: { price: number; mileageMi: number; listings: Listing[]; width: number; height: number }) {
   const trend = useMemo(() => trendLine(listings), [listings]);
-  const H = 110;
   const xDomain = useMemo(() => [0, Math.max(mileageMi, ...listings.map((l) => l.mileageMi)) * 1.05], [listings, mileageMi]);
   const yDomain = useMemo(() => {
     const all = [price, ...listings.map((l) => l.priceUsd)];
     return [Math.min(...all) * 0.94, Math.max(...all) * 1.06];
   }, [listings, price]);
-  const x = useMemo(() => scaleLinear().domain(xDomain).range([8, W - 8]), [xDomain]);
-  const y = useMemo(() => scaleLinear().domain(yDomain).range([H - 6, 6]), [yDomain]);
+  const left = MARGIN.left;
+  const right = width - MARGIN.right;
+  const top = MARGIN.top;
+  const bottom = height - MARGIN.bottom;
+  const x = useMemo(() => scaleLinear().domain(xDomain).range([left, right]), [xDomain, left, right]);
+  const y = useMemo(() => scaleLinear().domain(yDomain).range([bottom, top]), [yDomain, bottom, top]);
+  const xTicks = x.ticks(4);
+  const yTicks = y.ticks(4);
   const trendPath = shapeLine<number>()
     .x((d) => x(d))
     .y((d) => y(trendAt(trend, d)))([xDomain[0], xDomain[1]]);
+  const { hover, setHover, bind } = useMarks(listings.length, 0);
+  const hovered = hover !== null ? listings[hover] : null;
+  const labelOf = (l: Listing) => `${marketplaceName(l.marketplace)}, ${l.year}, ${formatMiles(l.mileageMi)}, ${formatPrice(l.priceUsd)}`;
 
-  const move = (event: ReactKeyboardEvent<SVGCircleElement>, i: number) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      event.preventDefault();
-      setActive(Math.min(listings.length - 1, i + 1));
-      refs.current[Math.min(listings.length - 1, i + 1)]?.focus();
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      event.preventDefault();
-      setActive(Math.max(0, i - 1));
-      refs.current[Math.max(0, i - 1)]?.focus();
-    } else if (event.key === "Escape") {
-      // Escape leaves the chart, not the page (6h: it bubbled to Experience.tsx's window listener, which
-      // treats any Escape as "back to the showroom").
-      event.stopPropagation();
-      setHoverIdx(null);
-      (event.currentTarget as SVGCircleElement).blur();
-    }
+  const onMove = (event: ReactPointerEvent<SVGRectElement>) => {
+    const p = localPoint(event);
+    let best = -1;
+    let bestD = 40;
+    listings.forEach((l, i) => {
+      const d = Math.hypot(x(l.mileageMi) - p.x, y(l.priceUsd) - p.y);
+      if (d <= bestD) {
+        best = i;
+        bestD = d;
+      }
+    });
+    setHover(best < 0 ? null : best);
   };
 
-  const hovered = hoverIdx !== null ? listings[hoverIdx] : null;
-  const [box, k] = useChartScale();
-
   return (
-    <div ref={box} className="relative" style={{ height: (H + 18) * k }}>
-      <Rule top={H * k} />
-      <svg data-mark-group viewBox={`0 0 ${W} ${H}`} width="100%" height={H * k} style={{ display: "block", overflow: "visible" }} role="group" aria-label="Comparable listings by mileage and price; arrow keys move between listings">
-        {trendPath && <path data-mark d={trendPath} fill="none" stroke="color-mix(in srgb, var(--color-ink) 45%, transparent)" strokeWidth={1.5} strokeDasharray="4 4" />}
+    <>
+      {yTicks.map((t) => (
+        <Rule key={t} top={y(t)} left={left} width={right - left} strength={12} />
+      ))}
+      <svg data-mark-group width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="absolute left-0 top-0" style={{ overflow: "visible" }} role="group" aria-label="Comparable listings by mileage and price; arrow keys move between listings">
+        {trendPath && <path data-mark d={trendPath} fill="none" stroke={ink(45)} strokeWidth={1.5} strokeDasharray="4 4" style={{ pointerEvents: "none" }} />}
         {listings.map((l, i) => (
           <circle
             key={i}
-            ref={(el) => {
-              refs.current[i] = el;
-            }}
             data-mark
-            tabIndex={i === active ? 0 : -1}
             cx={x(l.mileageMi)}
             cy={y(l.priceUsd)}
-            r={3}
+            r={hover === i ? 6 : 4}
             fill="var(--color-ink)"
-            opacity={0.45}
-            style={{ transformBox: "fill-box", transformOrigin: "center", outlineOffset: 2, cursor: "pointer" }}
-            onFocus={() => {
-              setActive(i);
-              setHoverIdx(i);
-            }}
-            onMouseEnter={() => setHoverIdx(i)}
-            onMouseLeave={() => setHoverIdx(null)}
-            onBlur={() => setHoverIdx(null)}
-            onKeyDown={(event) => move(event, i)}
-            role="img"
-            aria-label={`${marketplaceName(l.marketplace)}, ${l.year}, ${formatMiles(l.mileageMi)}, ${formatPrice(l.priceUsd)}`}
+            opacity={hover === i ? 1 : 0.55}
+            style={{ transformBox: "fill-box", transformOrigin: "center", outlineOffset: 2, pointerEvents: "none" }}
+            {...bind(i, labelOf(l))}
           />
         ))}
-        <circle data-mark cx={x(mileageMi)} cy={y(price)} r={8} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center" }} />
+        <circle data-mark cx={x(mileageMi)} cy={y(price)} r={9} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ transformBox: "fill-box", transformOrigin: "center", pointerEvents: "none" }} />
+        <rect x={left} y={top} width={right - left} height={bottom - top} fill="transparent" style={{ pointerEvents: "all" }} onPointerMove={onMove} onPointerLeave={() => setHover(null)} />
       </svg>
+      {yTicks.map((t) => (
+        <TickLabel key={t} x={0} y={y(t) - 7} w={left - 8} align="right">
+          ${Math.round(t / 1000)}k
+        </TickLabel>
+      ))}
+      {xTicks.map((t) => (
+        <TickLabel key={t} x={x(t) - 30} y={bottom + 4}>
+          {Math.round(t / 1000)}k mi
+        </TickLabel>
+      ))}
+      <p data-mark className="detail-label absolute" style={{ left: 0, top: 0, whiteSpace: "nowrap", lineHeight: 1 }}>
+        Asking price
+      </p>
+      <p data-mark className="detail-label absolute" style={{ right: 0, bottom: 0, whiteSpace: "nowrap", lineHeight: 1 }}>
+        Mileage
+      </p>
       {hovered && (
-        <div
-          role="status"
-          className="absolute z-10 rounded px-3 py-2 text-left"
-          style={{
-            left: pct(x(hovered.mileageMi)),
-            top: (y(hovered.priceUsd) - 8) * k,
-            transform: `translate(${x(hovered.mileageMi) < W / 2 ? "12px" : "calc(-100% - 12px)"}, -100%)`,
-            background: "var(--color-paper)",
-            boxShadow: "0 2px 12px color-mix(in srgb, var(--color-ink) 18%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 16%, transparent)",
-            fontSize: "max(11px, calc(12 * var(--u)))",
-            lineHeight: 1.4,
-            minWidth: 150,
-          }}
-        >
+        <Tip x={x(hovered.mileageMi)} y={y(hovered.priceUsd)} width={width} mid={(left + right) / 2} center>
           <p>{marketplaceName(hovered.marketplace)}</p>
           <p className="font-mono">
             {hovered.year} · {formatMiles(hovered.mileageMi)} · {formatPrice(hovered.priceUsd)}
           </p>
-        </div>
+        </Tip>
       )}
-    </div>
+      <div aria-live="polite" className="sr-only">
+        {hovered ? labelOf(hovered) : ""}
+      </div>
+    </>
   );
 }
 
-// ---- The asking-price history ------------------------------------------------------------------------------
+// ---- Tab 3: price history (line) ----------------------------------------------------------------------------
 
-function PriceHistory({ price, history }: { price: number; history: HistoryPoint[] }) {
+function PriceHistory({ price, history, width, height }: { price: number; history: HistoryPoint[]; width: number; height: number }) {
   const uid = useId();
-  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
-  const [active, setActive] = useState(history.length - 1);
-  const refs = useRef<(SVGCircleElement | null)[]>([]);
-  const H = 90;
-  const x = useMemo(() => scaleLinear().domain([0, history.length - 1]).range([8, W - 8]), [history.length]);
+  const left = MARGIN.left;
+  const right = width - MARGIN.right;
+  const top = MARGIN.top;
+  const bottom = height - MARGIN.bottom;
+  const last = history.length - 1;
+  const x = useMemo(() => scaleLinear().domain([0, last]).range([left, right]), [last, left, right]);
   const y = useMemo(() => {
     const values = [price, ...history.map((h) => h.medianUsd)];
-    return scaleLinear().domain([Math.min(...values) * 0.96, Math.max(...values) * 1.04]).range([H - 6, 6]);
-  }, [history, price]);
+    return scaleLinear().domain([Math.min(...values) * 0.96, Math.max(...values) * 1.04]).range([bottom, top]);
+  }, [history, price, bottom, top]);
+  const yTicks = y.ticks(4);
   const path = shapeLine<HistoryPoint>()
     .x((_, i) => x(i))
     .y((d) => y(d.medianUsd))(history);
+  const { hover, setHover, bind } = useMarks(history.length, last);
+  const hovered = hover !== null ? history[hover] : null;
 
-  const move = (event: ReactKeyboardEvent<SVGCircleElement>, i: number) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      event.preventDefault();
-      setActive(Math.min(history.length - 1, i + 1));
-      refs.current[Math.min(history.length - 1, i + 1)]?.focus();
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      event.preventDefault();
-      setActive(Math.max(0, i - 1));
-      refs.current[Math.max(0, i - 1)]?.focus();
-    } else if (event.key === "Escape") {
-      // Escape leaves the chart, not the page (6h: it bubbled to Experience.tsx's window listener, which
-      // treats any Escape as "back to the showroom").
-      event.stopPropagation();
-      setHoverIdx(null);
-      (event.currentTarget as SVGCircleElement).blur();
-    }
+  const onMove = (event: ReactPointerEvent<SVGRectElement>) => {
+    const { x: px } = localPoint(event);
+    setHover(Math.max(0, Math.min(last, Math.round(x.invert(px)))));
   };
-
-  const hovered = hoverIdx !== null ? history[hoverIdx] : null;
-  const [box, k] = useChartScale();
+  const tickIdx = [0, Math.min(10, last), last].filter((v, i, all) => all.indexOf(v) === i);
 
   return (
-    <div ref={box} className="relative" style={{ height: (H + 4) * k }}>
-      <Rule top={H * k} />
-      {/* The line draws along its length via the clip geometry's own `scaleX` (step 5: "tied to scaleX of a
-          clip, which is an allowed transform") — the clip rect scales, the path inside it never does, so the
-          line reveals left to right without distorting. */}
-      <svg data-mark-group viewBox={`0 0 ${W} ${H}`} width="100%" height={H * k} style={{ display: "block", overflow: "visible" }} role="group" aria-label="Median asking price by quarter; arrow keys move between quarters">
+    <>
+      {yTicks.map((t) => (
+        <Rule key={t} top={y(t)} left={left} width={right - left} strength={12} />
+      ))}
+      <svg data-mark-group width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="absolute left-0 top-0" style={{ overflow: "visible" }} role="group" aria-label="Median asking price by quarter; arrow keys move between quarters">
         <clipPath id={`${uid}-clip`}>
-          <rect data-rule x={0} y={0} width={W} height={H} style={{ transformBox: "fill-box", transformOrigin: "left" }} />
+          <rect data-rule x={0} y={0} width={width} height={height} style={{ transformBox: "fill-box", transformOrigin: "left" }} />
         </clipPath>
-        <line x1={8} x2={W - 8} y1={y(price)} y2={y(price)} stroke="color-mix(in srgb, var(--color-ink) 50%, transparent)" strokeWidth={1.5} strokeDasharray="5 5" />
-        <g clipPath={`url(#${uid}-clip)`}>{path && <path d={path} fill="none" stroke="var(--color-ink)" strokeWidth={2} />}</g>
+        <line x1={left} x2={right} y1={y(price)} y2={y(price)} stroke={ink(50)} strokeWidth={1.5} strokeDasharray="5 5" style={{ pointerEvents: "none" }} />
+        {hovered && <line x1={x(hover!)} x2={x(hover!)} y1={top} y2={bottom} stroke={ink(30)} strokeWidth={1} style={{ pointerEvents: "none" }} />}
+        {/* The line draws along its length via the clip geometry's own `scaleX` (step 5: "tied to scaleX of a
+            clip, which is an allowed transform"): the clip rect scales, the path inside it never does. */}
+        <g clipPath={`url(#${uid}-clip)`}>{path && <path d={path} fill="none" stroke="var(--color-ink)" strokeWidth={2} style={{ pointerEvents: "none" }} />}</g>
         {history.map((h, i) => (
           <circle
             key={h.quarter}
-            ref={(el) => {
-              refs.current[i] = el;
-            }}
             data-mark
-            tabIndex={i === active ? 0 : -1}
             cx={x(i)}
             cy={y(h.medianUsd)}
-            r={i === history.length - 1 ? 4 : 2.5}
+            r={hover === i ? 6 : i === last ? 5 : 3}
             fill="var(--color-ink)"
-            style={{ transformBox: "fill-box", transformOrigin: "center", outlineOffset: 2, cursor: "pointer" }}
-            onFocus={() => {
-              setActive(i);
-              setHoverIdx(i);
-            }}
-            onMouseEnter={() => setHoverIdx(i)}
-            onMouseLeave={() => setHoverIdx(null)}
-            onBlur={() => setHoverIdx(null)}
-            onKeyDown={(event) => move(event, i)}
-            role="img"
-            aria-label={`${h.quarter}: ${formatPrice(h.medianUsd)} median asking price`}
+            style={{ transformBox: "fill-box", transformOrigin: "center", outlineOffset: 2, pointerEvents: "none" }}
+            {...bind(i, `${h.quarter}: ${formatPrice(h.medianUsd)} median asking price`)}
           />
         ))}
+        <rect x={left} y={top} width={right - left} height={bottom - top} fill="transparent" style={{ pointerEvents: "all" }} onPointerMove={onMove} onPointerLeave={() => setHover(null)} />
       </svg>
+      {yTicks.map((t) => (
+        <TickLabel key={t} x={0} y={y(t) - 7} w={left - 8} align="right">
+          ${Math.round(t / 1000)}k
+        </TickLabel>
+      ))}
+      {tickIdx.map((i) => (
+        <TickLabel key={i} x={i === last ? width - 64 : x(i) - 32} y={bottom + 4} w={64} align={i === last ? "right" : "center"}>
+          {history[i].quarter}
+        </TickLabel>
+      ))}
+      <div data-mark className="absolute flex items-baseline gap-2" style={{ right: MARGIN.right, bottom: height - y(price) + 4, whiteSpace: "nowrap" }}>
+        <span className="detail-label">This car</span>
+        <span className="font-mono" style={{ fontSize: "max(11px, calc(13 * var(--u)))" }}>
+          {formatPrice(price)}
+        </span>
+      </div>
       {hovered && (
-        <div
-          role="status"
-          className="absolute z-10 rounded px-3 py-2 text-left"
-          style={{
-            left: pct(x(history.indexOf(hovered))),
-            top: (y(hovered.medianUsd) - 8) * k,
-            transform: `translate(${x(history.indexOf(hovered)) < W / 2 ? "8px" : "calc(-100% - 8px)"}, -100%)`,
-            background: "var(--color-paper)",
-            boxShadow: "0 2px 12px color-mix(in srgb, var(--color-ink) 18%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 16%, transparent)",
-            fontSize: "max(11px, calc(12 * var(--u)))",
-            lineHeight: 1.4,
-            whiteSpace: "nowrap",
-          }}
-        >
+        <Tip x={x(hover!)} y={y(hovered.medianUsd)} width={width} mid={(left + right) / 2} center>
           <p className="font-mono">
             {hovered.quarter} · {formatPrice(hovered.medianUsd)}
           </p>
-        </div>
+        </Tip>
       )}
-    </div>
+      <div aria-live="polite" className="sr-only">
+        {hovered ? `${hovered.quarter}: ${formatPrice(hovered.medianUsd)} median asking price` : ""}
+      </div>
+    </>
   );
 }
 
@@ -473,66 +525,111 @@ function DataTable({ price, listings, history }: { price: number; listings: List
   );
 }
 
-// ---- The section: header, strip, and the two further datasets ----------------------------------------------
+// ---- The module: price, comparison line, tabs ---------------------------------------------------------------
 
-/** The header and strip, section D's `price-card` block. */
-export function PriceCard({ car, hoverMid, setHoverMid }: { car: CarWithAssets; hoverMid: number | null; setHoverMid: (mid: number | null) => void }) {
-  const { listings, history } = getComparables(car.slug);
+/** The chart box: fills what the panel leaves, measures itself, and renders its chart once it has a size. */
+function ChartBox({ children }: { children: (size: { width: number; height: number }) => ReactNode }) {
+  const [ref, size] = useChartSize();
   return (
-    <div data-price-card className="flex h-full flex-col">
-      <h2 className="sr-only">Price comparison</h2>
-      <p data-mark className="font-mono" style={{ fontSize: "var(--type-price)", lineHeight: 1 }}>
-        {formatPrice(car.priceUsd)}
-      </p>
-      {/* 75%, not 65% (6h): 65% measured 4.03:1 on the figma theme's card, under AA. */}
-      <p data-mark className="mt-2" style={{ fontSize: "max(12px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 75%, transparent)" }}>
-        {comparisonLine(listings)}
-      </p>
-      <div className="mt-4">
-        <PriceStrip price={car.priceUsd} listings={listings} hoverMid={hoverMid} setHoverMid={setHoverMid} />
-      </div>
-      <Caption>Larger dots mean more listings at that price. Illustrative data.</Caption>
-      {/* Read right after the strip it summarises (6h: it sat at the end of the further datasets). */}
-      <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
-      <DataTable price={car.priceUsd} listings={listings} history={history} />
+    <div ref={ref} className="relative" style={{ marginTop: u(16), flex: 1, minHeight: `max(220px, ${u(220)})` }}>
+      {size.width > 0 && size.height > 0 && children(size)}
     </div>
   );
 }
 
-/** The two further datasets, section D's `price-more` block. */
-export function PriceMore({ car, hoverMid, setHoverMid }: { car: CarWithAssets; hoverMid: number | null; setHoverMid: (mid: number | null) => void }) {
+const TABS = ["Price spread", "Price vs mileage", "Price history"] as const;
+
+/** Section D's `price-module` block: the price, the comparison line and three tabs (WAI-ARIA tabs pattern,
+ * automatic activation). Only the active panel's content is mounted, so a chart always measures a visible box. */
+export function PriceModule({ car }: { car: CarWithAssets }) {
   const { listings, history } = getComparables(car.slug);
-  // Not memoized: `listings` (committed JSON, ~40-80 rows) is cheap to re-fit on every render, and the React
-  // Compiler can't prove the array from `getComparables` is stable across renders, so `useMemo` here only
-  // produced a "memoization could not be preserved" build error for no real benefit.
+  const base = useId();
+  const [tab, setTab] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const trend = trendLine(listings);
-  const step = bucketStep(car.priceUsd);
-  // Links the strip and the scatter (step 5: "hovering a strip group highlights its listings here, and the
-  // reverse"): a listing belongs to a strip bucket if its price falls in that bucket's step.
-  const highlighted = hoverMid !== null ? listings.filter((l) => Math.abs(l.priceUsd - hoverMid) <= step / 2) : listings;
+
+  const select = (to: number) => {
+    const next = (to + TABS.length) % TABS.length;
+    setTab(next);
+    tabRefs.current[next]?.focus();
+  };
+  const onTabKey = (event: ReactKeyboardEvent<HTMLButtonElement>, i: number) => {
+    const to = event.key === "ArrowRight" ? i + 1 : event.key === "ArrowLeft" ? i - 1 : event.key === "Home" ? 0 : event.key === "End" ? TABS.length - 1 : null;
+    if (to === null) return;
+    // preventDefault keeps Detail.tsx's window onKey from also stepping the page between sections.
+    event.preventDefault();
+    select(to);
+  };
+
+  const panelStyle: CSSProperties = { marginTop: u(24), flex: 1, minHeight: 0 };
   return (
-    <div data-price-more className="flex h-full flex-col justify-between">
-      <section aria-label="Price and mileage">
-        <p data-mark className="detail-label">
-          Price and mileage
-        </p>
-        <Takeaway>{mileageTakeaway(car.priceUsd, car.mileageMi, trend)}</Takeaway>
-        <div className="mt-3" onMouseLeave={() => setHoverMid(null)}>
-          <PriceScatter price={car.priceUsd} mileageMi={car.mileageMi} listings={highlighted.length ? highlighted : listings} />
+    <>
+      <p data-mark className="font-mono" style={{ fontSize: "var(--type-price)", lineHeight: 1 }}>
+        {formatPrice(car.priceUsd)}
+      </p>
+      {/* 75%, not 65% (6h): 65% measured 4.03:1 on the figma theme's card, under AA. */}
+      <p data-mark style={{ marginTop: u(8), fontSize: "max(12px, var(--type-label))", lineHeight: 1.4, color: ink(75) }}>
+        {comparisonLine(listings)}
+      </p>
+      <div role="tablist" aria-label="Price comparison datasets" className="relative flex" style={{ marginTop: u(24), gap: u(32) }}>
+        {TABS.map((label, i) => (
+          <button
+            key={label}
+            ref={(el) => {
+              tabRefs.current[i] = el;
+            }}
+            id={`${base}-tab-${i}`}
+            type="button"
+            role="tab"
+            aria-selected={tab === i}
+            aria-controls={`${base}-panel-${i}`}
+            tabIndex={tab === i ? 0 : -1}
+            className="price-tab"
+            onClick={() => setTab(i)}
+            onKeyDown={(event) => onTabKey(event, i)}
+          >
+            {label}
+          </button>
+        ))}
+        <div data-rule aria-hidden className="absolute bottom-0 left-0 h-px w-full origin-left" style={{ background: ink(22) }} />
+      </div>
+      {TABS.map((label, i) => (
+        <div
+          key={label}
+          id={`${base}-panel-${i}`}
+          role="tabpanel"
+          aria-labelledby={`${base}-tab-${i}`}
+          hidden={tab !== i}
+          style={{ ...panelStyle, display: tab === i ? "flex" : undefined, flexDirection: "column" }}
+        >
+          {tab === i && (
+            <>
+              {i === 0 && <Takeaway>{stripSummary(car.priceUsd, listings)}</Takeaway>}
+              {i === 1 && <Takeaway>{mileageTakeaway(car.priceUsd, car.mileageMi, trend)}</Takeaway>}
+              {i === 2 && <Takeaway>{historyTakeaway(car.chassis, history)}</Takeaway>}
+              <ChartBox>
+                {({ width, height }) =>
+                  i === 0 ? (
+                    <PriceStrip price={car.priceUsd} listings={listings} width={width} height={height} />
+                  ) : i === 1 ? (
+                    <PriceScatter price={car.priceUsd} mileageMi={car.mileageMi} listings={listings} width={width} height={height} />
+                  ) : (
+                    <PriceHistory price={car.priceUsd} history={history} width={width} height={height} />
+                  )
+                }
+              </ChartBox>
+              <Caption>
+                {i === 0 && "Larger dots mean more listings at that price. Illustrative data."}
+                {i === 1 && "Illustrative data; a straight trend line fit to the comparables above."}
+                {i === 2 && <>Median of {listings.length} comparable listings&rsquo; asking price by quarter. Illustrative data.</>}
+              </Caption>
+            </>
+          )}
         </div>
-        <Caption>Illustrative data; a straight trend line fit to the comparables above.</Caption>
-      </section>
-      <section aria-label="Asking-price history" className="mt-6">
-        <p data-mark className="detail-label">
-          Asking-price history
-        </p>
-        <Takeaway>{historyTakeaway(car.chassis, history)}</Takeaway>
-        <div className="mt-3">
-          <PriceHistory price={car.priceUsd} history={history} />
-        </div>
-        <Caption>Median of {listings.length} comparable listings&rsquo; asking price by quarter. Illustrative data.</Caption>
-      </section>
-    </div>
+      ))}
+      {/* Outside the panels: hidden panels hide their content from assistive tech. */}
+      <DataTable price={car.priceUsd} listings={listings} history={history} />
+    </>
   );
 }
 
@@ -553,9 +650,9 @@ export function prepareChartReveal(container: HTMLElement, reduced: boolean): ()
   }
   return () => {
     if (reduced) {
-      // `clearProps` on completion: the strip's dots carry their own React-driven opacity (the linked-hover
-      // dim), set as an SVG attribute. GSAP's fade would otherwise leave an inline `style.opacity: 1` behind,
-      // which outranks that attribute in the cascade and would silently defeat the hover dim forever after.
+      // `clearProps` on completion: the dots carry their own React-driven opacity (the hover dim), set as an
+      // SVG attribute. GSAP's fade would otherwise leave an inline `style.opacity: 1` behind, which outranks
+      // that attribute in the cascade and would silently defeat the hover dim forever after.
       gsap.to([...rules, ...marks], { opacity: 1, duration: 0.3, ease: "sine.out", clearProps: "opacity" });
       return;
     }
