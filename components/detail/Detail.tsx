@@ -787,7 +787,10 @@ function Page({ car }: { car: CarWithAssets }) {
       if (r.left >= 0 && r.right <= vw) return;
       const b = block(owner.dataset.block);
       const to = r.right > vw ? Math.min(travel, (b.x + b.w + 24) * u - vw) : Math.max(0, (b.x - 24) * u);
-      lenis.scrollTo(to, reduced ? { immediate: true, force: true } : { duration: scrollFeel.jump, easing: revealOut, force: true });
+      // Immediate, not the 1.2 s "Jump to specs" tween (/review-animations, after 6h): Tab is a keyboard action
+      // and shouldn't wait on an animation; the page's own scroll lag (`SCROLL_LAG`) still carries the track
+      // there smoothly, as it does for the wheel.
+      lenis.scrollTo(to, { immediate: true, force: true });
     };
     rootEl.addEventListener("focusin", onFocusIn);
 

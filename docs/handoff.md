@@ -29,8 +29,8 @@ is in the working tree until the user asks for a commit.
 ## Open, for the user
 
 1. **`DESIGN.md`** was regenerated in 6h from the figma theme ("The Stuttgart Brochure"); review it.
-2. **`/review-animations`** on 6h's motion changes (the non-modal enquiry open, focus-follow scrolling, A2's later
-   swap; user-invoked).
+2. **`/review-animations`** ran on 6h's motion; its three findings are fixed (see the 6h status block). Re-run it after
+   the next motion change.
 3. **The non-modal enquiry panel** still covers the end of "A new home" at 1440 (420 px wide); a slimmer panel would
    clear it.
 4. **Remove `?theme=current`** (tokens, Bodoni and Host Grotesk loading) now that figma is picked, or keep it.

@@ -7,7 +7,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { CarWithAssets } from "@/lib/cars";
 import gsap from "gsap";
 import { sidebar } from "@/lib/detail-fx";
-import { effect } from "@/lib/detail-motion";
+import { ease, effect } from "@/lib/detail-motion";
 import { enquiryMessage } from "@/lib/format";
 
 interface Fields {
@@ -76,7 +76,7 @@ export function Enquiry({ car, open, modal, onClose }: { car: CarWithAssets; ope
         // Already on screen (a non-modal open, now opened by the button): building the tweens above re-applied
         // the hidden starting state, so jump the panel back to open and fade only the scrim in.
         openTween.progress(1);
-        if (modal) gsap.fromTo(scrimEl, { opacity: 0 }, { opacity: effect.sidebar.scrimOpacity, duration: effect.sidebar.scrimDuration, ease: "sine.out" });
+        if (modal) gsap.fromTo(scrimEl, { opacity: 0 }, { opacity: effect.sidebar.scrimOpacity, duration: effect.sidebar.scrimDuration, ease: ease.fade });
       }
       shown.current = true;
       // Only when opened by the button: the scroll-triggered auto-open (step 3, section E 40% into view)

@@ -166,7 +166,7 @@ feel unhurried. GSAP names are given; CSS equivalents are for non-GSAP transitio
 | `travel` | none (custom) | `cubic-bezier(0.8, 0, 0.45, 1)` | Inside each camera transition's scroll range: very gentle at the start, fastest about two thirds of the way, then a long soft landing (user, 2026-10-09; it was `power2.inOut`, then `power3.in`, which snapped at the end). Code: `travelBezier` in `lib/detail-motion.ts`. |
 | `swap` | `power2.out` | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` | The image-swap wipe. |
 | `fade` | `sine.out` | `cubic-bezier(0.39, 0.575, 0.565, 1)` | Opacity-only chrome. |
-| `leave` | `power2.in` | `cubic-bezier(0.55, 0.085, 0.68, 0.53)` | Closing sidebars and overlays. |
+| `leave` | `power2.out` | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` | Closing sidebars and overlays. Was `power2.in` until `/review-animations` after 6h: ease-in on UI delays the response the visitor is watching. |
 | `linear` | `none` | `linear` | Scroll-tied effects (the scroll supplies the feel). |
 
 ### Scroll
@@ -1080,6 +1080,13 @@ From the user's review after the gate (same day), and built:
   when A2's left edge reaches 25% of the screen's width and, at a quarter-viewport step, finishes as the slot
   reaches the left edge, still fully on screen (polled: clip `inset(0)` at 100%, 50% and 25%, mid-wipe at 12.5%,
   done at 0). The B photo and the slideshow slot keep step 2's cadence (half a viewport, starting on entry).
+
+`/review-animations` (run by the user after the gate) on 6h's motion: three findings, all fixed. Focus-follow
+scrolled with the 1.2 s "Jump to specs" tween on a keyboard action; it now jumps immediately and the page's own
+scroll lag carries the track. Sidebars and the gallery closed on `power2.in`; the `leave` token is now `power2.out`
+(step 2's easing table updated). The non-modal-to-modal scrim fade used a literal curve; now `ease.fade`. Re-verified
+the Tab path and both enquiry modes. Kept as the plan sets them, with the review's note: M11's 0.8 s open (longer
+than a UI drawer's usual 500 ms, the overhaul's deliberately unhurried vocabulary) and the 1.2 s arrow-key stepping.
 
 Not fixed, for the user (critique findings that are design calls, or outside 6h):
 

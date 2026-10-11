@@ -8,7 +8,7 @@ export const ease = {
   travel: "power3.inOut", // GSAP has no name for the camera's curve; see `travelBezier`, which lib/choreography.ts uses
   swap: "power2.out", // the image-swap wipe
   fade: "sine.out", // opacity-only chrome
-  leave: "power2.in", // closing sidebars and overlays
+  leave: "power2.out", // closing sidebars and overlays: ease-out like everything else (was power2.in until /review-animations after 6h)
   linear: "none", // scroll-tied effects: the scroll supplies the feel
 } as const;
 

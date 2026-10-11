@@ -142,7 +142,7 @@
   --ease-travel: cubic-bezier(0.8, 0, 0.45, 1); /* camera transitions: very gentle start, fastest at about two thirds, soft landing */
   --ease-swap: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* power2.out: the image-swap wipe */
   --ease-fade: cubic-bezier(0.39, 0.575, 0.565, 1); /* sine.out: opacity-only chrome */
-  --ease-leave: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* power2.in: closing sidebars */
+  --ease-leave: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* power2.out: closing sidebars (was power2.in; ease-in on UI delays the response) */
   --dur-hover: 0.3s;
   --dur-chrome: 0.6s;
   --dur-handoff-chrome: 0.4s; /* the carousel's own chrome and frames fading at hand-off, step 2's entry table */
