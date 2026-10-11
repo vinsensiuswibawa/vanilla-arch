@@ -1,4 +1,4 @@
-# Session handoff (2026-10-10, after shot 6h)
+# Session handoff (2026-10-11, after shot 7a in progress)
 
 Start the next session by reading this file, then `docs/overhaul.md` (the detail page's plan and the 6c–6h status
 blocks), `CLAUDE.md` and `AGENTS.md`. The working rule stands (user, 2026-10-08): before touching anything, state what
@@ -35,8 +35,8 @@ is in the working tree until the user asks for a commit.
    clear it.
 4. **Remove `?theme=current`** (tokens, Bodoni and Host Grotesk loading) now that figma is picked, or keep it.
 5. **M7 depth drift** (left for later by the user) (behind-layer type at 0.9× the page's speed) is in `lib/detail-fx.ts` but was never wired.
-6. **Section D's charts** have no axis labels on the scatter and history; the price module reads more dashboard than
-   brochure (critique, 6h).
+6. **Shot 7a** (section D's price comparison in three tabs) is built and partly checked; see its status block in
+   `docs/overhaul.md`. Open: the title wraps at 1024 × 640, the audits and `/review-animations` have not run.
 7. **What counts toward the 350 KB "initial" JS budget** (6d), and whether `content/shapes.json` (236 KB raw) slims.
 8. **Commit the `.cache/` check scripts** somewhere tracked (e.g. `scripts/detail/`) so they travel with the repo.
 9. **Claude Doc sync:** mirror the PRD's 2026-10-10 decision-log rows and budget note to the canonical Claude Doc.

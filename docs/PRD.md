@@ -644,6 +644,7 @@ Thirty decisions shaped this PRD, all settled with you in the planning session o
 | Detail page overhaul complete (2026-10-10) | Shots 6a–6h built the detail page in `docs/overhaul.md` | The showroom redesign, the equipment and history overlay, the real gallery and `/credits` come next ("After the overhaul") |
 | Theme (2026-10-10) | The "figma" direction wins: Satoshi for text and display, Staatliches for condensed labels, deep teal ink on off-white, slate panels | Picked by the user at the 6h gate. `?theme=current` still opens the other system until it is removed; `DESIGN.md` is regenerated from the figma theme |
 | Enquiry auto-open (2026-10-10) | Scrolling to section E opens the enquiry as a non-modal panel (no scrim, focus stays put, closes when the visitor scrolls away); the button opens it as a modal with the scrim | Picked by the user at the 6h gate, so the finale (frame 14) is never dimmed. Amends step 3's "opens both ways" |
+| Price module in three tabs (2026-10-11) | Section D's price comparison is one card with three tabs (Price spread, Price vs mileage, Price history) beside a narrow "Price comparison" title column; the strip ↔ scatter linked hover is dropped | The three stacked charts read small and hard to hover; tabs let each chart fill the card. Switching tabs is instant. Detail in `docs/overhaul.md` step 5 and the 7a status block. |
 
 ## Sources
 

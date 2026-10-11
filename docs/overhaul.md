@@ -537,36 +537,35 @@ of its scroll range instead of travelling. The carousel hand-off becomes a 0.3 s
 
 ### Section D: price comparison
 
-**The price strip** (the user's Figma chart, redone in Arcade's system), front layer, cols 4–5 from the top margin:
-- **Header:** the price (large, mono numerals), and one line: "Compared with 58 similar listings across Halden,
-  Torquewell and Lot Twelve." (the count and names come from the data). No monthly payment line, no verification badge.
-- **The strip:** one horizontal hairline across cols 4–5. Comparable listings are grouped in $1,000 price steps
-  (scaled to the car: $500 steps under $20,000, $5,000 steps over $200,000); each group is a filled dot whose **area**
-  is proportional to its listing count. This car is an ink ring on the line, with a small label above it: the price
-  and a verdict. Four price ticks below the line, evenly spaced and rounded; a caption under it: "Larger dots mean
-  more listings at that price. Illustrative data."
-- **The verdict**, from the car's percentile among its comparables: **Good value** (cheaper than at least 60%),
-  **Fair price** (between), **Above market** (pricier than at least 70%). Always words, never colour alone.
-- **Interaction:** hovering or focusing a dot shows a small card (price range, listing count, marketplaces); the strip
-  is one focusable group and the arrow keys step through the dots; Escape leaves. Screen readers get a short summary
-  ("This car is priced at $245,000, cheaper than 64% of 58 comparable listings: good value") and the full data as a
-  visually hidden table.
-- **Motion:** when the section arrives (triggered at 80%), the line draws (M8), then the dots grow from zero, left to
-  right (`scale` 0 → 1, 0.6 s, `reveal`, stagger 0.02 s), then this car's ring and label rise (M1).
+*Rewritten in shot 7a (2026-10-11): the stacked cards became one card with three tabs.*
 
-**Below it, two further datasets**, same columns, stacked, each with a heading, a one-line takeaway written from the
-data, and a caption:
-1. **Price and mileage.** A scatter of the comparables (x: mileage, y: asking price) with a straight trend line, and
-   this car marked with the ink ring. Takeaway example: "$12,400 below the trend for its mileage." Hover or focus a
-   dot for its marketplace, year, mileage and price. Linked to the strip: hovering a strip group highlights its
-   listings here, and the reverse.
-2. **Asking-price history.** The model's median asking price by quarter over the last five years (20 points), as a
-   line, with this car's price as a dashed horizontal reference. Takeaway example: "Asking prices for the 930 rose 18%
-   in five years." Hover or focus a point for the quarter and median.
-- **Motion:** each chart's axes draw (M8) and its marks fade and rise in (M1 timing) when it reaches 80%; the history
-  line draws along its length (stroke reveal tied to `scaleX` of a clip, which is an allowed transform).
-- **Charts are hand-built SVG** with `d3-scale` and `d3-shape` only (about 10 KB), styled from the theme tokens; the
-  `dataviz` skill's guidance applies at build time. No chart library.
+A two-column spread inside the white price panel: a narrow right-hand title column ("Price comparison", the
+condensed label face, otherwise empty on purpose) and one tall beige card (`price-module`, 564u × the full inset
+height) holding the price, the comparison line (e.g. "Compared with 58 similar listings across Halden, Torquewell
+and Lot Twelve.") and a tab list with one chart per tab, each filling the card. The tabs follow the WAI-ARIA tabs
+pattern (automatic activation, roving tabindex, arrows wrap, Home/End). Switching is instant (no tab token in the
+motion vocabulary; it is a frequent, keyboard-reachable action).
+
+1. **Price spread** (the strip): groups of comparable listings in $1,000 steps ($500 under $20,000, $5,000 over
+   $200,000) as ink dots whose area is proportional to the count; this car is an ink ring with its price and a
+   verdict in words (**Good value** cheaper than at least 60%, **Fair price**, **Above market** pricier than at
+   least 70%); price ticks; a Lowest / Median / Highest / Listings row.
+2. **Price vs mileage** (the scatter): the comparables with a straight trend line, labelled axes, gridlines, this car
+   as an ink ring; the takeaway reads "$12,400 below the trend for its mileage."
+3. **Price history** (the line): the model's median asking price by quarter, this car's price as a dashed
+   reference, a vertical guide at the hovered quarter.
+
+Charts are drawn in real CSS pixels (`useChartSize` measures the chart box; nothing scales a drawing after the
+fact). **Interaction:** one transparent plot rect takes the pointer and finds the nearest target (strip: nearest
+bucket; scatter: nearest point within 40 px; history: nearest quarter), so every hover target is at least
+24 × 24 px; hover and focus show the same tooltip and write it into an always-mounted `aria-live` region. The
+marks keep a roving tabindex (one Tab stop per chart, arrows move, Escape leaves the chart, not the page).
+**The linked strip ↔ scatter hover is dropped** (they sit in different tabs). The full data stays as a visually
+hidden table outside the tab panels.
+**Motion:** when the section arrives (80%), hairlines draw (M8), strip dots grow (scale 0 → 1, 0.6 s, reveal,
+stagger 0.02 s), everything else rises with M1 timing; only the default tab is mounted then, so other tabs appear
+instantly when chosen. Reduced motion: the 0.3 s fades.
+**Charts are hand-built SVG** with `d3-scale` and `d3-shape` only; no chart library.
 
 **The data** (`content/comparables.json`), generated once by a script (`scripts/comparables.mjs`) and committed, so
 it never changes between visits:
@@ -1101,6 +1100,28 @@ Not fixed, for the user (critique findings that are design calls, or outside 6h)
    corners against the square-cornered system; the current theme uses no signal orange on the detail page.
 7. `DESIGN.md` and `.impeccable/design.json` were regenerated from the figma theme (`/impeccable document`, scan
    mode, north star "The Stuttgart Brochure", chosen by the user).
+
+### 7a: Section D's price comparison in three tabs
+
+#### 7a status (2026-10-11)
+
+- **Built:** `price-card` and `price-more` became `price-module` (x 10577, 564u wide, full inset height) and
+  `price-title` (x 11165, 111u wide); the camera, the stops and every other block are unchanged. Detail.tsx renders
+  the title as an h2 with M1 `lineRise`, and one card with the tabs; `hoverMid` is gone. PriceCharts.tsx was
+  rewritten (`useChartSize`, real-pixel SVG, plot-rect pointer targeting, aria-live regions).
+- **Enlargement fallback: not needed.** Chart boxes (width × height, px; Porsche, Peugeot and Jaguar identical):
+  1440 × 960: 500 × 578 (spread), 500 × 603 (mileage, history); 1024 × 640: 333 × 340 and 333 × 359; 1920 × 1080
+  (Porsche): 562 × 650 and 562 × 679. None under 320 × 220; nothing overflowed the card.
+- **Checked** (cloud sandbox, software WebGL, no timings taken): typecheck, lint, production build and the 6 smoke
+  tests; the tab keys (ArrowRight, End, Home, ArrowLeft), arrows on a focused mark not stepping the page, Escape on
+  a mark leaving the chart but not the page, hover tooltip into the live region, and the accessibility tree order
+  (Porsche, 1440 × 960).
+- **Found and fixed:** the scatter's "Asking price" title collided with the top y tick (ticks within 16 px of the
+  top are dropped); the strip's last tick overhung the chart box (ticks clamp inside it).
+- **Open:** `price-title` wraps to two lines and clips at 1024 × 640 (111u is about 74 px there, the label needs
+  about 85 px at the 11 px floor); proposed `height: auto` with the mask kept, awaiting the user. Not run: the other
+  twelve cars, the hover on tabs 1 and 3, the reveal, the `.cache/` walk (the folder is not in a fresh clone),
+  `/impeccable critique` and `audit`, `web-design-guidelines`, `break-ui`, and the user's `/review-animations`.
 
 ### After the overhaul
 

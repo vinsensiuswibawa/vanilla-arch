@@ -227,8 +227,15 @@ buttons. Hairlines are 1 px at 22–30% ink (or paper on dark) and draw in from 
 
 ### Cards / Containers
 
-- **Price card:** brochure beige, square, 20u padding (16 px floor), holding the price, the comparison line, the
-  price strip and its caption; two further cards below for the scatter and the history.
+- **Price card (7a):** one tall brochure-beige card, square, 32u padding (20 px floor), holding the price, the
+  comparison line and three tabs (Price spread, Price vs mileage, Price history), one chart per tab. A narrow
+  title column to its right carries only "Price comparison" in the condensed label face and is otherwise empty.
+- **Price tabs:** left-aligned labels in uppercase text face, 44 px touch height, 32u apart; inactive ink at 75%,
+  active ink with a 2 px bar flush with the tab's bottom edge, a 22%-ink hairline under the row; switching is
+  instant.
+- **Price strip (7a):** a 1 px baseline at 22% ink; filled ink dots (area ∝ listing count, radius 1.2–4% of the
+  chart width, 72% opacity); this car an ink ring labelled with its price and verdict in words; five price ticks
+  below; a four-column Lowest / Median / Highest / Listings row under a hairline at the foot of the chart.
 - **Dark panels:** slate, full height, with paper type and 30%-paper hairlines.
 
 ### Inputs / Fields

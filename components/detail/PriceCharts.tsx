@@ -256,7 +256,7 @@ function PriceStrip({ price, listings, width, height }: { price: number; listing
         <rect x={0} y={0} width={width} height={hitHeight} fill="transparent" style={{ pointerEvents: "all" }} onPointerMove={onMove} onPointerLeave={() => setHover(null)} />
       </svg>
       {ticks.map((t) => (
-        <TickLabel key={t} x={x(t) - 30} y={baseline + rMax + 12}>
+        <TickLabel key={t} x={Math.max(0, Math.min(width - 60, x(t) - 30))} y={baseline + rMax + 12}>
           {formatPrice(t)}
         </TickLabel>
       ))}
@@ -312,7 +312,8 @@ function PriceScatter({ price, mileageMi, listings, width, height }: { price: nu
   const x = useMemo(() => scaleLinear().domain(xDomain).range([left, right]), [xDomain, left, right]);
   const y = useMemo(() => scaleLinear().domain(yDomain).range([bottom, top]), [yDomain, bottom, top]);
   const xTicks = x.ticks(4);
-  const yTicks = y.ticks(4);
+  // A tick within 16 px of the top would sit under the "Asking price" axis title: drop it.
+  const yTicks = y.ticks(4).filter((t) => y(t) >= top + 16);
   const trendPath = shapeLine<number>()
     .x((d) => x(d))
     .y((d) => y(trendAt(trend, d)))([xDomain[0], xDomain[1]]);
