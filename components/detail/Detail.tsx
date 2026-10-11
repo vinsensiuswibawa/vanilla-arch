@@ -1176,7 +1176,7 @@ function Page({ car }: { car: CarWithAssets }) {
                   data-block="price-title"
                   data-tone="light"
                   className="font-condensed absolute overflow-hidden"
-                  style={{ ...styleOf(block("price-title")), lineHeight: 1, fontSize: "max(11px, var(--type-label))", letterSpacing: "var(--label-tracking)", textTransform: "var(--label-case)" }}
+                  style={{ ...styleOf(block("price-title")), height: "auto", lineHeight: 1, fontSize: "max(11px, var(--type-label))", letterSpacing: "var(--label-tracking)", textTransform: "var(--label-case)" }}
                 >
                   Price comparison
                 </h2>

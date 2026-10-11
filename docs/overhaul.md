@@ -1118,8 +1118,10 @@ Not fixed, for the user (critique findings that are design calls, or outside 6h)
   (Porsche, 1440 × 960).
 - **Found and fixed:** the scatter's "Asking price" title collided with the top y tick (ticks within 16 px of the
   top are dropped); the strip's last tick overhung the chart box (ticks clamp inside it).
-- **Open:** `price-title` wraps to two lines and clips at 1024 × 640 (111u is about 74 px there, the label needs
-  about 85 px at the 11 px floor); proposed `height: auto` with the mask kept, awaiting the user. Not run: the other
+- **Fixed (user approved):** `price-title` wrapped to two lines and clipped at 1024 × 640 (111u is about 74 px
+  there, the label needs about 85 px at the 11 px floor). It now has `height: auto` with its overflow mask kept, so
+  it reads on two lines at narrow widths and one line at 1440.
+- **Open:** Not run: the other
   twelve cars, the hover on tabs 1 and 3, the reveal, the `.cache/` walk (the folder is not in a fresh clone),
   `/impeccable critique` and `audit`, `web-design-guidelines`, `break-ui`, and the user's `/review-animations`.
 
