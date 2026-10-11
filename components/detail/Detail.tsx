@@ -1195,7 +1195,7 @@ function Page({ car }: { car: CarWithAssets }) {
                   data-block="price-module"
                   data-tone="light"
                   className="absolute box-border flex flex-col"
-                  style={{ ...styleOf(block("price-module")), height: "calc(100% - calc(var(--u) * 76))", background: "var(--color-card)", padding: "max(20px, calc(32 * var(--u)))" }}
+                  style={{ ...styleOf(block("price-module")), background: "var(--color-card)", padding: "max(20px, calc(32 * var(--u)))" }}
                 >
                   <PriceModule car={car} renderVerdict={(text) => charRiseLine(text, 0, priceVerdictChars)} />
                 </div>

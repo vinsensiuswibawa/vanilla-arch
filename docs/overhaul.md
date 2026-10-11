@@ -1141,6 +1141,10 @@ Not fixed, for the user (critique findings that are design calls, or outside 6h)
   "auto"`), the incoming panel's text, chart box, stat row and caption rising 8 px, dots scaling from 0.85, scatter
   points fading, the history clip drawing. Pointer clicks animate; arrows, Home and End are instant; the previous
   switch's tweens are killed and cleared before each one.
+- **Layout revised after review (user, 2026-10-11):** the title sits in a left column beside the card, not above it
+  (`price-title` x 10577, w 111; `price-module` x 10712, y 24, full inset height). `t2` now reads the title's x, which is the
+  old card x, so the camera is unchanged; the card's right part is therefore past the viewport at the price stop and comes
+  into view as the visitor scrolls on.
 - **Measured departures (both user-approved):** stat values 24u instead of 32u (at 32u the Porsche's $192,500 / $229,000
   / $284,000 measured 153 px each in a 500 px row and collided); strip baseline 0.74 instead of 0.62 (a ~100 px empty
   band under the ticks at 1440 × 960). Also: the pin line starts at `max(28, label height)` so the label never leaves the box,
