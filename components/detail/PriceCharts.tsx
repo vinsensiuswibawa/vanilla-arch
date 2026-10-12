@@ -611,34 +611,37 @@ const restOpacity = (_: number, el: Element) => parseFloat(el.getAttribute("opac
 /** What a switch tween leaves behind on an element; cleared so React's own attributes govern again (6h). */
 const SWITCH_PROPS = "opacity,transform";
 
-/** A small "i" button that opens a note under its row (7c: the comparison line moved here). A real button, so it
- * works by keyboard and touch, not hover alone; Escape (while it or the note has focus) and a press elsewhere close
- * it. Escape is stopped here so Experience.tsx's Escape-leaves-the-detail-page listener doesn't also fire. */
-function InfoButton({ id, label, children }: { id: string; label: string; children: ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const wrap = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const away = (event: PointerEvent) => {
-      if (!wrap.current?.contains(event.target as Node)) setOpen(false);
-    };
-    document.addEventListener("pointerdown", away);
-    return () => document.removeEventListener("pointerdown", away);
-  }, [open]);
+/** The "i" button beside the claim line (7c: the comparison line moved behind it). A real button, so it works by
+ * keyboard and touch, not hover alone. Escape (focus on the button) closes the note and is stopped here so
+ * Experience.tsx's Escape-leaves-the-detail-page listener doesn't also fire. The note itself is `InfoNote`. */
+function InfoButton({ id, label, open, onToggle, onClose }: { id: string; label: string; open: boolean; onToggle: () => void; onClose: () => void }) {
   return (
-    <span ref={wrap} className="inline-flex" onKeyDown={(event) => {
-      if (event.key !== "Escape" || !open) return;
-      event.preventDefault();
-      event.stopPropagation();
-      setOpen(false);
-    }}>
-      <button type="button" className="price-info" aria-label={label} aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
-        <span aria-hidden>i</span>
-      </button>
-      <p id={id} hidden={!open} className="price-info-note">
-        {children}
-      </p>
-    </span>
+    <button
+      type="button"
+      data-info
+      className="price-info"
+      aria-label={label}
+      aria-expanded={open}
+      aria-controls={id}
+      onClick={onToggle}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || !open) return;
+        event.preventDefault();
+        event.stopPropagation();
+        onClose();
+      }}
+    >
+      <span aria-hidden>i</span>
+    </button>
+  );
+}
+
+/** The note the button opens: in the flow under the claim line (an overlay hid the tabs, /impeccable critique 7c). */
+function InfoNote({ id, open, children }: { id: string; open: boolean; children: ReactNode }) {
+  return (
+    <p id={id} data-info hidden={!open} className="price-info-note">
+      {children}
+    </p>
   );
 }
 
@@ -659,6 +662,15 @@ export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; render
   const trend = trendLine(listings);
   const prices = listings.map((l) => l.priceUsd);
   const verdict = VERDICT_LABEL[verdictFor(car.priceUsd, prices)];
+  const [infoOpen, setInfoOpen] = useState(false);
+  useEffect(() => {
+    if (!infoOpen) return;
+    const away = (event: PointerEvent) => {
+      if (!(event.target as Element).closest("[data-info]")) setInfoOpen(false);
+    };
+    document.addEventListener("pointerdown", away);
+    return () => document.removeEventListener("pointerdown", away);
+  }, [infoOpen]);
 
   /** M13's indicator: one bar moved with `x` and `scaleX` (a 1 px wide element scaled to the tab's width). */
   const place = (to: number, animate: boolean) => {
@@ -769,11 +781,12 @@ export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; render
         </span>
         <span className="inline-flex items-center" style={{ columnGap: u(8), fontSize: "max(13px, var(--type-body))", color: ink(75) }}>
           cheaper than {Math.round(cheaperThanShare(car.priceUsd, prices) * 100)}% of {listings.length} comparable listings
-          <InfoButton id={`${base}-info`} label="About this comparison">
-            {comparisonLine(listings)}
-          </InfoButton>
+          <InfoButton id={`${base}-info`} label="Where this comparison comes from" open={infoOpen} onToggle={() => setInfoOpen((v) => !v)} onClose={() => setInfoOpen(false)} />
         </span>
       </div>
+      <InfoNote id={`${base}-info`} open={infoOpen}>
+        {comparisonLine(listings)}
+      </InfoNote>
       {/* The full sentence once, for screen readers; the header says it in pieces. */}
       <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
       <div ref={tablist} role="tablist" aria-label="Price comparison datasets" className="relative flex" style={{ marginTop: u(32), gap: u(32) }}>

@@ -675,7 +675,7 @@ svg[data-mark-group] circle:focus-visible {
   padding: 0;
   border-radius: 9999px;
   background: none;
-  border: 1px solid color-mix(in srgb, var(--color-ink) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 65%, transparent);
   cursor: pointer;
   font-family: var(--t-text);
   font-size: max(11px, calc(12 * var(--u)));
@@ -686,7 +686,7 @@ svg[data-mark-group] circle:focus-visible {
 .price-info::after {
   content: "";
   position: absolute;
-  inset: calc(-1 * max(13px, calc(12 * var(--u))));
+  inset: calc(-1 * max(14px, calc(12 * var(--u))));
 }
 .price-info[aria-expanded="true"] {
   color: var(--color-paper);
@@ -703,16 +703,12 @@ svg[data-mark-group] circle:focus-visible {
   }
 }
 .price-info-note {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  right: 0;
-  top: calc(100% + max(8px, calc(8 * var(--u))));
-  padding: max(10px, calc(12 * var(--u))) max(12px, calc(16 * var(--u)));
-  background: var(--color-ink);
-  color: var(--color-paper);
+  margin-top: max(8px, calc(8 * var(--u)));
+  padding-left: max(10px, calc(12 * var(--u)));
+  border-left: 2px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
   font-size: max(12px, var(--type-label));
   line-height: 1.4;
+  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
   animation: price-info-in var(--dur-hover) var(--ease-reveal);
 }
 @keyframes price-info-in {
