@@ -664,47 +664,64 @@ svg[data-mark-group] circle:focus-visible {
   }
 }
 
-/* The price module's "How we count" trigger and its note (7c). A tracked-caps text button like the tabs; ::after lifts
-   the hit area to 44px. */
+/* The price module's info icon and its tooltip (7d). A circle with an italic "i"; ::after lifts the hit area to 44px.
+   The tooltip shows on hover (fine pointers), keyboard focus and aria-expanded (a click, for touch). Inside the ink
+   block the focus ring is paper: ink is invisible there. */
+.price-block :focus-visible {
+  outline-color: var(--color-paper);
+}
+.price-info-wrap {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: max(6px, calc(8 * var(--u)));
+}
 .price-info {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max(16px, calc(16 * var(--u)));
+  height: max(16px, calc(16 * var(--u)));
   padding: 0;
   background: none;
-  border: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
   cursor: pointer;
-  font-family: var(--t-text);
   font-size: max(12px, var(--type-label));
   line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: var(--label-tracking);
-  white-space: nowrap;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.3em;
-  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
+  color: inherit;
 }
 .price-info::after {
   content: "";
   position: absolute;
-  inset: calc(-1 * max(14px, calc(12 * var(--u)))) -8px;
+  inset: calc(-1 * max(14px, calc(14 * var(--u))));
 }
-.price-info[aria-expanded="true"] {
-  color: var(--color-ink);
-  text-decoration-thickness: 2px;
-}
-@media (hover: hover) and (pointer: fine) {
-  .price-info:hover {
-    color: var(--color-ink);
-  }
-}
-.price-info-note {
+.price-info-tip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
   margin-top: max(8px, calc(8 * var(--u)));
-  padding-left: max(10px, calc(12 * var(--u)));
-  border-left: 2px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+  width: max(240px, calc(300 * var(--u)));
+  padding: 12px;
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-size: max(12px, var(--type-label));
   line-height: 1.4;
-  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
+  visibility: hidden;
+  pointer-events: none;
+}
+.price-info:focus-visible + .price-info-tip,
+.price-info[aria-expanded="true"] + .price-info-tip {
+  visibility: visible;
   animation: price-info-in var(--dur-hover) var(--ease-reveal);
+}
+@media (hover: hover) and (pointer: fine) {
+  .price-info:hover + .price-info-tip {
+    visibility: visible;
+    animation: price-info-in var(--dur-hover) var(--ease-reveal);
+  }
 }
 @keyframes price-info-in {
   from {
@@ -713,7 +730,9 @@ svg[data-mark-group] circle:focus-visible {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .price-info-note {
+  .price-info:focus-visible + .price-info-tip,
+  .price-info[aria-expanded="true"] + .price-info-tip,
+  .price-info:hover + .price-info-tip {
     animation-name: price-info-fade;
     animation-duration: 0.3s;
   }

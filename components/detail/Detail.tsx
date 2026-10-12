@@ -19,7 +19,7 @@ import { play } from "@/lib/audio";
 import { cars, getCar, type CarWithAssets, type Photo } from "@/lib/cars";
 import { applyState, mixPose, arc as shortestArc, screenBox, solveAll, stateOf } from "@/lib/choreography";
 import { detail, exit, leaveDetail, resetDetail, stepTurntable } from "@/lib/detail";
-import { block, cueRanges, progressAt, STOPS, styleOf, toneAt, u } from "@/lib/detail-layout";
+import { block, cueRanges, progressAt, STOPS, styleOf, toneAt, TRACK, u } from "@/lib/detail-layout";
 import { barExit, charRise, chromeFade, depthOffset, depthSetter, frameDrift, frameOffset, imageReveal, imageSwap, lineRise, parallax, ruleDraw, scrollText, sideEntrance, splitChars, splitLines } from "@/lib/detail-fx";
 import { ease, effect, entry, reduced as reducedTokens, SCROLL_LAG, scrollFeel } from "@/lib/detail-motion";
 import { formatKilometres, formatMiles, formatPrice } from "@/lib/format";
@@ -46,15 +46,6 @@ const EMBLEM_WIDTH = 140;
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 /** Drops nulls from a ref list; the result is a plain array, assignable wherever the fx factories expect `Targets`. */
 const live = (els: (Element | null)[]): Element[] => els.filter((el): el is Element => el !== null);
-
-/** Sequential, non-overlapping groups of a car's photos for the sections that need several (A2, B's photo,
- * C's band): deterministic by `start`, so the same car always gets the same picks. Thin sets (as few as six)
- * wrap around rather than come up empty. */
-function photoGroup(car: CarWithAssets, start: number, count: number): Photo[] {
-  const pool = car.photos;
-  if (!pool.length) return [];
-  return Array.from({ length: Math.min(count, pool.length) }, (_, i) => pool[(start + i) % pool.length]);
-}
 
 /** Section C's spec table rows (docs/overhaul-copy.md, "Spec table rows"). */
 /** [label, value, numeral]: `numeral` rows get the mono face (CLAUDE.md's "Geist Mono (numerals)"),
@@ -87,18 +78,20 @@ function SwapSlot({ id, photos, sizes, parallax: withParallax }: { id: string; p
   if (!photos.length) return null;
   return (
     <div data-block={id} data-tone="dark" className="absolute overflow-hidden" style={styleOf(block(id))}>
-      <div
-        {...(withParallax ? { "data-swap-parallax": "" } : {})}
-        className="absolute top-0"
-        style={withParallax ? { left: "-6%", width: "112%", height: "100%" } : { inset: 0 }}
-      >
-        {photos.map((photo, i) => (
-          <div key={photo.src} data-swap-layer className="absolute inset-0" style={{ zIndex: photos.length - i, clipPath: "inset(0)" }}>
-            <div data-swap-inner className="absolute inset-0">
-              <Image src={photo.src} alt={photo.alt} fill sizes={sizes} className="object-cover" />
+      <div data-reveal-inner className="absolute inset-0">
+        <div
+          {...(withParallax ? { "data-swap-parallax": "" } : {})}
+          className="absolute top-0"
+          style={withParallax ? { left: "-6%", width: "112%", height: "100%" } : { inset: 0 }}
+        >
+          {photos.map((photo, i) => (
+            <div key={photo.src} data-swap-layer className="absolute inset-0" style={{ zIndex: photos.length - i, clipPath: "inset(0)" }}>
+              <div data-swap-inner className="absolute inset-0">
+                <Image src={photo.src} alt={photo.alt} fill sizes={sizes} className="object-cover" />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -281,7 +274,7 @@ function Page({ car }: { car: CarWithAssets }) {
       u = probe.current!.getBoundingClientRect().width || 1;
       const w = rootEl.clientWidth;
       const h = rootEl.clientHeight;
-      const total = 15210 * u;
+      const total = TRACK * u;
       travel = Math.max(1, total - w);
       contentEl.style.height = `${h + travel}px`;
       frontEl.style.width = behindEl.style.width = `${total}px`;
@@ -535,15 +528,19 @@ function Page({ car }: { car: CarWithAssets }) {
       if (reduced) gsap.set(frame, { opacity: 0 });
       else {
         gsap.set(frame, { clipPath: "inset(100% 0 0 0)" });
-        gsap.set(inner, { yPercent: effect.imageReveal.innerYPercent });
+        gsap.set(inner, { yPercent: effect.imageReveal.innerYPercent, scale: effect.imageReveal.zoomFrom });
       }
-      // User, 2026-10-10: wait until the frame has fully entered the viewport before revealing, not when
-      // it's "just entering" — the right edge reaching 100% is exactly "fully in frame", a later, stricter
-      // trigger than the plan's "centre at 90%" (step 2), which read as starting too early in review.
-      revealOnce(frame, 1, () => imageReveal(frame, inner, reduced), "right");
+      // User, 7d: reveal when the frame's left edge reaches 80% of the viewport. This reverses the 2026-10-10
+      // "fully in frame" call (right edge at 100%), which read as late.
+      revealOnce(frame, effect.imageReveal.trigger, () => imageReveal(frame, inner, reduced));
     };
     wireImageReveal(a3Frame.current, a3Inner.current);
     wireImageReveal(cBandFrame.current, cBandInner.current);
+    const wireSlotReveal = (id: string) =>
+      wireImageReveal(rootEl.querySelector<HTMLElement>(`[data-block="${id}"]`), rootEl.querySelector<HTMLElement>(`[data-block="${id}"] [data-reveal-inner]`));
+    wireSlotReveal("a2");
+    wireSlotReveal("b-photo");
+    wireSlotReveal("s-swap");
 
     revealOnce(cLabel.current, effect.lineRise.trigger, () => lineRise(cLabel.current!, reduced));
 
@@ -770,8 +767,9 @@ function Page({ car }: { car: CarWithAssets }) {
       // before it wipes away (user, after 6h: it was swapping as it entered); a quarter-viewport step then
       // finishes the first swap as the slot reaches the left edge, still fully on screen.
       stepSwap(a2Swap, 0.25, 0.25);
-      stepSwap(bPhotoSwap);
-      stepSwap(sSwap);
+      // B's photo and the slideshow's swap slot reveal first (M4, 80% trigger, 1.4 s of zoom), so their first wipe waits.
+      stepSwap(bPhotoSwap, 0.6, 0.25);
+      stepSwap(sSwap, 0.6, 0.25);
       // M6: the photo drifts against the scroll while it crosses the viewport; off under reduced motion.
       if (!reduced && bPhotoParallaxEl) {
         const vw = detail.viewport.w;
@@ -938,25 +936,23 @@ function Page({ car }: { car: CarWithAssets }) {
     ["Location", car.location],
   ];
   const firstPhoto = car.photos.find((p) => p.kind === "exterior") ?? car.photos[0];
-  // Sections A to C's remaining photos (6f): slot sizes adapt to the pool instead of fixed 3/1/3/1, so a
-  // thinnest-set car (six, 6b's floor — eight of the thirteen cars are exactly at it) never repeats a photo
-  // across A to C. A3 is optional per the plan ("A3 (optional): a portrait photo"); skipped below 8 photos
-  // rather than forced into a repeat (found by /impeccable critique, 6f: at the old fixed 3/1/3/1, a
-  // six-photo car repeated three of its nine slots within one continuous scroll).
-  const pool = car.photos.length;
-  const swapCount = pool >= 9 ? 3 : 2;
-  const a2Photos = photoGroup(car, 1, swapCount);
-  const a3Photo = pool >= 8 ? (photoGroup(car, 1 + swapCount, 1)[0] as Photo | undefined) : undefined;
-  const bStart = 1 + swapCount + (a3Photo ? 1 : 0);
-  const bPhotos = photoGroup(car, bStart, swapCount);
-  const cBandPhoto = photoGroup(car, bStart + swapCount, 1)[0] as Photo | undefined;
-  // D's slideshow (6g) continues the same wrap-around sequence: by the pool floor (six), sections A to C have
-  // already used nearly the whole set, so the slideshow necessarily revisits photos for the thinnest cars —
-  // the same trade-off `photoGroup`'s wrap already makes everywhere else, not a new one.
-  const dStart = bStart + swapCount + 1;
-  const sTallPhoto = photoGroup(car, dStart, 1)[0] as Photo | undefined;
-  const sSwapPhotos = photoGroup(car, dStart + 1, swapCount);
-  const sThirdPhoto = photoGroup(car, dStart + 1 + swapCount, 1)[0] as Photo | undefined;
+  // Every photo appears once on the page (7d). Slots fill in priority order until the photos run out; a slot
+  // with no photo isn't rendered, and a swap slot with one photo just doesn't swap.
+  const ordered = [firstPhoto, ...car.photos.filter((p) => p !== firstPhoto)];
+  let nextPhoto = 1; // ordered[0] is A1's
+  const take = (): Photo | undefined => ordered[nextPhoto++];
+  const layer = (photo: Photo | undefined): Photo[] => (photo ? [photo] : []);
+  const a2Photos = layer(take());
+  const bPhotos = layer(take());
+  const cBandPhoto = take();
+  const sTallPhoto = take();
+  const sThirdPhoto = take();
+  const sSwapPhotos = layer(take());
+  const a3Photo = take();
+  for (const photos of [a2Photos, bPhotos, sSwapPhotos, a2Photos, bPhotos, sSwapPhotos]) {
+    const extra = take();
+    if (extra) photos.push(extra);
+  }
   // Make/year and "Jump to specs" follow the name's actual line count (MAKE_GAP_PX below the name, JUMP_GAP_PX
   // below make/year), so a one-line name (NSX, M5, TR6) doesn't leave the gap a fixed y would. Name: 160u at
   // 0.95 leading = 152u per line; make/year and jump set `lineHeight: 1` so their boxes are just their font
@@ -1305,7 +1301,7 @@ function Page({ car }: { car: CarWithAssets }) {
                   type="button"
                   data-block="inquire"
                   data-tone="light"
-                  className="font-display absolute text-left"
+                  className="font-display absolute text-right"
                   style={{ ...styleOf(block("inquire")), fontSize: "max(16px, calc(28 * var(--u)))", lineHeight: 1.15 }}
                   onClick={() => {
                     enquiryAuto.current = false;

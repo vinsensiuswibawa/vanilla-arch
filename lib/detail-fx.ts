@@ -98,6 +98,8 @@ export function imageReveal(frame: Targets, inner: Targets, reduced: boolean) {
   const tl = gsap.timeline();
   tl.fromTo(frame, { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: effect.imageReveal.clipDuration, ease: effect.imageReveal.ease });
   tl.fromTo(inner, { yPercent: effect.imageReveal.innerYPercent }, { yPercent: 0, duration: effect.imageReveal.innerDuration, ease: effect.imageReveal.ease }, 0);
+  // The photo is 5% large while the clip opens and settles after it (ends at zoomDelay + zoomDuration = 2.0 s).
+  tl.fromTo(inner, { scale: effect.imageReveal.zoomFrom }, { scale: 1, duration: effect.imageReveal.zoomDuration, ease: effect.imageReveal.ease, immediateRender: true }, effect.imageReveal.zoomDelay);
   return tl;
 }
 

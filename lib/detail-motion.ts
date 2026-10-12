@@ -34,7 +34,7 @@ export const effect = {
   lineRise: { yPercent: 100, duration: 0.9, stagger: 0.08, ease: ease.reveal, trigger: 0.85 }, // M1
   charRise: { yPercent: 110, duration: 0.8, stagger: 0.03, lineOffset: 0.12, ease: ease.reveal, trigger: 0.8 }, // M2
   scrollText: { from: 0.2, to: 1, start: 0.9, end: 0.45 }, // M3: opacity per character, scroll-tied
-  imageReveal: { clipDuration: 1.2, innerDuration: 1.5, innerYPercent: 15, ease: ease.reveal, trigger: 0.9 }, // M4
+  imageReveal: { clipDuration: 1.2, innerDuration: 1.5, innerYPercent: 15, ease: ease.reveal, trigger: 0.8, zoomFrom: 1.05, zoomDelay: 0.6, zoomDuration: 1.4 }, // M4
   imageSwap: { clipDuration: 1.4, scaleDuration: 1.9, scaleFrom: 1.15, clipEase: ease.swap, scaleEase: ease.reveal }, // M5
   parallax: { xPercent: 6, frameScale: 1.12 }, // M6: inner photo drifts -6 to +6 %, rendered 112 % wide
   // M7 (7c): each element's speed against the page; behind-layer type below 1, "A new home" above it (opposite to "Give it")

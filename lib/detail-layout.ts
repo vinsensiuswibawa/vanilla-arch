@@ -29,9 +29,9 @@ export interface Block {
 
 export const BAR = 68;
 /** The whole track, from the hero's left edge to the end of the enquiry section. */
-export const TRACK = 15210;
+export const TRACK = 14830;
 /** Where section E is aligned in the viewport (frame 14), as a track x. */
-export const ENQUIRY = 13770;
+export const ENQUIRY = 13390;
 
 export const BLOCKS: Block[] = [
   // ---- Behind the car: pale fields and the large type the car passes in front of ----
@@ -39,16 +39,16 @@ export const BLOCKS: Block[] = [
   { id: "hero-name", layer: "behind", kind: "type", tone: "light", label: "Car name", real: true, x: 24, y: 100, w: 560, h: 430 },
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
   { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
-  { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13400, w: 1810, h: "full" },
-  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give it", real: true, x: 13995, y: 200, w: 560, h: 130 },
-  { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 14220, y: 770, w: 1000, h: 130 },
+  { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
+  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give it", real: true, x: 13535, y: 200, w: 560, h: 130 },
+  { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13760, y: 720, w: 1000, h: 130 },
 
   // ---- In front of the car: photos, the dark sections, the price section, small text and buttons ----
   { id: "emblem", layer: "front", kind: "control", tone: "light", label: "Emblem", real: true, x: 1170, y: 24, w: 80, h: 64 },
   // 150, not the storyboard's 200 (user, 2026-10-09: the underline below it, width:100% of this box, was
   // trailing well past the text; -25% hugs "Jump to specs →" instead).
   { id: "jump", layer: "front", kind: "control", tone: "light", label: "Jump to specs →", real: true, x: 24, y: 612, w: 150, h: 36 },
-  { id: "scroll-cue", layer: "front", kind: "type", tone: "light", label: "Scroll", real: true, x: 1252, bottom: BAR + 24, w: 20, h: 190 },
+  { id: "scroll-cue", layer: "front", kind: "type", tone: "light", label: "Scroll", real: true, x: 1252, bottom: BAR + 12, w: 20, h: 190 },
   { id: "a1", layer: "front", kind: "photo", tone: "dark", label: "A1 photo", real: true, x: 1318, y: 0, w: 620, h: "aboveBar" },
   { id: "a2", layer: "front", kind: "photo", tone: "dark", label: "A2 swap slot", real: true, x: 1794, y: 446, w: 530, h: 355 },
   { id: "a3", layer: "front", kind: "photo", tone: "dark", label: "A3 photo", real: true, x: 2700, y: 160, w: 542, h: 640 },
@@ -95,7 +95,7 @@ export const BLOCKS: Block[] = [
   { id: "price-module", layer: "front", kind: "card", tone: "light", label: "Price comparison", real: true, x: 10712, y: 24, w: 564, h: "inset" },
   { id: "price-title", layer: "front", kind: "type", tone: "light", label: "Price comparison title", real: true, x: 10577, y: 24, w: 111, h: 16 },
 
-  { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11300, w: 2100, h: "full" },
+  { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11300, w: 1720, h: "full" },
   { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11324, y: 24, w: 607, h: "inset" },
   { id: "s-swap", layer: "front", kind: "photo", tone: "dark", label: "Swap slot", real: true, x: 11780, y: 240, w: 465, h: 480 },
   { id: "s-third", layer: "front", kind: "photo", tone: "dark", label: "Third photo", real: true, x: 12288, y: 24, w: 720, h: 400 },
@@ -103,7 +103,7 @@ export const BLOCKS: Block[] = [
   // arrow sat off screen at the frame-12 position (6h).
   { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12688, bottom: 24, w: 320, h: 28 },
 
-  { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14950, y: 430, w: 240, h: 100 },
+  { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14578, y: 430, w: 240, h: 100 },
 ];
 
 const byId = new Map(BLOCKS.map((block) => [block.id, block]));
@@ -125,7 +125,7 @@ export const STOPS = [
 ] as const;
 
 /** Scroll positions (u) of the storyboard's 14 frames, for the walk check. */
-export const FRAMES = [0, 1354, 3242, 4142, 4710, 5542, 6728, 8118, 9128, 9726, 10805, 11593, 13172, 13770] as const;
+export const FRAMES = [0, 1354, 3242, 4142, 4710, 5542, 6728, 8118, 9128, 9726, 10805, 11593, 12792, 13390] as const;
 
 /** A block's rectangle in u, for a viewport `height` u tall. */
 export function rect(b: Block, height: number) {

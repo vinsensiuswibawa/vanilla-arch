@@ -610,36 +610,32 @@ const restOpacity = (_: number, el: Element) => parseFloat(el.getAttribute("opac
 /** What a switch tween leaves behind on an element; cleared so React's own attributes govern again (6h). */
 const SWITCH_PROPS = "opacity,transform";
 
-/** The "How we count" button beside the claim line (7c; the source caption sits under the price). A real button, so it works by
- * keyboard and touch, not hover alone. Escape (focus on the button) closes the note and is stopped here so
- * Experience.tsx's Escape-leaves-the-detail-page listener doesn't also fire. The note itself is `InfoNote`. */
-function InfoButton({ id, open, onToggle, onClose }: { id: string; open: boolean; onToggle: () => void; onClose: () => void }) {
+/** The info icon beside the claim line: a real button, so it works by keyboard and touch, not hover alone. Hover and
+ * focus show its tooltip by CSS; a click toggles `aria-expanded`, which shows it for touch. Escape (focus on the
+ * button) closes it and is stopped here so Experience.tsx's Escape-leaves-the-detail-page listener doesn't also fire. */
+function InfoButton({ id, open, onToggle, onClose, children }: { id: string; open: boolean; onToggle: () => void; onClose: () => void; children: ReactNode }) {
   return (
-    <button
-      type="button"
-      data-info
-      className="price-info"
-      aria-expanded={open}
-      aria-controls={id}
-      onClick={onToggle}
-      onKeyDown={(event) => {
-        if (event.key !== "Escape" || !open) return;
-        event.preventDefault();
-        event.stopPropagation();
-        onClose();
-      }}
-    >
-      How we count
-    </button>
-  );
-}
-
-/** The note the button opens: in the flow under the claim line (an overlay hid the tabs, /impeccable critique 7c). */
-function InfoNote({ id, open, children }: { id: string; open: boolean; children: ReactNode }) {
-  return (
-    <p id={id} data-info hidden={!open} className="price-info-note">
-      {children}
-    </p>
+    <span data-info className="price-info-wrap">
+      <button
+        type="button"
+        className="price-info"
+        aria-label="About this comparison"
+        aria-expanded={open}
+        aria-describedby={id}
+        onClick={onToggle}
+        onKeyDown={(event) => {
+          if (event.key !== "Escape" || !open) return;
+          event.preventDefault();
+          event.stopPropagation();
+          onClose();
+        }}
+      >
+        <span aria-hidden className="font-display" style={{ fontStyle: "italic" }}>i</span>
+      </button>
+      <span role="tooltip" id={id} className="price-info-tip">
+        {children}
+      </span>
+    </span>
   );
 }
 
@@ -688,7 +684,16 @@ export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; render
     place(tabNow.current, false);
     const observer = new ResizeObserver(() => place(tabNow.current, false));
     observer.observe(list);
-    return () => observer.disconnect();
+    tabRefs.current.forEach((b) => b && observer.observe(b));
+    // The webfont swaps in after the first measure; re-measure once it has.
+    let alive = true;
+    document.fonts.ready.then(() => {
+      if (alive) place(tabNow.current, false);
+    });
+    return () => {
+      alive = false;
+      observer.disconnect();
+    };
   }, []);
   useLayoutEffect(
     () => () => {
@@ -773,25 +778,24 @@ export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; render
       </p>
       {/* Same hairline as the tab divider (7c); it draws with the other rules (M8). */}
       <div data-rule aria-hidden className="h-px w-full origin-left" style={{ marginTop: u(16), background: ink(22) }} />
-      <div data-mark className="relative flex flex-wrap items-baseline" style={{ marginTop: u(16), columnGap: u(12) }}>
-        <span className="font-mono" style={{ fontSize: "max(20px, calc(32 * var(--u)))", lineHeight: 1 }}>
+      {/* The price and the claim sit on an ink block (7d); the source and method live in the info tooltip. */}
+      <div data-mark className="price-block" style={{ marginTop: u(16), background: "var(--color-ink)", color: "var(--color-paper)", padding: "max(16px, calc(20 * var(--u)))" }}>
+        <span className="block font-mono" style={{ fontSize: "max(20px, calc(32 * var(--u)))", lineHeight: 1 }}>
           {formatPrice(car.priceUsd)}
         </span>
-        <span className="inline-flex items-center" style={{ columnGap: u(8), fontSize: "max(13px, var(--type-body))", color: ink(75) }}>
-          cheaper than {Math.round(cheaperThanShare(car.priceUsd, prices) * 100)}% of {listings.length} comparable listings
-          <InfoButton id={`${base}-info`} open={infoOpen} onToggle={() => setInfoOpen((v) => !v)} onClose={() => setInfoOpen(false)} />
+        <span className="block" style={{ marginTop: 12, fontSize: "max(13px, var(--type-body))", color: "color-mix(in srgb, var(--color-paper) 80%, transparent)" }}>
+          cheaper than {Math.round(cheaperThanShare(car.priceUsd, prices) * 100)}% of vehicles across {listings.length} comparable{" "}
+          <span className="whitespace-nowrap">
+            listings
+            <InfoButton id={`${base}-info`} open={infoOpen} onToggle={() => setInfoOpen((v) => !v)} onClose={() => setInfoOpen(false)}>
+              {listings.length} listings · {new Intl.ListFormat("en", { type: "conjunction" }).format(Array.from(new Set(listings.map((l) => l.marketplace))).map(marketplaceName))}. Listings of the same model, by asking price. “Cheaper than” is the share asking more than this car. Illustrative data.
+            </InfoButton>
+          </span>
         </span>
       </div>
-      {/* The source stays visible (7c, user): in a screenshot the verdict still shows what it was weighed against. */}
-      <p data-mark className="font-mono" style={{ marginTop: u(8), fontSize: "max(12px, var(--type-label))", lineHeight: 1.4, color: ink(75) }}>
-        {listings.length} listings · {Array.from(new Set(listings.map((l) => l.marketplace))).map(marketplaceName).join(", ")}
-      </p>
-      <InfoNote id={`${base}-info`} open={infoOpen}>
-        Listings of the same model, by asking price. “Cheaper than” is the share asking more than this car. Illustrative data.
-      </InfoNote>
       {/* The full sentence once, for screen readers; the header says it in pieces. */}
       <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
-      <div ref={tablist} role="tablist" aria-label="Price comparison datasets" className="relative flex" style={{ marginTop: u(32), gap: u(32) }}>
+      <div ref={tablist} role="tablist" aria-label="Price comparison datasets" className="relative flex justify-between" style={{ marginTop: u(32) }}>
         {TABS.map((label, i) => (
           <button
             key={label}

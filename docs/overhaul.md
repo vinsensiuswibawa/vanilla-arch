@@ -190,7 +190,7 @@ feel unhurried. GSAP names are given; CSS equivalents are for non-GSAP transitio
 | M1 | Line rise | Text split into lines; each line rises from under its own mask. | `yPercent` 100 → 0, 0.9 s, `reveal`, stagger 0.08 s | Triggered at 85% | Labels, paragraphs, spec rows, "Our take", "To keep in mind", captions |
 | M2 | Character rise | Display text split into lines, then characters; characters rise from under the line mask, every line in the same direction (from below). | `yPercent` 110 → 0, 0.8 s, `reveal`, stagger 0.03 s per character, lines start 0.12 s apart | Triggered at 80% | The car name (hero entry), section headlines, "Give it", "A new home" (see M9) |
 | M3 | Scroll-to-reveal text | Characters brighten from dim to full as the block crosses the screen. | Opacity 0.2 → 1 per character, `linear`, stagger spread over the range | Scroll-tied, from the block's left edge at 90% to its centre at 45% | Section C summary quote |
-| M4 | Image reveal | The frame's clip opens from the bottom while the photo inside rises into place. | Clip `inset(100% 0 0 0)` → `inset(0)`, 1.2 s, `reveal`; inner photo `yPercent` 15 → 0, 1.5 s, `reveal` | Triggered when the image's centre reaches 90% | Every photo's first appearance |
+| M4 | Image reveal | The frame's clip opens from the bottom while the photo inside rises into place. | Clip `inset(100% 0 0 0)` → `inset(0)`, 1.2 s, `reveal`; inner photo `yPercent` 15 → 0, 1.5 s, `reveal`, then settles from 1.05 to 1 over 1.4 s, starting at 0.6 s | Triggered when the image's left edge reaches 80% | Every photo's first appearance |
 | M5 | Image swap | Several photos share one slot: the top photo wipes away right to left, uncovering the next, which settles from a slight zoom. | Top clip `inset(0)` → `inset(0 100% 0 0)`, 1.4 s, `swap`; next photo `scale` 1.15 → 1, 1.9 s, `reveal` | See the cadence note below | Section A's smaller slot, section B's 480 × 640 photo, the section D slideshow |
 | M6 | Parallax | The photo inside its frame drifts against the scroll; the frame stays on the grid. Photos are rendered 112% wide so no edge shows. | Inner `xPercent` −6 → +6 across the frame's trip through the viewport, `linear` | Scroll-tied | All photos in frames |
 | M7 | Depth drift | Behind-layer type moves slightly slower than the page, so it separates from the front layer and the car. | Offset `x * (1 - speed)`, `linear`; speeds: name 0.82, make · year 0.88, "Jump to specs" 0.94, "Give it" 0.85, "A new home" 1.1 (opposite to "Give it", echoing M9). Wired in 7c | Scroll-tied | Hero name, make · year, "Jump to specs", "Give it / A new home" |
@@ -1195,3 +1195,40 @@ Built:
 - **Not run:** `/review-animations` on M14, M7 and the button fade (the user's), the full car matrix for the walk,
   `/impeccable critique` and `audit`.
 
+
+## 7d status
+
+Built:
+
+- **Price header:** price and claim on one ink block (price, 12 px, claim; claim at 80% paper; paper focus rings inside). The
+  "How we count" text button is now a 16u circle with an italic "i" (`aria-label="About this comparison"`, 44px hit area).
+  Its tooltip carries the listing count, the marketplaces (`Intl.ListFormat`, "and" list) and the method note; it shows on
+  hover (fine pointers), `:focus-visible` and `aria-expanded` (click, for touch), with `price-info-in` (reduced motion:
+  `price-info-fade`). The source `<p>` and `InfoNote` are gone.
+- **Tabs:** `justify-content: space-between` (equal gaps; last label flush right). The indicator re-measures when each tab
+  button resizes and once after `document.fonts.ready`.
+- **M4 everywhere:** trigger 0.9 → 0.8 on the frame's left edge (reverses the 2026-10-10 "fully in frame" call); A2, B photo
+  and the slideshow swap slot reveal through `[data-reveal-inner]` (separate from the M6 element); the photo zooms 1.05 → 1
+  over 1.4 s from 0.6 s (ends at 2.0 s; none under reduced motion). B photo's and the swap slot's first wipe now start at
+  0.6 of the viewport (step 0.25); A2 keeps (0.25, 0.25).
+- **Slideshow:** panel 2100 → 1720u (ends 12u after "See all" and S third, at 13020u); everything from E on moved 380u left
+  (`TRACK` 14830, `ENQUIRY` 13390, frames 13 and 14: 12792, 13390); `layout()` uses `TRACK * u`. "Give it" 80u left, "A new home"
+  80u left and 50u up. "Inquire about this car here →" is right-aligned, its box ending at TRACK − 12.
+- **Photos:** each photo appears once. Fill order A1, A2, B, C band, S tall, S third, S swap, A3, then extra swap layers
+  (A2, B, S swap, three rounds). `photoGroup` is deleted. Slots by photo count: 6 photos (Datsun, Integra, NSX, Gallardo, MX-5,
+  205, 930, TR6) → A1, A2, B, C, S tall, S third (no S swap); 7 (Barchetta, Subaru) add a static S swap; 13 (Elise, XJ220) fill A3,
+  A2 and B at 3 layers and S swap at 2; 14 (M5) fills every layer.
+- "Scroll for more" sits 12u above the bar (was 24u).
+
+Checks (cloud sandbox, software WebGL, about 1 fps; no timings): typecheck, lint, build; 5 of the 6 smoke tests on the full run,
+the 6th (keyboard steps) fails on its 15 s waits at this frame rate and passes alone. Walk of the TR6 and M5 at 1440 × 960
+and 1024 × 640, frames 2, 5, 9 to 14: price → 12 px → claim; tab indicator equals its label's text rect (±0.4 px) and the last
+label ends at the divider's right; slideshow right edge − S third right = 12u (12 px at 1440, 8 px at 1024); no src repeats
+on any of the 13 cars. B photo: hidden at a left edge of 85%, reveals at 80%, ends at clip 0 and scale 1. Reduced motion: the
+frame fades, no scale. Not run: `/review-animations` on the reveal and zoom (the user's), `/impeccable critique` and `audit`.
+
+**Open, needs a decision:** `layout()` sizes the track from the probe's measured width, and Chromium quantises that width to
+1/64 px: `--u` is 1.0979 at 1885 × 1054 but the probe reads 1.09375, so the track is 16220 px instead of 16282 and the blocks (laid
+out by CSS `--u`) overshoot at the end by 62 px. At 1885 × 1054 the inquire text's right edge is 1933.6 px (clientWidth 1885;
+want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (want 1016). Fix: measure the probe at
+`calc(var(--u) * 1000)` and divide by 1000.
