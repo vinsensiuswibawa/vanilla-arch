@@ -18,7 +18,6 @@ import type { CarWithAssets } from "@/lib/cars";
 import {
   bucketStep,
   cheaperThanShare,
-  comparisonLine,
   getComparables,
   historyTakeaway,
   marketplaceName,
@@ -611,16 +610,15 @@ const restOpacity = (_: number, el: Element) => parseFloat(el.getAttribute("opac
 /** What a switch tween leaves behind on an element; cleared so React's own attributes govern again (6h). */
 const SWITCH_PROPS = "opacity,transform";
 
-/** The "i" button beside the claim line (7c: the comparison line moved behind it). A real button, so it works by
+/** The "How we count" button beside the claim line (7c; the source caption sits under the price). A real button, so it works by
  * keyboard and touch, not hover alone. Escape (focus on the button) closes the note and is stopped here so
  * Experience.tsx's Escape-leaves-the-detail-page listener doesn't also fire. The note itself is `InfoNote`. */
-function InfoButton({ id, label, open, onToggle, onClose }: { id: string; label: string; open: boolean; onToggle: () => void; onClose: () => void }) {
+function InfoButton({ id, open, onToggle, onClose }: { id: string; open: boolean; onToggle: () => void; onClose: () => void }) {
   return (
     <button
       type="button"
       data-info
       className="price-info"
-      aria-label={label}
       aria-expanded={open}
       aria-controls={id}
       onClick={onToggle}
@@ -631,7 +629,7 @@ function InfoButton({ id, label, open, onToggle, onClose }: { id: string; label:
         onClose();
       }}
     >
-      <span aria-hidden>i</span>
+      How we count
     </button>
   );
 }
@@ -781,11 +779,15 @@ export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; render
         </span>
         <span className="inline-flex items-center" style={{ columnGap: u(8), fontSize: "max(13px, var(--type-body))", color: ink(75) }}>
           cheaper than {Math.round(cheaperThanShare(car.priceUsd, prices) * 100)}% of {listings.length} comparable listings
-          <InfoButton id={`${base}-info`} label="Where this comparison comes from" open={infoOpen} onToggle={() => setInfoOpen((v) => !v)} onClose={() => setInfoOpen(false)} />
+          <InfoButton id={`${base}-info`} open={infoOpen} onToggle={() => setInfoOpen((v) => !v)} onClose={() => setInfoOpen(false)} />
         </span>
       </div>
+      {/* The source stays visible (7c, user): in a screenshot the verdict still shows what it was weighed against. */}
+      <p data-mark className="font-mono" style={{ marginTop: u(8), fontSize: "max(12px, var(--type-label))", lineHeight: 1.4, color: ink(75) }}>
+        {listings.length} listings · {Array.from(new Set(listings.map((l) => l.marketplace))).map(marketplaceName).join(", ")}
+      </p>
       <InfoNote id={`${base}-info`} open={infoOpen}>
-        {comparisonLine(listings)}
+        Listings of the same model, by asking price. “Cheaper than” is the share asking more than this car. Illustrative data.
       </InfoNote>
       {/* The full sentence once, for screen readers; the header says it in pieces. */}
       <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
