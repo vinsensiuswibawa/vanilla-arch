@@ -663,3 +663,72 @@ svg[data-mark-group] circle:focus-visible {
     color: var(--color-ink);
   }
 }
+
+/* The price module's "i" button and its note (7c). The circle is small; ::after lifts the hit area to 44px. */
+.price-info {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max(18px, calc(20 * var(--u)));
+  height: max(18px, calc(20 * var(--u)));
+  padding: 0;
+  border-radius: 9999px;
+  background: none;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 45%, transparent);
+  cursor: pointer;
+  font-family: var(--t-text);
+  font-size: max(11px, calc(12 * var(--u)));
+  font-style: italic;
+  line-height: 1;
+  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
+}
+.price-info::after {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * max(13px, calc(12 * var(--u))));
+}
+.price-info[aria-expanded="true"] {
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .price-info:hover {
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+  .price-info[aria-expanded="true"]:hover {
+    color: var(--color-paper);
+  }
+}
+.price-info-note {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: calc(100% + max(8px, calc(8 * var(--u))));
+  padding: max(10px, calc(12 * var(--u))) max(12px, calc(16 * var(--u)));
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-size: max(12px, var(--type-label));
+  line-height: 1.4;
+  animation: price-info-in var(--dur-hover) var(--ease-reveal);
+}
+@keyframes price-info-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .price-info-note {
+    animation-name: price-info-fade;
+    animation-duration: 0.3s;
+  }
+  @keyframes price-info-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}

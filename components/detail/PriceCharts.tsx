@@ -13,7 +13,7 @@
 import { scaleLinear, scaleSqrt } from "d3-scale";
 import { line as shapeLine } from "d3-shape";
 import gsap from "gsap";
-import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import type { CarWithAssets } from "@/lib/cars";
 import {
   bucketStep,
@@ -611,6 +611,37 @@ const restOpacity = (_: number, el: Element) => parseFloat(el.getAttribute("opac
 /** What a switch tween leaves behind on an element; cleared so React's own attributes govern again (6h). */
 const SWITCH_PROPS = "opacity,transform";
 
+/** A small "i" button that opens a note under its row (7c: the comparison line moved here). A real button, so it
+ * works by keyboard and touch, not hover alone; Escape (while it or the note has focus) and a press elsewhere close
+ * it. Escape is stopped here so Experience.tsx's Escape-leaves-the-detail-page listener doesn't also fire. */
+function InfoButton({ id, label, children }: { id: string; label: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const wrap = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const away = (event: PointerEvent) => {
+      if (!wrap.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", away);
+    return () => document.removeEventListener("pointerdown", away);
+  }, [open]);
+  return (
+    <span ref={wrap} className="inline-flex" onKeyDown={(event) => {
+      if (event.key !== "Escape" || !open) return;
+      event.preventDefault();
+      event.stopPropagation();
+      setOpen(false);
+    }}>
+      <button type="button" className="price-info" aria-label={label} aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
+        <span aria-hidden>i</span>
+      </button>
+      <p id={id} hidden={!open} className="price-info-note">
+        {children}
+      </p>
+    </span>
+  );
+}
+
 /** Section D's `price-module` block: the verdict as the headline, the price line, the comparison line and three
  * tabs (WAI-ARIA tabs pattern, automatic activation). Only the active panel's content is mounted, so a chart
  * always measures a visible box. `renderVerdict` is Detail.tsx's char-rise markup, so M2 can reveal the headline. */
@@ -730,20 +761,21 @@ export function PriceModule({ car, renderVerdict }: { car: CarWithAssets; render
           <span className="block">{renderVerdict(verdict)}</span>
         </span>
       </p>
-      <div data-mark className="flex flex-wrap items-baseline" style={{ marginTop: u(16), columnGap: u(12) }}>
+      {/* Same hairline as the tab divider (7c); it draws with the other rules (M8). */}
+      <div data-rule aria-hidden className="h-px w-full origin-left" style={{ marginTop: u(16), background: ink(22) }} />
+      <div data-mark className="relative flex flex-wrap items-baseline" style={{ marginTop: u(16), columnGap: u(12) }}>
         <span className="font-mono" style={{ fontSize: "max(20px, calc(32 * var(--u)))", lineHeight: 1 }}>
           {formatPrice(car.priceUsd)}
         </span>
-        <span style={{ fontSize: "max(13px, var(--type-body))", color: ink(75) }}>
+        <span className="inline-flex items-center" style={{ columnGap: u(8), fontSize: "max(13px, var(--type-body))", color: ink(75) }}>
           cheaper than {Math.round(cheaperThanShare(car.priceUsd, prices) * 100)}% of {listings.length} comparable listings
+          <InfoButton id={`${base}-info`} label="About this comparison">
+            {comparisonLine(listings)}
+          </InfoButton>
         </span>
       </div>
       {/* The full sentence once, for screen readers; the header says it in pieces. */}
       <span className="sr-only">{stripSummary(car.priceUsd, listings)}</span>
-      {/* 75%, not 65% (6h): 65% measured 4.03:1 on the figma theme's card, under AA. */}
-      <p data-mark style={{ marginTop: u(8), fontSize: "max(12px, var(--type-label))", lineHeight: 1.4, color: ink(75) }}>
-        {comparisonLine(listings)}
-      </p>
       <div ref={tablist} role="tablist" aria-label="Price comparison datasets" className="relative flex" style={{ marginTop: u(32), gap: u(32) }}>
         {TABS.map((label, i) => (
           <button
