@@ -40,7 +40,7 @@ export const BLOCKS: Block[] = [
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
   { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
   { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
-  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give it", real: true, x: 13535, y: 200, w: 560, h: 130 },
+  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give it", real: true, x: 13499, y: 200, w: 560, h: 130 },
   { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13760, y: 720, w: 1000, h: 130 },
 
   // ---- In front of the car: photos, the dark sections, the price section, small text and buttons ----

@@ -936,8 +936,10 @@ function Page({ car }: { car: CarWithAssets }) {
     ["Location", car.location],
   ];
   const firstPhoto = car.photos.find((p) => p.kind === "exterior") ?? car.photos[0];
-  // Every photo appears once on the page (7d). Slots fill in priority order until the photos run out; a slot
-  // with no photo isn't rendered, and a swap slot with one photo just doesn't swap.
+  // Every photo appears once on the page (7d), with one exception (7e). Slots fill in priority order until the
+  // photos run out. The seven single frames (A1, A2, B, C band, S tall, S third, S swap) always render: when the
+  // pool is under seven, S swap alone reuses A2's photo (the frame furthest from it on the page). A3 and the
+  // extra swap layers take only unused photos, so they simply don't render when the pool runs out.
   const ordered = [firstPhoto, ...car.photos.filter((p) => p !== firstPhoto)];
   let nextPhoto = 1; // ordered[0] is A1's
   const take = (): Photo | undefined => ordered[nextPhoto++];
@@ -947,7 +949,7 @@ function Page({ car }: { car: CarWithAssets }) {
   const cBandPhoto = take();
   const sTallPhoto = take();
   const sThirdPhoto = take();
-  const sSwapPhotos = layer(take());
+  const sSwapPhotos = layer(take() ?? (ordered.length < 7 ? a2Photos[0] : undefined));
   const a3Photo = take();
   for (const photos of [a2Photos, bPhotos, sSwapPhotos, a2Photos, bPhotos, sSwapPhotos]) {
     const extra = take();

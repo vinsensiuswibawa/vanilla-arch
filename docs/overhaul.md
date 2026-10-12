@@ -1232,3 +1232,9 @@ frame fades, no scale. Not run: `/review-animations` on the reveal and zoom (the
 out by CSS `--u`) overshoot at the end by 62 px. At 1885 × 1054 the inquire text's right edge is 1933.6 px (clientWidth 1885;
 want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (want 1016). Fix: measure the probe at
 `calc(var(--u) * 1000)` and divide by 1000.
+
+## 7e status
+
+- Done: `.price-info-tip` wraps and sits inside its box and the price card at 1440 × 960 and 1024 × 640 with no clipping ancestor; S swap always renders (reuses A2's photo only for pools under seven: porsche-930 and triumph-tr6 repeat once, bmw-m5-e39 never); "Give it" x 13535 → 13499.
+- Open: the cut-off inquire text is not the `h + travel` height mismatch (`lenis.limit === travel`, scroller height equals root height at every size) but the probe's 1/64 px quantisation noted above (1896 × 950: text 65 px past the edge; 1896 × 1065 and 1440 × 960 are exact). Not changed, awaiting a go on the `calc(var(--u) * 1000)` fix.
+- Verified: typecheck, lint, 6 smoke tests, porsche-930 walk at frames 11, 12, 14 (1440 × 960; enquiry auto-open fires). Not committed.

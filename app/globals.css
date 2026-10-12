@@ -705,6 +705,8 @@ svg[data-mark-group] circle:focus-visible {
   margin-top: max(8px, calc(8 * var(--u)));
   width: max(240px, calc(300 * var(--u)));
   padding: 12px;
+  white-space: normal;
+  overflow-wrap: break-word;
   background: var(--color-paper);
   color: var(--color-ink);
   font-size: max(12px, var(--type-label));
