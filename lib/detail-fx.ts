@@ -119,9 +119,20 @@ export function parallax(inner: HTMLElement, t: number) {
   inner.style.transform = `translate3d(${(t * 2 - 1) * effect.parallax.xPercent}%, 0, 0)`;
 }
 
-/** M7: behind-layer type travels slightly slower than the page. `pageX` is the track's current x, in px. */
-export function depthDrift(el: HTMLElement, pageX: number) {
-  el.style.transform = `translate3d(${pageX * (1 - effect.depthDrift.speed)}px, 0, 0)`;
+/** M7 offset for an element travelling at `speed` times the page; 0 when `pageX` is 0 (or `speed` is 1). */
+export const depthOffset = (pageX: number, speed: number) => pageX * (1 - speed);
+
+/** M7 on a GSAP-owned element (its own tweens write transform): a setter for GSAP's `x`, in px, so the two
+ * never overwrite each other (6g). Create once per element, call per tick. */
+export const depthSetter = (el: Element) => gsap.quickSetter(el, "x", "px") as (px: number) => void;
+
+/** M14: a small overlapping photo's frame moves at 1.12x the page; the offset is 0 when `pageX` equals `xc` (the
+ * track x at which the frame is centred). */
+export const frameOffset = (pageX: number, xc: number) => -(pageX - xc) * effect.frameDrift.k;
+
+/** Writes M14's offset on a frame nothing else animates, so it takes `style.transform` directly. */
+export function frameDrift(el: HTMLElement, px: number) {
+  el.style.transform = px ? `translate3d(${px}px, 0, 0)` : "";
 }
 
 /** M8: a hairline draws from left to right, with its row. */

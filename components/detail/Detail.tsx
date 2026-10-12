@@ -20,7 +20,7 @@ import { cars, getCar, type CarWithAssets, type Photo } from "@/lib/cars";
 import { applyState, mixPose, arc as shortestArc, screenBox, solveAll, stateOf } from "@/lib/choreography";
 import { detail, exit, leaveDetail, resetDetail, stepTurntable } from "@/lib/detail";
 import { block, cueRanges, progressAt, STOPS, styleOf, toneAt, u } from "@/lib/detail-layout";
-import { barExit, charRise, chromeFade, imageReveal, imageSwap, lineRise, parallax, ruleDraw, scrollText, sideEntrance, splitChars, splitLines } from "@/lib/detail-fx";
+import { barExit, charRise, chromeFade, depthOffset, depthSetter, frameDrift, frameOffset, imageReveal, imageSwap, lineRise, parallax, ruleDraw, scrollText, sideEntrance, splitChars, splitLines } from "@/lib/detail-fx";
 import { ease, effect, entry, reduced as reducedTokens, SCROLL_LAG, scrollFeel } from "@/lib/detail-motion";
 import { formatKilometres, formatMiles, formatPrice } from "@/lib/format";
 import { FRAMES } from "@/lib/frames";
@@ -547,25 +547,28 @@ function Page({ car }: { car: CarWithAssets }) {
 
     revealOnce(cLabel.current, effect.lineRise.trigger, () => lineRise(cLabel.current!, reduced));
 
-    const wireSpecTable = (tableEl: HTMLElement | null, extra: Element[] = []) => {
+    const wireSpecTable = (tableEl: HTMLElement | null, alongside?: () => void) => {
       if (!tableEl) return;
       const texts = Array.from(tableEl.querySelectorAll<HTMLElement>("[data-spec-text]"));
       const rules = Array.from(tableEl.querySelectorAll<HTMLElement>("[data-spec-rule]"));
-      if (reduced) gsap.set(live([...texts, ...rules, ...extra]), { opacity: 0 });
+      if (reduced) gsap.set(live([...texts, ...rules]), { opacity: 0 });
       else {
         gsap.set(texts, { yPercent: effect.lineRise.yPercent });
         gsap.set(rules, { scaleX: 0 });
-        // An empty array here (table A has no `extra`) still warns "GSAP target  not found": gsap.set([], ...)
-        // stringifies the empty array to "" for its error message, since the array itself is truthy.
-        if (extra.length) gsap.set(extra, { yPercent: effect.lineRise.yPercent });
       }
       revealOnce(tableEl, effect.lineRise.trigger, () => {
-        lineRise(live([...texts, ...extra]), reduced);
+        lineRise(live(texts), reduced);
         ruleDraw(rules, reduced);
+        alongside?.();
       });
     };
     wireSpecTable(tableA.current);
-    wireSpecTable(tableB.current, live([cOverlay.current]));
+    // The equipment button never moves (7c): it fades in with the first row and the rule draw (M12), not as the
+    // 15th item of the stagger.
+    if (cOverlay.current) gsap.set(cOverlay.current, { opacity: 0 });
+    wireSpecTable(tableB.current, () => {
+      if (cOverlay.current) chromeFade(cOverlay.current);
+    });
 
     const wireProse = (container: HTMLElement | null, body: HTMLElement | null) => {
       if (!container || !body) return;
@@ -690,6 +693,34 @@ function Page({ car }: { car: CarWithAssets }) {
     let section = "";
     let progressWritten = -1;
     let barWritten = -1;
+    // 7c: M7 depth drift on the GSAP-owned type (one quickSetter each, made once: their own tweens write the same
+    // transform, so style.transform would erase one or the other), M14 frame drift on the swap slots' roots (nothing
+    // else animates those), and M6 on the single photos' wrappers. All off under reduced motion, and each is computed
+    // only while its block is within one viewport of the screen (writing 0 once it leaves).
+    const d = effect.depthDrift;
+    const depthItems = reduced
+      ? []
+      : (
+          [
+            [name.current, "hero-name", (x: number) => depthOffset(x, d.name)],
+            [make.current, "hero-make", (x: number) => depthOffset(x, d.make)],
+            [jumpBtn.current, "jump", (x: number) => depthOffset(x, d.jump), 1440],
+            [giveIt.current, "give-it", (x: number) => depthOffset(x - travel, d.giveIt)],
+            [newHome.current, "new-home", (x: number) => depthOffset(x - travel, d.newHome)],
+          ] as const
+        ).flatMap(([el, id, offset, until]) => (el ? [{ set: depthSetter(el), id, offset, until, last: 0 }] : []));
+    const frameItems = reduced
+      ? []
+      : ["a2", "b-photo", "s-swap"].flatMap((id) => {
+          const el = rootEl.querySelector<HTMLElement>(`[data-block="${id}"]`);
+          return el ? [{ el, id, last: 0 }] : [];
+        });
+    const photoItems = reduced
+      ? []
+      : ["a1", "s-tall", "s-third"].flatMap((id) => {
+          const el = rootEl.querySelector<HTMLElement>(`[data-block="${id}"] [data-parallax-inner]`);
+          return el ? [{ el, id }] : [];
+        });
     const tick = (time: number) => {
       const dt = Math.min(0.05, Math.max(0, time - last));
       last = time;
@@ -747,6 +778,35 @@ function Page({ car }: { car: CarWithAssets }) {
         const left = bPhotoFrame.left - x;
         const right = left + bPhotoFrame.width;
         parallax(bPhotoParallaxEl, clamp01((vw - right) / (vw + bPhotoFrame.width)));
+      }
+      if (depthItems.length) {
+        const vw = detail.viewport.w;
+        const near = (id: string) => {
+          const b = block(id);
+          const left = b.x * u - x;
+          return left < 2 * vw && left + b.w * u > -vw;
+        };
+        for (const item of depthItems) {
+          const v = near(item.id) && (item.until === undefined || x < item.until * u) ? item.offset(x) : 0;
+          if (v !== item.last) {
+            item.last = v;
+            item.set(v);
+          }
+        }
+        for (const item of frameItems) {
+          const b = block(item.id);
+          const v = near(item.id) ? frameOffset(x, (b.x + b.w / 2) * u - vw / 2) : 0;
+          if (v !== item.last) {
+            item.last = v;
+            frameDrift(item.el, v);
+          }
+        }
+        for (const item of photoItems) {
+          if (!near(item.id)) continue;
+          const b = block(item.id);
+          const right = (b.x + b.w) * u - x;
+          parallax(item.el, clamp01((vw - right) / (vw + b.w * u)));
+        }
       }
       if (process.env.NODE_ENV !== "production") {
         rootEl.dataset.x = String(Math.round(x));
@@ -1017,8 +1077,10 @@ function Page({ car }: { car: CarWithAssets }) {
 
                 {firstPhoto && (
                   <div ref={a1Frame} data-block="a1" data-tone="dark" className="absolute overflow-hidden" style={styleOf(block("a1"))}>
-                    <div ref={a1Inner} className="absolute inset-0">
-                      <Image src={firstPhoto.src} alt={firstPhoto.alt} fill sizes="620px" className="object-cover" />
+                    <div data-parallax-inner className="absolute top-0 h-full" style={{ left: "-6%", width: "112%" }}>
+                      <div ref={a1Inner} className="absolute inset-0">
+                        <Image src={firstPhoto.src} alt={firstPhoto.alt} fill sizes="620px" className="object-cover" />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1091,11 +1153,13 @@ function Page({ car }: { car: CarWithAssets }) {
                 {cBandPhoto && (
                   <div ref={cBandFrame} data-block="c-band" data-tone="dark" className="absolute overflow-hidden" style={styleOf(block("c-band"))}>
                     <div ref={cBandInner} className="absolute inset-0">
-                      <Image src={cBandPhoto.src} alt={cBandPhoto.alt} fill sizes="1196px" className="object-cover" />
+                      <Image src={cBandPhoto.src} alt={cBandPhoto.alt} fill sizes="1300px" className="object-cover" />
                     </div>
                   </div>
                 )}
-                <h2 ref={cLabel} data-block="c-label" data-tone="dark" className="detail-label absolute overflow-hidden" style={{ ...styleOf(block("c-label")), lineHeight: 1 }}>
+                <h2 ref={cLabel} data-block="c-label" data-tone="dark" className="font-condensed absolute overflow-hidden"
+                  style={{ ...styleOf(block("c-label")), lineHeight: 1, fontSize: "max(11px, var(--type-label))", letterSpacing: "var(--label-tracking)", textTransform: "var(--label-case)", color: "var(--color-paper)" }}
+                >
                   Listed car specifications
                 </h2>
                 <dl ref={tableA} data-block="c-table-a" data-tone="dark" className="absolute flex h-full flex-col" style={{ ...styleOf(block("c-table-a")), color: "var(--color-paper)" }}>
@@ -1203,16 +1267,20 @@ function Page({ car }: { car: CarWithAssets }) {
                 {/* D: the slideshow (M4 on the single photos, M5 on the swap slot) and the gallery link. */}
                 {sTallPhoto && (
                   <div ref={sTallFrame} data-block="s-tall" data-tone="dark" className="absolute overflow-hidden" style={styleOf(block("s-tall"))}>
-                    <div ref={sTallInner} className="absolute inset-0">
-                      <Image src={sTallPhoto.src} alt={sTallPhoto.alt} fill sizes="607px" className="object-cover" />
+                    <div data-parallax-inner className="absolute top-0 h-full" style={{ left: "-6%", width: "112%" }}>
+                      <div ref={sTallInner} className="absolute inset-0">
+                        <Image src={sTallPhoto.src} alt={sTallPhoto.alt} fill sizes="607px" className="object-cover" />
+                      </div>
                     </div>
                   </div>
                 )}
                 <SwapSlot id="s-swap" photos={sSwapPhotos} sizes="465px" />
                 {sThirdPhoto && (
                   <div ref={sThirdFrame} data-block="s-third" data-tone="dark" className="absolute overflow-hidden" style={styleOf(block("s-third"))}>
-                    <div ref={sThirdInner} className="absolute inset-0">
-                      <Image src={sThirdPhoto.src} alt={sThirdPhoto.alt} fill sizes="720px" className="object-cover" />
+                    <div data-parallax-inner className="absolute top-0 h-full" style={{ left: "-6%", width: "112%" }}>
+                      <div ref={sThirdInner} className="absolute inset-0">
+                        <Image src={sThirdPhoto.src} alt={sThirdPhoto.alt} fill sizes="720px" className="object-cover" />
+                      </div>
                     </div>
                   </div>
                 )}

@@ -193,13 +193,14 @@ feel unhurried. GSAP names are given; CSS equivalents are for non-GSAP transitio
 | M4 | Image reveal | The frame's clip opens from the bottom while the photo inside rises into place. | Clip `inset(100% 0 0 0)` → `inset(0)`, 1.2 s, `reveal`; inner photo `yPercent` 15 → 0, 1.5 s, `reveal` | Triggered when the image's centre reaches 90% | Every photo's first appearance |
 | M5 | Image swap | Several photos share one slot: the top photo wipes away right to left, uncovering the next, which settles from a slight zoom. | Top clip `inset(0)` → `inset(0 100% 0 0)`, 1.4 s, `swap`; next photo `scale` 1.15 → 1, 1.9 s, `reveal` | See the cadence note below | Section A's smaller slot, section B's 480 × 640 photo, the section D slideshow |
 | M6 | Parallax | The photo inside its frame drifts against the scroll; the frame stays on the grid. Photos are rendered 112% wide so no edge shows. | Inner `xPercent` −6 → +6 across the frame's trip through the viewport, `linear` | Scroll-tied | All photos in frames |
-| M7 | Depth drift | Behind-layer type moves slightly slower than the page, so it separates from the front layer and the car. | Behind-layer elements travel at 0.9× the page's speed (`x` offset, `linear`) | Scroll-tied | Car name, "About" headline, "Give it / A new home" |
+| M7 | Depth drift | Behind-layer type moves slightly slower than the page, so it separates from the front layer and the car. | Offset `x * (1 - speed)`, `linear`; speeds: name 0.82, make · year 0.88, "Jump to specs" 0.94, "Give it" 0.85, "A new home" 1.1 (opposite to "Give it", echoing M9). Wired in 7c | Scroll-tied | Hero name, make · year, "Jump to specs", "Give it / A new home" |
 | M8 | Rule draw | Hairlines draw from left to right. | `scaleX` 0 → 1, origin left, 1.2 s, `reveal`, stagger 0.06 s | Triggered with their row (M1) | Spec table rules, the progress line on first show, link underlines on hover (0.3 s) |
 | M9 | Side entrance | Words arrive from their side with a fade. | `xPercent` ∓12 → 0 and opacity 0 → 1, 1.4 s, `reveal`; "Give it" from the left, "A new home" from the right, 0.15 s apart | Triggered when section E reaches 70% | Section E |
 | M10 | Bar exit | The bottom spec bar slides down and out. | `yPercent` 0 → 100, opacity 1 → 0 over the last 30% of the bar's travel, `linear` | Scroll-tied, over section A's final 25% | Bottom spec bar |
 | M11 | Sidebar | A panel arrives from the right over a scrim. | Panel `xPercent` 100 → 0, 0.8 s, `reveal`; scrim opacity 0 → 0.4, 0.6 s, `fade`; closing 0.5 s, `leave` | Clicked, or (enquiry) section E reaching 40% | Enquiry form, equipment and history overlay (placeholders) |
 | M12 | Chrome fade | Small UI fades in place. | Opacity 0 → 1, 0.6 s, `fade` | With its sequence | Emblem, back link, "Scroll for more", "Jump to specs" |
 | M13 | Tab switch | The price module's tabs: the active-tab bar slides, the incoming panel rises in. (Added in 7b, user-approved.) | Indicator `x`/`scaleX`, 0.3 s, `reveal`, retargets mid-flight; panel text, chart box and caption opacity 0 → 1 and `y` 8 → 0, 0.3 s, `reveal`, stagger 0.05 s; dots scale 0.85 → 1 (stagger 0.012 s), scatter points fade, history line draws along its clip then its points fade | A pointer click on a tab (keyboard switches are instant; reduced motion: 0.3 s fade only) | The price module's three tabs |
+| M14 | Frame drift | Small overlapping photos move at 1.12× the page, so they slide over their neighbours. (Added in 7c.) | `-(x - xc) × 0.12` px on the frame, `linear`; `xc` is the track x at which the frame is centred | Scroll-tied | A2, B photo, slideshow swap |
 
 **Image-swap cadence (M5).** Everywhere (section A, section B's photo, the section D slideshow): scroll-tied, one
 swap per half-viewport of travel while the slot is on screen, so the visitor drives it and scrolling back reverses
@@ -1166,3 +1167,31 @@ Not fixed, for the user (critique findings that are design calls, or outside 6h)
 - The showroom (carousel) redesign under the same principles, passing a `CarHandoff` from whatever its camera
   becomes.
 - The equipment and history overlay, the gallery and `/credits` designed properly.
+
+## 7c status
+
+Built:
+
+- **M14 Frame drift** on the A2, B photo and slideshow swap roots (`style.transform`; `stepSwap` still uses the nominal x).
+  **M6** on the A1, slideshow tall and third photos through a `data-parallax-inner` wrapper (112% wide), so the entry
+  and reveal tweens keep the inner element. **M7** wired through one `gsap.quickSetter(el, "x", "px")` per element
+  (name, make · year, "Jump to specs", "Give it", "A new home"), created once. All skipped under reduced motion; each
+  element is computed only while its block is within one viewport of the screen.
+- Known: the offsets are 0 only where the frame is centred (M14) or at the track's start/end (M7). The A2 and B photo
+  stops are within about 2u of that; the slideshow swap is +58u at the slideshow stop and -36u at frame 12.
+- About paragraph 542 → 813u wide. Section C: the equipment button fades with table B's first row and rule draw (M12)
+  and never moves; the "Listed car specifications" label is Staatliches like "About the car"; the photo band is 1300u
+  wide, flush with table B's right edge (8028u).
+- **Checks** (cloud sandbox, software WebGL, no timings): typecheck, lint, production build; 5 of the 6 smoke tests, and the
+  keyboard-steps test passes once its 15 s waits are raised to 150 s (the sandbox renders about 1 fps; the page was still
+  scrolling). Walk of the Triumph TR6 at 1440 × 960 and 1024 × 640, frames 1, 2, 5, 6, 7, 11, 12, 14: hero type at offset 0
+  at frame 1 and "Give it" / "A new home" at 0 at frame 14; the A2, B and slideshow photos shift mid-scroll; the band's
+  right edge equals table B's (8028 at 1440, flush at 1024 too); the button is at opacity 0 until table B's reveal, then 1.
+  GSAP trap: at x = 400u "Make · year" read tx 48 with ty 0 (its rise had played) and "Jump to specs" tx 24, ty 0; at 13300u
+  (after M9 played) "Give it" read tx -70.5 and "A new home" +47, both at opacity 1. Reduced motion: every new offset 0
+  at five scroll positions.
+- **About paragraph, 1440 × 960:** 4 lines on the Porsche 930, Triumph TR6, Jaguar XJ220 and Datsun 240K GT; 3 lines on the
+  other nine (none above 5). Font size untouched.
+- **Not run:** `/review-animations` on M14, M7 and the button fade (the user's), the full car matrix for the walk,
+  `/impeccable critique` and `audit`.
+

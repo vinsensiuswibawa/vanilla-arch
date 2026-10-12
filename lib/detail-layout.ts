@@ -57,11 +57,11 @@ export const BLOCKS: Block[] = [
   { id: "about-surface", layer: "front", kind: "surface", tone: "light", label: "B: about", x: 4809, w: 1919, h: "full" },
   { id: "about-label", layer: "front", kind: "type", tone: "light", label: "About the car", real: true, x: 4832, y: 240, w: 220, h: 24 },
   { id: "headline", layer: "front", kind: "type", tone: "light", label: "Headline", real: true, x: 4832, y: 420, w: 1000, h: 270 },
-  { id: "about-body", layer: "front", kind: "type", tone: "light", label: "About paragraph", real: true, x: 4832, bottom: 24, w: 542, h: 120 },
+  { id: "about-body", layer: "front", kind: "type", tone: "light", label: "About paragraph", real: true, x: 4832, bottom: 24, w: 813, h: 120 },
   { id: "b-photo", layer: "front", kind: "photo", tone: "dark", label: "B photo 480 × 640", real: true, x: 6008, y: 160, w: 480, h: 640 },
 
   { id: "specs", layer: "front", kind: "panel", tone: "dark", label: "C: specs", x: 6728, w: 2600, h: "full" },
-  { id: "c-band", layer: "front", kind: "photo", tone: "dark", label: "Photo band", real: true, x: 6728, y: 0, w: 1196, h: 360 },
+  { id: "c-band", layer: "front", kind: "photo", tone: "dark", label: "Photo band", real: true, x: 6728, y: 0, w: 1300, h: 360 },
   { id: "c-label", layer: "front", kind: "type", tone: "dark", label: "Listed car specifications", real: true, x: 6752, bottom: 24, w: 330, h: 20 },
   // Widened from the storyboard's 358/358 (user, 6f): the longer engine and spec values (e.g. "3.0 L
   // 930/50 turbocharged flat-six") truncated with no room to spare; table B shifts right to match, still

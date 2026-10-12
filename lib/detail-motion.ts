@@ -37,7 +37,9 @@ export const effect = {
   imageReveal: { clipDuration: 1.2, innerDuration: 1.5, innerYPercent: 15, ease: ease.reveal, trigger: 0.9 }, // M4
   imageSwap: { clipDuration: 1.4, scaleDuration: 1.9, scaleFrom: 1.15, clipEase: ease.swap, scaleEase: ease.reveal }, // M5
   parallax: { xPercent: 6, frameScale: 1.12 }, // M6: inner photo drifts -6 to +6 %, rendered 112 % wide
-  depthDrift: { speed: 0.9 }, // M7: behind-layer type travels at 0.9x the page
+  // M7 (7c): each element's speed against the page; behind-layer type below 1, "A new home" above it (opposite to "Give it")
+  depthDrift: { name: 0.82, make: 0.88, jump: 0.94, giveIt: 0.85, newHome: 1.1 },
+  frameDrift: { k: 0.12 }, // M14 (7c): small overlapping photos move at 1.12x the page: offset -(x - xc) * k
   ruleDraw: { duration: 1.2, stagger: 0.06, ease: ease.reveal, hoverDuration: 0.3 }, // M8
   sideEntrance: { xPercent: 12, duration: 1.4, stagger: 0.15, ease: ease.reveal, trigger: 0.7 }, // M9
   barExit: { share: 0.3 }, // M10: last 30 % of the bar's travel, over section A's final 25 %
