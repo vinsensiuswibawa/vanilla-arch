@@ -550,6 +550,96 @@ button.blk-control:hover {
     transform: scaleX(1);
   }
 }
+/* Section E's contact card (after 7f): paper on the light field with the pills' hairline, sharp corners like
+   the price card. Links show their underline on hover/focus only. */
+.detail-contact {
+  padding: max(16px, calc(20 * var(--u)));
+  background: var(--color-paper);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
+  color: var(--color-ink);
+}
+.detail-contact a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+}
+.detail-contact a:focus-visible {
+  text-decoration-color: currentColor;
+}
+@media (hover: hover) and (pointer: fine) {
+  .detail-contact a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+.detail-contact-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: max(40px, calc(48 * var(--u)));
+  height: max(40px, calc(48 * var(--u)));
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--t-text);
+  font-size: max(13px, calc(16 * var(--u)));
+  letter-spacing: var(--label-tracking);
+}
+
+/* Section E's form link (after 7f): each fixed line draws its own hairline from the right on hover/focus
+   (transform only, staggered), and the arrow nudges right. */
+.detail-inquire {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.detail-inquire-line {
+  position: relative;
+  display: table;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.detail-inquire-line::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-hover) var(--ease-reveal);
+}
+.detail-inquire-line + .detail-inquire-line::after {
+  transition-delay: 0.05s;
+}
+.detail-inquire-arrow {
+  display: inline-block;
+  transition: transform var(--dur-hover) var(--ease-reveal);
+}
+.detail-inquire:focus-visible .detail-inquire-line::after {
+  transform: scaleX(1);
+}
+.detail-inquire:focus-visible .detail-inquire-arrow {
+  transform: translateX(0.2em);
+}
+@media (hover: hover) and (pointer: fine) {
+  .detail-inquire:hover .detail-inquire-line::after {
+    transform: scaleX(1);
+  }
+  .detail-inquire:hover .detail-inquire-arrow {
+    transform: translateX(0.2em);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .detail-inquire-line::after,
+  .detail-inquire-arrow {
+    transition-duration: 0s;
+  }
+}
+
 .detail-label {
   font-size: max(10px, var(--type-label));
   letter-spacing: var(--label-tracking);

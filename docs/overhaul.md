@@ -1245,3 +1245,10 @@ want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (wa
 - Photos (after the network was opened): the 930 gets a classic-911 black-leather interior (fragment.fi, CC BY 2.0) in the C band, and its listing now reads black leather to match the photo and the model; the TR6 gets a cream TR6 from behind (andreboeni, CC BY 2.0) for S swap. Both cars now fill every frame with no repeats (A3 stays empty below eight photos). Both new files are Flickr 1024 px sources, so the C band upscales the 930's interior slightly. Commons' API throttles this environment, so the files were added the way `scripts/photos/fetch.mjs` would, without running it. "Give this car" moved another 96u left (x 13403).
 - "Our take" and "To keep in mind" are now the columns of one bottom-anchored grid aligned to the top: labels and first lines share a level at 1440 × 960 and 1024 × 640, and the longer paragraph ends on the 24u bottom margin.
 - Verified: typecheck, lint, build, 6 smoke tests (the keyboard test timed out once on software WebGL and passed on rerun). Not committed.
+
+## After 7f: chassis number and section E
+
+- Hero: a chassis number (new `chassisNo` per car in `lib/cars.ts`, fiction in each maker's real format) sits 4px under make · year in the same box, so it rises and drifts with it; "Jump to specs" stays 12px under the box.
+- Section E: "Give this car" / "A new home" stack at the resting viewport's top-left (24u, floored at the pills' 24px, and below the pills' row), and enter together from the left (M9); the right column (a fictional contact card, "or", the form link) enters from the right, stacked in one flex column 12u inside the right edge. The form link draws a hairline under each line from the right on hover/focus (transform only, `--dur-hover`, `--ease-reveal`) and nudges its arrow; it opens the sidebar modal.
+- Open: the scroll-triggered sidebar (non-modal, 2026-10-10 decision) still auto-opens at the end and covers the contact card and "or".
+- Verified: typecheck, lint, build, 6 smoke tests; positions measured at 1440 × 960, 1885 × 1054 and 1024 × 640.

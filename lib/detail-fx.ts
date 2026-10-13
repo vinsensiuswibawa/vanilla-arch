@@ -143,7 +143,7 @@ export function ruleDraw(targets: Targets, reduced: boolean) {
   return gsap.fromTo(targets, { scaleX: 0 }, { scaleX: 1, duration: effect.ruleDraw.duration, ease: effect.ruleDraw.ease, stagger: effect.ruleDraw.stagger, transformOrigin: "left" });
 }
 
-/** M9: "Give this car" from the left, "a new home" from the right, both with a fade. */
+/** M9: section E's two sides: the stacked headings from the left, the contact column from the right, with a fade. */
 export function sideEntrance(left: Targets, right: Targets, reduced: boolean) {
   if (reduced) return gsap.fromTo([left, right], { opacity: 0 }, { opacity: 1, duration: reducedTokens.fade, ease: ease.fade, stagger: 0.1 });
   const tl = gsap.timeline();

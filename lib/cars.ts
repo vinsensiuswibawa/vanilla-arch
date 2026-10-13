@@ -56,6 +56,8 @@ export interface Car extends DetailCopy {
   /** Market name when it differs from the model, e.g. Eunos Roadster. */
   marketName?: string;
   chassis: string;
+  /** The listed car's own chassis number (fiction, in the maker's real format). */
+  chassisNo: string;
   marketNameJa: string;
   frame: FramePrimitive;
   priceUsd: number;
@@ -106,6 +108,7 @@ const listings: Record<Slug, Listing> = {
     make: "Datsun",
     model: "240K GT",
     chassis: "C110",
+    chassisNo: "KGC110-021846",
     marketNameJa: "ケンメリ スカイライン",
     frame: "arch",
     priceUsd: 38_500,
@@ -161,6 +164,7 @@ const listings: Record<Slug, Listing> = {
     make: "Triumph",
     model: "TR6",
     chassis: "CP",
+    chassisNo: "CP 52817 O",
     marketNameJa: "トライアンフ TR6",
     frame: "circle",
     priceUsd: 34_000,
@@ -215,6 +219,7 @@ const listings: Record<Slug, Listing> = {
     make: "Porsche",
     model: "911 Turbo",
     chassis: "930",
+    chassisNo: "930 680 0743",
     marketNameJa: "ポルシェ 930 ターボ",
     frame: "square",
     priceUsd: 245_000,
@@ -269,6 +274,7 @@ const listings: Record<Slug, Listing> = {
     make: "Peugeot",
     model: "205 CJ",
     chassis: "741B",
+    chassisNo: "VF3741BC215862471",
     marketNameJa: "プジョー 205 カブリオレ",
     frame: "half-disc",
     priceUsd: 9_800,
@@ -324,6 +330,7 @@ const listings: Record<Slug, Listing> = {
     make: "Honda",
     model: "NSX",
     chassis: "NA1",
+    chassisNo: "NA1-1004621",
     marketNameJa: "ホンダ NSX",
     frame: "arch",
     priceUsd: 92_000,
@@ -382,6 +389,7 @@ const listings: Record<Slug, Listing> = {
     make: "Jaguar",
     model: "XJ220",
     chassis: "XJ220",
+    chassisNo: "SAJJEAEX8AX220147",
     marketNameJa: "ジャガー XJ220",
     frame: "circle",
     priceUsd: 585_000,
@@ -433,6 +441,7 @@ const listings: Record<Slug, Listing> = {
     make: "Honda",
     model: "Integra Type R",
     chassis: "DB8",
+    chassisNo: "DB8-1300417",
     marketNameJa: "インテグラ タイプR",
     frame: "square",
     priceUsd: 46_000,
@@ -488,6 +497,7 @@ const listings: Record<Slug, Listing> = {
     make: "Lotus",
     model: "Elise Sport 135",
     chassis: "S1",
+    chassisNo: "SCCGA1110XHC12784",
     marketNameJa: "ロータス エリーゼ",
     frame: "half-disc",
     priceUsd: 36_500,
@@ -542,6 +552,7 @@ const listings: Record<Slug, Listing> = {
     make: "Fiat",
     model: "Barchetta",
     chassis: "183",
+    chassisNo: "ZFA18300000081736",
     marketNameJa: "フィアット バルケッタ",
     frame: "arch",
     priceUsd: 12_500,
@@ -596,6 +607,7 @@ const listings: Record<Slug, Listing> = {
     make: "Subaru",
     model: "Impreza WRX Wagon",
     chassis: "GG",
+    chassisNo: "GGA-004128",
     marketNameJa: "インプレッサ WRX ワゴン",
     frame: "circle",
     priceUsd: 14_900,
@@ -652,6 +664,7 @@ const listings: Record<Slug, Listing> = {
     make: "BMW",
     model: "M5",
     chassis: "E39",
+    chassisNo: "WBSDE92030GZ98412",
     marketNameJa: "BMW M5",
     frame: "square",
     priceUsd: 36_500,
@@ -707,6 +720,7 @@ const listings: Record<Slug, Listing> = {
     make: "Lamborghini",
     model: "Gallardo LP 560-4",
     chassis: "LP 560-4",
+    chassisNo: "ZHWGU54T08LA06231",
     marketNameJa: "ランボルギーニ ガヤルド",
     frame: "half-disc",
     priceUsd: 129_000,
@@ -758,6 +772,7 @@ const listings: Record<Slug, Listing> = {
     make: "Mazda",
     model: "MX-5",
     chassis: "NC",
+    chassisNo: "JMZNC18F200103562",
     marketNameJa: "マツダ ロードスター",
     frame: "arch",
     priceUsd: 11_900,
