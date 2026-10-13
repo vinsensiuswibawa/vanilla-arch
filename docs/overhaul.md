@@ -1250,5 +1250,5 @@ want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (wa
 
 - Hero: a chassis number (new `chassisNo` per car in `lib/cars.ts`, fiction in each maker's real format) sits 4px under make · year in the same box, so it rises and drifts with it; "Jump to specs" stays 12px under the box.
 - Section E: "Give this car" / "A new home" stack at the resting viewport's top-left (24u, floored at the pills' 24px, and below the pills' row), and enter together from the left (M9); the right column (a fictional contact card, "or", the form link) enters from the right, stacked in one flex column 12u inside the right edge. The form link draws a hairline under each line from the right on hover/focus (transform only, `--dur-hover`, `--ease-reveal`) and nudges its arrow; it opens the sidebar modal.
-- Open: the scroll-triggered sidebar (non-modal, 2026-10-10 decision) still auto-opens at the end and covers the contact card and "or".
+- The scroll-triggered sidebar (the non-modal auto-open from 6h) is removed (user): it covered the contact card and "or". The form opens only from the link, as a modal.
 - Verified: typecheck, lint, build, 6 smoke tests; positions measured at 1440 × 960, 1885 × 1054 and 1024 × 640.

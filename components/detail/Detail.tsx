@@ -243,9 +243,6 @@ function Page({ car }: { car: CarWithAssets }) {
   const router = useRouter();
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
-  const [enquiryModal, setEnquiryModal] = useState(false);
-  /** The scroll-triggered, non-modal enquiry is open: the tick closes it once the visitor heads away from E. */
-  const enquiryAuto = useRef(false);
 
   useLayoutEffect(() => {
     if (phase === "showroom") heading.current?.focus({ preventScroll: true });
@@ -508,14 +505,6 @@ function Page({ car }: { car: CarWithAssets }) {
       // told it to close (found by the smoke test: "Jump to specs" became unclickable after Home).
       setGalleryOpen(false);
       setEnquiryOpen(false);
-      setEnquiryModal(false);
-      // Also cancels the sidebar's pending auto-open (the `gsap.delayedCall` scheduled after M9 fires, below):
-      // closing an overlay that isn't open yet is a no-op, so without this a visitor who reached section E,
-      // then navigated away inside that ~2 s window, would see the sidebar pop open later at a completely
-      // different section — reproduced by the smoke test once the auto-open's own delay made this window real.
-      for (const t of delayedCalls) t.kill();
-      delayedCalls.length = 0;
-      enquiryAuto.current = false;
       lenis.scrollTo(to, reduced ? { immediate: true, force: true } : { duration: scrollFeel.jump, easing: revealOut, force: true });
     };
     jump.current = () => scrollTo(stops[STOPS.findIndex((stop) => stop.id === "specs")]);
@@ -527,7 +516,6 @@ function Page({ car }: { car: CarWithAssets }) {
     // effects (M3, M5's cadence, M6) are read per tick below, next to the bar exit and tone that already work
     // that way. Every ScrollTrigger created here is collected for cleanup; none of them survive a car change.
     const triggers: ScrollTrigger[] = [];
-    const delayedCalls: gsap.core.Tween[] = [];
     const revealOnce = (el: Element | null, trigger: number, play: () => void, edge: "left" | "right" = "left") => {
       if (!el) return;
       triggers.push(ScrollTrigger.create({ trigger: el, containerAnimation: timeline, start: `${edge} ${trigger * 100}%`, once: true, onEnter: play }));
@@ -675,23 +663,8 @@ function Page({ car }: { car: CarWithAssets }) {
     // and the sidebar already open while the car was still in its side pose. Anchored at rest instead, a small
     // trigger value means "fires once the track is nearly or fully settled".
     revealOnce(fieldETrigger.current, 0.1, () => sideEntrance(eLeft, eRight, reduced));
-    // The sidebar opens once per visit (step 3), timed off M9 rather than its own scroll trigger: two
-    // independent scroll-position triggers can't guarantee the text finishes its 1.4 s + 0.15 s reveal before
-    // the sidebar covers it (the same bug above, just worse at the very end of the track, where there's no
-    // further scroll distance left to space them apart). A fixed delay after the text starts revealing does.
-    revealOnce(fieldETrigger.current, 0.1, () => {
-      // The scroll-triggered open is non-modal: no scrim, no focus move (see Enquiry.tsx's `modal` prop).
-      // Only if the visitor is still headed for section E when it fires (the scroll's target, not the lagged
-      // track): `scrollTo` cancels the call for keyboard navigation, but a wheel flick back within the 2 s
-      // still opened it over section D (6h).
-      delayedCalls.push(
-        gsap.delayedCall(reduced ? 0.3 : 2, () => {
-          if (lenis.targetScroll < travel - 0.25 * rootEl.clientWidth) return;
-          enquiryAuto.current = true;
-          setEnquiryOpen(true);
-        }),
-      );
-    });
+    // No scroll-triggered sidebar any more (user, after 7f): section E offers the contact card or the form,
+    // and the form opens only from "Inquire about this car here →".
 
     // The leave fade (step 2): the page and the canvas (showing only this car, since the showroom's own
     // views stay off while a listing is open) fade out together over 0.6 s, then back in once the route has
@@ -749,11 +722,6 @@ function Page({ car }: { car: CarWithAssets }) {
       let at = 0;
       for (let i = 0; i < stops.length; i++) if (x >= stops[i] - 4) at = i;
       if (STOPS[at].id !== section) rootEl.dataset.section = section = STOPS[at].id;
-      // The non-modal enquiry doesn't block the wheel, so it leaves when the visitor scrolls away from E.
-      if (enquiryAuto.current && lenis.targetScroll < travel - 0.5 * detail.viewport.w) {
-        enquiryAuto.current = false;
-        setEnquiryOpen(false);
-      }
 
       const written = Math.round((x / travel) * 10_000);
       if (written !== progressWritten) {
@@ -917,7 +885,6 @@ function Page({ car }: { car: CarWithAssets }) {
       for (const t of entryTweens) t.kill();
       cancelAnimationFrame(prepareFrame);
       for (const t of triggers) t.kill();
-      for (const t of delayedCalls) t.kill();
       for (const t of [...a2Swap.timelines, ...bPhotoSwap.timelines, ...sSwap.timelines]) t.kill();
       lenis.destroy();
       resize.disconnect();
@@ -1371,18 +1338,14 @@ function Page({ car }: { car: CarWithAssets }) {
                   </p>
 
                   {/* E: the enquiry form's link (step 3/5/6g). Two fixed lines, each with its own hover underline;
-                      the arrow nudges right. Opens the sidebar modal, also while the scroll-triggered panel is open. */}
+                      the arrow nudges right. Opens the sidebar (modal); it no longer opens on its own. */}
                   <button
                     ref={inquireBtn}
                     type="button"
                     data-tone="light"
                     className="detail-inquire font-display text-right"
                     style={{ fontSize: "max(16px, calc(28 * var(--u)))", lineHeight: 1.15 }}
-                    onClick={() => {
-                      enquiryAuto.current = false;
-                      setEnquiryOpen(true);
-                      setEnquiryModal(true);
-                    }}
+                    onClick={() => setEnquiryOpen(true)}
                   >
                     <span className="detail-inquire-line">Inquire about this</span>
                     <span className="detail-inquire-line">
@@ -1418,12 +1381,8 @@ function Page({ car }: { car: CarWithAssets }) {
       <Enquiry
         car={car}
         open={enquiryOpen}
-        modal={enquiryModal}
-        onClose={() => {
-          enquiryAuto.current = false;
-          setEnquiryOpen(false);
-          setEnquiryModal(false);
-        }}
+        modal
+        onClose={() => setEnquiryOpen(false)}
       />
     </>
   );

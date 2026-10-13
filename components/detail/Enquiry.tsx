@@ -34,7 +34,8 @@ function validate(fields: Fields): FieldErrors {
 /**
  * `modal`: opened by "Inquire about this car here →" — scrim, focus into Name, Tab trapped. Otherwise it is the
  * scroll-triggered open (user, 6h): no scrim, no `aria-modal`, focus left where it is and the page behind still
- * live, so the finale (frame 14) stays visible beside the panel instead of dimmed under it.
+ * live, so the finale (frame 14) stays visible beside the panel instead of dimmed under it. Since the scroll
+ * trigger was removed (user, after 7f) Detail.tsx always passes `modal`; the non-modal path is unused.
  */
 export function Enquiry({ car, open, modal, onClose }: { car: CarWithAssets; open: boolean; modal: boolean; onClose: () => void }) {
   const titleId = useId();
