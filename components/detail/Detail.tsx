@@ -500,22 +500,87 @@ function Page({ car }: { car: CarWithAssets }) {
       const tl = gsap.timeline({ onComplete: () => (rootEl.dataset.film = "done") });
       const proxy = { s: lenis.scroll };
       const drive = () => lenis.scrollTo(proxy.s, { immediate: true, force: true });
-      for (let i = 1; i < stops.length; i++) {
-        const distance = stops[i] - stops[i - 1];
+      // The stops, plus one extra halt where section C's summary is fully lit (M3's end), so it can be read.
+      const points = stops.map((x, i) => ({ x, id: STOPS[i].id as string }));
+      // Narrower than about 1.6:1 the price card runs past the right edge at its stop; the run halts just far
+      // enough on that the cursor tour stays on screen (at 16:9 this changes nothing).
+      const pricePoint = points.find((p) => p.id === "price");
+      const card = block("price-module");
+      if (pricePoint) pricePoint.x = Math.min(travel, Math.max(pricePoint.x, (card.x + card.w + 24) * u - rootEl.clientWidth));
+      const summaryAt = summaryEnd + 24 * u;
+      points.splice(points.findIndex((p) => p.x > summaryAt), 0, { x: summaryAt, id: "summary" });
+      // A stand-in cursor for the price charts (the real one is hidden): it glides over each chart's marks,
+      // feeding the charts the same pointermove they get from a mouse, and clicks through the three tabs.
+      const cursor = document.createElement("div");
+      cursor.className = "film-cursor";
+      cursor.setAttribute("aria-hidden", "true");
+      document.body.appendChild(cursor);
+      gsap.set(cursor, { x: rootEl.clientWidth * 0.62, y: rootEl.clientHeight * 0.6, opacity: 0 });
+      const priceCard = () => rootEl.querySelector<HTMLElement>('[data-block="price-module"]');
+      const panel = () => priceCard()?.querySelector<HTMLElement>('[role="tabpanel"]:not([hidden])') ?? null;
+      const centre = (el: Element) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      };
+      const hit = () => panel()?.querySelector<SVGRectElement>('rect[fill="transparent"]') ?? null;
+      const feed = () => {
+        const rect = hit();
+        if (!rect) return;
+        const x = Number(gsap.getProperty(cursor, "x"));
+        const y = Number(gsap.getProperty(cursor, "y"));
+        rect.dispatchEvent(new PointerEvent("pointermove", { bubbles: true, clientX: x, clientY: y, pointerType: "mouse" }));
+      };
+      // Function-based values resolve when each glide starts, so the marks are read once the track has settled
+      // and the tab's chart has mounted.
+      const pick = (k: number) => {
+        const marks = Array.from(panel()?.querySelectorAll<SVGCircleElement>("svg[data-mark-group] circle[data-mark][tabindex]") ?? [])
+          .map(centre)
+          .sort((a, b) => a.x - b.x);
+        if (!marks.length) return { x: Number(gsap.getProperty(cursor, "x")), y: Number(gsap.getProperty(cursor, "y")) };
+        return marks[Math.round((k * (marks.length - 1)) / (film.tourMarks - 1))];
+      };
+      const tour = () => {
+        for (let k = 0; k < film.tourMarks; k++) {
+          tl.to(cursor, { x: () => pick(k).x, y: () => pick(k).y, duration: film.tourStep, ease: ease.reveal, onUpdate: feed });
+          tl.to({}, { duration: film.tourPause });
+        }
+        tl.add(() => hit()?.dispatchEvent(new PointerEvent("pointerout", { bubbles: true, relatedTarget: document.body, pointerType: "mouse" })));
+      };
+      const clickTab = (i: number) => {
+        const tab = () => priceCard()?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[i];
+        tl.to(cursor, { x: () => (tab() ? centre(tab()!).x : 0), y: () => (tab() ? centre(tab()!).y : 0), duration: film.tourStep * 1.6, ease: ease.reveal });
+        tl.to(cursor, { scale: 0.8, duration: 0.12, ease: ease.fade });
+        tl.add(() => tab()?.click());
+        tl.to(cursor, { scale: 1, duration: 0.2, ease: ease.reveal });
+        tl.to({}, { duration: film.tabSettle });
+      };
+      for (let i = 1; i < points.length; i++) {
+        const distance = points[i].x - points[i - 1].x;
         if (distance <= 1) continue;
-        tl.to(proxy, { s: stops[i], duration: Math.max(film.minMove, distance / (film.pace * u)), ease: ease.travel, onUpdate: drive });
-        tl.to({}, { duration: i === stops.length - 1 ? film.endHold : film.hold });
+        tl.to(proxy, { s: points[i].x, duration: Math.max(film.minMove, distance / (film.pace * u)), ease: ease.travel, onUpdate: drive });
+        if (points[i].id === "price") {
+          tl.to({}, { duration: film.hold / 2 });
+          tl.to(cursor, { opacity: 1, duration: 0.3, ease: ease.fade });
+          tour();
+          clickTab(1);
+          tour();
+          clickTab(2);
+          tour();
+          tl.to(cursor, { opacity: 0, duration: 0.3, ease: ease.fade });
+        } else tl.to({}, { duration: i === points.length - 1 ? film.endHold : points[i].id === "summary" ? film.summaryHold : film.hold });
       }
       tl.call(() => setEnquiryOpen(true));
       tl.to({}, { duration: film.sidebarHold });
       rootEl.dataset.film = "running";
       const events = ["wheel", "keydown", "pointerdown", "touchstart"] as const;
-      const interrupt = () => {
+      const interrupt = (event: Event) => {
+        if (!event.isTrusted) return;
         stopFilm();
         rootEl.dataset.film = "stopped";
       };
       stopFilm = () => {
         tl.kill();
+        cursor.remove();
         for (const type of events) window.removeEventListener(type, interrupt, { capture: true });
       };
       for (const type of events) window.addEventListener(type, interrupt, { capture: true, passive: true });

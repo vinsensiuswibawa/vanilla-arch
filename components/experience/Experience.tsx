@@ -46,11 +46,13 @@ export function Experience() {
     useArcade.getState().setRecord();
     const timers: number[] = [];
     const later = (seconds: number, run: () => void) => timers.push(window.setTimeout(run, seconds * 1000));
-    let step = slugFrom(window.location.pathname) ? 2 : 0;
+    // On a /cars/<slug>?film deep link the gate still has to be entered, but the carousel step is skipped.
+    const deepLink = slugFrom(window.location.pathname) !== null;
+    let step = 0;
     const advance = () => {
       const state = useArcade.getState();
       if (step === 0 && state.phase === "gate" && state.loaded.every(Boolean)) {
-        step = 1;
+        step = deepLink ? 2 : 1;
         later(film.gateHold, () => enterShowroom(false));
       } else if (step === 1 && state.phase === "showroom" && !state.listing) {
         step = 2;

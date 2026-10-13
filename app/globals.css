@@ -860,4 +860,17 @@ html.film nextjs-portal {
 html.film :focus-visible {
   outline: none !important;
 }
-
+/* Film mode's stand-in cursor for the price-chart tour: an ink dot with a paper ring, above everything. */
+.film-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  box-shadow: 0 0 0 3px var(--color-paper), 0 4px 14px color-mix(in srgb, var(--color-ink) 30%, transparent);
+  pointer-events: none;
+}
