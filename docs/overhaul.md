@@ -1254,3 +1254,9 @@ want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (wa
 - Verified: typecheck, lint, build, 6 smoke tests; positions measured at 1440 × 960, 1885 × 1054 and 1024 × 640.
 - Then (user): the contact card moved into the enquiry sidebar, above the form, with an "or send a message" divider; section E keeps only the form link (back at x 14578, y 430). "Give this car" / "a new home" are now sentence case like the summary, centred in the resting viewport (layout() spans them across it at any width).
 - Then: M9 is now a scroll-tied fade (opacity 0 → 1 over M3's range) on the two headings and the form link; the triggered side entrance and the section E trigger marker are gone. Reduced motion shows them at full opacity.
+
+## Film mode (for the LinkedIn recording)
+
+- `?film` (TR6) or `?film=<slug>` on `/`: implies `?record`, hides the cursor, the Next dev badge and focus rings, enters without sound, glides the carousel to the car, opens it, then drives the track stop to stop (380u/s, the camera's `travel` curve, 1.8 s holds) and ends on the enquiry sidebar; the detail root reads `data-film="running"`, then `"done"`. Any wheel, key, pointer or touch press stops the run. On `/cars/<slug>?film` it skips the showroom. Off under reduced motion. Timings in `lib/film.ts`.
+- Record on the laptop against the production build (`npm run build && npm start`), not in a cloud session (software WebGL, about 1 fps). Verified in the cloud only for sequence: gate → showroom → morph → seven stops → sidebar → done.
+- Section E at rest: the headings start at the back pill's left edge and the form link ends the same 24px from the right edge.

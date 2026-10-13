@@ -846,3 +846,18 @@ svg[data-mark-group] circle:focus-visible {
     }
   }
 }
+
+/* Film mode (lib/film.ts): nothing on screen but the page. The Next dev badge lives in a <nextjs-portal> host. */
+html.film,
+html.film * {
+  cursor: none !important;
+}
+html.film .cursor-pill,
+html.film nextjs-portal {
+  display: none !important;
+}
+/* The run focuses the form's Name field when the sidebar opens; a ring there reads as a glitch on video. */
+html.film :focus-visible {
+  outline: none !important;
+}
+

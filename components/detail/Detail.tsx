@@ -24,6 +24,7 @@ import { barExit, charRise, chromeFade, depthOffset, depthSetter, frameDrift, fr
 import { ease, effect, entry, reduced as reducedTokens, SCROLL_LAG, scrollFeel } from "@/lib/detail-motion";
 import { formatKilometres, formatMiles, formatPrice } from "@/lib/format";
 import { FRAMES } from "@/lib/frames";
+import { film, filmSlug } from "@/lib/film";
 import { carouselPose } from "@/lib/handoff";
 import { fromData, type ShapeData } from "@/lib/shape";
 import { runtime } from "@/lib/showroom";
@@ -32,6 +33,8 @@ import { useArcade } from "@/lib/store";
 const SHAPES = shapes as unknown as Record<string, ShapeData>;
 /** The back pill's centre, in px from the top left: where the page asks "light or dark under here?". */
 const PILL = { x: 24 + 56, y: 24 + 18 };
+/** The pill row's inset from the viewport edge in px (`top-6 left-6`); section E aligns to it at rest. */
+const PILL_INSET = 24;
 /** The spec bar leaves over the end of section A and the start of T1: a scroll range, in u, around T1's start. */
 const BAR_EXIT = { before: 487, after: 146 };
 /** Make/year sits exactly 24px below the name's last line of text, and "Jump to specs" exactly 12px below
@@ -298,12 +301,10 @@ function Page({ car }: { car: CarWithAssets }) {
       setLeftWidth("b-photo", bPhotoSwap);
       setLeftWidth("b-photo", bPhotoFrame);
       setLeftWidth("s-swap", sSwap);
-      // E's stacked headings span the resting viewport and centre in it at every width (user, after 7f).
-      for (const el of [giveIt.current, newHome.current]) {
-        if (!el) continue;
-        el.style.left = `${travel}px`;
-        el.style.width = `${w}px`;
-      }
+      // At rest, E's stacked headings start at the back pill's left edge and the form link ends the same
+      // distance from the right edge (user, after 7f): the pill row sits at a fixed 24px (`top-6 left-6`).
+      for (const el of [giveIt.current, newHome.current]) if (el) el.style.left = `${travel + PILL_INSET}px`;
+      if (inquireBtn.current) inquireBtn.current.style.left = `${travel + w - PILL_INSET - inquireBtn.current.offsetWidth}px`;
       if (dragEl) {
         // The hero's drag target covers the car where it stands at P0.
         const camera = new PerspectiveCamera();
@@ -425,7 +426,12 @@ function Page({ car }: { car: CarWithAssets }) {
       entryTweens.push(tl);
     };
 
+    // Film mode (lib/film.ts): once the car has settled, the run drives the track itself.
+    const wantFilm = !reduced && filmSlug() === car.slug;
+    let filmCall: gsap.core.Tween | null = null;
+    let stopFilm = () => {};
     const finishEntry = () => {
+      if (wantFilm && !filmCall) filmCall = gsap.delayedCall(film.afterEntry, () => startFilm());
       detail.entryPose = null;
       detail.entering = false;
       detail.angle = 0;
@@ -486,6 +492,34 @@ function Page({ car }: { car: CarWithAssets }) {
       scrollTrigger: { trigger: contentEl, scroller: scrollerEl, start: 0, end: () => travel, scrub: reduced ? true : SCROLL_LAG, invalidateOnRefresh: true },
     });
     timeline.fromTo([frontEl, behindEl], { x: 0 }, { x: () => -travel, ease: ease.linear, duration: 1 });
+
+    // Film mode's track run: stop to stop at a steady pace on the camera's own curve, a hold at each section,
+    // then the enquiry sidebar. The proxy feeds Lenis, so the page's scrub lag and every scroll-tied effect
+    // behave exactly as they do under a wheel. Any wheel, key, pointer or touch press stops it.
+    const startFilm = () => {
+      const tl = gsap.timeline({ onComplete: () => (rootEl.dataset.film = "done") });
+      const proxy = { s: lenis.scroll };
+      const drive = () => lenis.scrollTo(proxy.s, { immediate: true, force: true });
+      for (let i = 1; i < stops.length; i++) {
+        const distance = stops[i] - stops[i - 1];
+        if (distance <= 1) continue;
+        tl.to(proxy, { s: stops[i], duration: Math.max(film.minMove, distance / (film.pace * u)), ease: ease.travel, onUpdate: drive });
+        tl.to({}, { duration: i === stops.length - 1 ? film.endHold : film.hold });
+      }
+      tl.call(() => setEnquiryOpen(true));
+      tl.to({}, { duration: film.sidebarHold });
+      rootEl.dataset.film = "running";
+      const events = ["wheel", "keydown", "pointerdown", "touchstart"] as const;
+      const interrupt = () => {
+        stopFilm();
+        rootEl.dataset.film = "stopped";
+      };
+      stopFilm = () => {
+        tl.kill();
+        for (const type of events) window.removeEventListener(type, interrupt, { capture: true });
+      };
+      for (const type of events) window.addEventListener(type, interrupt, { capture: true, passive: true });
+    };
 
     const revealOut = gsap.parseEase(ease.reveal);
     const scrollTo = (to: number) => {
@@ -874,6 +908,8 @@ function Page({ car }: { car: CarWithAssets }) {
       for (const t of entryTweens) t.kill();
       cancelAnimationFrame(prepareFrame);
       for (const t of triggers) t.kill();
+      filmCall?.kill();
+      stopFilm();
       for (const t of [...a2Swap.timelines, ...bPhotoSwap.timelines, ...sSwap.timelines]) t.kill();
       lenis.destroy();
       resize.disconnect();
@@ -978,10 +1014,10 @@ function Page({ car }: { car: CarWithAssets }) {
           </p>
           {/* Section E (step 3/6g): decorative behind-layer type, same as the hero name above — the real
               text is "Inquire about this car here →" in the front layer, below. */}
-          <p ref={giveIt} className="font-display absolute text-center" style={{ ...styleOf(block("give-it")), top: E_HEAD_TOP, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", whiteSpace: "nowrap" }}>
+          <p ref={giveIt} className="font-display absolute" style={{ ...styleOf(block("give-it")), top: E_HEAD_TOP, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", whiteSpace: "nowrap" }}>
             Give this car
           </p>
-          <p ref={newHome} className="font-display absolute text-center" style={{ ...styleOf(block("new-home")), top: `calc(${E_HEAD_TOP} + var(--type-enquiry) * var(--display-leading))`, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", whiteSpace: "nowrap" }}>
+          <p ref={newHome} className="font-display absolute" style={{ ...styleOf(block("new-home")), top: `calc(${E_HEAD_TOP} + var(--type-enquiry) * var(--display-leading))`, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", whiteSpace: "nowrap" }}>
             a new home
           </p>
         </div>

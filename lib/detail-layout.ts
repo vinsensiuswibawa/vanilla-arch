@@ -40,8 +40,8 @@ export const BLOCKS: Block[] = [
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
   { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
   { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
-  // Section E's headings stack, centred in the resting viewport (user, after 7f): x and w here are nominal;
-  // Detail.tsx's layout() sets both to the viewport at rest, at any width.
+  // Section E's headings stack at the back pill's left edge at rest (user, after 7f): x is nominal; Detail.tsx's
+  // layout() sets it from the resting viewport at any width.
   { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 13414, y: 88, w: 900, h: 130 },
   { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13414, y: 218, w: 1000, h: 130 },
 
@@ -105,7 +105,7 @@ export const BLOCKS: Block[] = [
   // 12u read as cramped). At 12731 it ran 43u past the photo and its arrow sat off screen at frame 12 (6h).
   { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12676, bottom: 24, w: 320, h: 28 },
 
-  // Right edge 12u inside the track's end, the screen's right edge at rest (7e/7f).
+  // x is nominal: layout() ends it the pill row's 24px inset from the screen's right edge at rest (after 7f).
   { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14578, y: 430, w: 240, h: 72 },
 ];
 

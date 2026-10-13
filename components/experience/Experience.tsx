@@ -10,6 +10,8 @@ import { enterShowroom, Gate } from "@/components/experience/Gate";
 import { IndexOverlay } from "@/components/experience/IndexOverlay";
 import { cars } from "@/lib/cars";
 import { leaveDetail } from "@/lib/detail";
+import { film, filmSlug } from "@/lib/film";
+import { prefersReducedMotion } from "@/lib/motion";
 import { showroom } from "@/lib/showroom";
 import { useArcade } from "@/lib/store";
 
@@ -34,6 +36,37 @@ export function Experience() {
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has("record")) useArcade.getState().setRecord();
   }, []);
+
+  // Film mode (lib/film.ts): the showroom half of the run. The detail page drives its own track once open.
+  useEffect(() => {
+    const slug = filmSlug();
+    const index = cars.findIndex((car) => car.slug === slug);
+    if (index < 0 || prefersReducedMotion()) return;
+    document.documentElement.classList.add("film");
+    useArcade.getState().setRecord();
+    const timers: number[] = [];
+    const later = (seconds: number, run: () => void) => timers.push(window.setTimeout(run, seconds * 1000));
+    let step = slugFrom(window.location.pathname) ? 2 : 0;
+    const advance = () => {
+      const state = useArcade.getState();
+      if (step === 0 && state.phase === "gate" && state.loaded.every(Boolean)) {
+        step = 1;
+        later(film.gateHold, () => enterShowroom(false));
+      } else if (step === 1 && state.phase === "showroom" && !state.listing) {
+        step = 2;
+        later(film.showroomHold, () => {
+          showroom.goTo(index);
+          later(film.carouselGlide, () => router.push(`/cars/${cars[index].slug}${window.location.search}`, { scroll: false }));
+        });
+      }
+    };
+    advance();
+    const unsubscribe = useArcade.subscribe(advance);
+    return () => {
+      unsubscribe();
+      for (const id of timers) window.clearTimeout(id);
+    };
+  }, [router]);
 
   // The URL is the source of truth for the open listing; its car is centred behind it.
   useEffect(() => {
