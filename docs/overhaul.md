@@ -1260,3 +1260,10 @@ want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (wa
 - `?film` (TR6) or `?film=<slug>` on `/`: implies `?record`, hides the cursor, the Next dev badge and focus rings, enters without sound, glides the carousel to the car, opens it, then drives the track stop to stop (380u/s, the camera's `travel` curve, 1.8 s holds) and ends on the enquiry sidebar; the detail root reads `data-film="running"`, then `"done"`. Any wheel, key, pointer or touch press stops the run. On `/cars/<slug>?film` it skips the showroom. Off under reduced motion. Timings in `lib/film.ts`.
 - Record on the laptop against the production build (`npm run build && npm start`), not in a cloud session (software WebGL, about 1 fps). Verified in the cloud only for sequence: gate → showroom → morph → seven stops → sidebar → done.
 - Section E at rest: the headings start at the back pill's left edge and the form link ends the same 24px from the right edge.
+
+## After film mode: the price gap and the price parallax
+
+- `PRICE_GAP` (600u, `lib/detail-layout.ts`): the price section and everything after it moved 600u right (TRACK 15430, ENQUIRY 13990, price stop 10326, slideshow stop 11405; FRAMES updated), while T2 still ends at 9726u, so the car holds its side pose over the open field before the price card enters.
+- M14 on the price section: the card (`frameDrift`) and its title (quickSetter; M1 owns its transform) move at 1.12× the page, 0 at the price stop.
+- Film mode's pace: 380 → 475 u/s (about 25% quicker), minimum move 2.4 → 1.9 s.
+- Seen, not changed: at the price stop the card's right edge runs past a 1440-wide viewport (card 986–1550px); the card and the stop moved together, so this predates the gap.

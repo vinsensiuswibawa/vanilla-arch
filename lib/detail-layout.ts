@@ -29,21 +29,23 @@ export interface Block {
 
 export const BAR = 68;
 /** The whole track, from the hero's left edge to the end of the enquiry section. */
-export const TRACK = 14830;
+export const TRACK = 15430;
+/** Track the car travels in its side pose, after T2 and before the price section reaches its stop (after 7f). */
+export const PRICE_GAP = 600;
 /** Where section E is aligned in the viewport (frame 14), as a track x. */
-export const ENQUIRY = 13390;
+export const ENQUIRY = 13990;
 
 export const BLOCKS: Block[] = [
   // ---- Behind the car: pale fields and the large type the car passes in front of ----
   { id: "field-ab", layer: "behind", kind: "field", tone: "light", label: "Light field, photos to roof view", x: 1914, w: 2895, h: "full" },
   { id: "hero-name", layer: "behind", kind: "type", tone: "light", label: "Car name", real: true, x: 24, y: 100, w: 560, h: 430 },
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
-  { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
-  { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
+  { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1825, h: "full" },
+  { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13620, w: 1810, h: "full" },
   // Section E's headings stack at the back pill's left edge at rest (user, after 7f): x is nominal; Detail.tsx's
   // layout() sets it from the resting viewport at any width.
-  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 13414, y: 88, w: 900, h: 130 },
-  { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13414, y: 218, w: 1000, h: 130 },
+  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 14014, y: 88, w: 900, h: 130 },
+  { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 14014, y: 218, w: 1000, h: 130 },
 
   // ---- In front of the car: photos, the dark sections, the price section, small text and buttons ----
   { id: "emblem", layer: "front", kind: "control", tone: "light", label: "Emblem", real: true, x: 1170, y: 24, w: 80, h: 64 },
@@ -93,20 +95,20 @@ export const BLOCKS: Block[] = [
   { id: "c-keep", layer: "front", kind: "type", tone: "dark", label: "To keep in mind", real: true, x: 8752, bottom: 24, w: 470, h: 100 },
 
   // Runs up to the slideshow, so the side-view car stays hidden in the gap between them (frame 11).
-  { id: "price-panel", layer: "front", kind: "surface", tone: "light", label: "D: price", x: 10553, w: 747, h: "full" },
-  { id: "price-module", layer: "front", kind: "card", tone: "light", label: "Price comparison", real: true, x: 10712, y: 24, w: 564, h: "inset" },
-  { id: "price-title", layer: "front", kind: "type", tone: "light", label: "Price comparison title", real: true, x: 10577, y: 24, w: 111, h: 16 },
+  { id: "price-panel", layer: "front", kind: "surface", tone: "light", label: "D: price", x: 11153, w: 747, h: "full" },
+  { id: "price-module", layer: "front", kind: "card", tone: "light", label: "Price comparison", real: true, x: 11312, y: 24, w: 564, h: "inset" },
+  { id: "price-title", layer: "front", kind: "type", tone: "light", label: "Price comparison title", real: true, x: 11177, y: 24, w: 111, h: 16 },
 
-  { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11300, w: 1720, h: "full" },
-  { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11324, y: 24, w: 607, h: "inset" },
-  { id: "s-swap", layer: "front", kind: "photo", tone: "dark", label: "Swap slot", real: true, x: 11780, y: 240, w: 465, h: 480 },
-  { id: "s-third", layer: "front", kind: "photo", tone: "dark", label: "Third photo", real: true, x: 12276, y: 24, w: 720, h: 400 },
+  { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11900, w: 1720, h: "full" },
+  { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11924, y: 24, w: 607, h: "inset" },
+  { id: "s-swap", layer: "front", kind: "photo", tone: "dark", label: "Swap slot", real: true, x: 12380, y: 240, w: 465, h: 480 },
+  { id: "s-third", layer: "front", kind: "photo", tone: "dark", label: "Third photo", real: true, x: 12876, y: 24, w: 720, h: 400 },
   // Right edge on the third photo's right edge (12996), 24u inside the panel's end (13020; user, after 7e:
   // 12u read as cramped). At 12731 it ran 43u past the photo and its arrow sat off screen at frame 12 (6h).
-  { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12676, bottom: 24, w: 320, h: 28 },
+  { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 13276, bottom: 24, w: 320, h: 28 },
 
   // x is nominal: layout() ends it the pill row's 24px inset from the screen's right edge at rest (after 7f).
-  { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14578, y: 430, w: 240, h: 72 },
+  { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 15178, y: 430, w: 240, h: 72 },
 ];
 
 const byId = new Map(BLOCKS.map((block) => [block.id, block]));
@@ -122,13 +124,13 @@ export const STOPS = [
   { id: "photos", x: 1354 },
   { id: "about", x: 4142 },
   { id: "specs", x: 6728 },
-  { id: "price", x: 9726 },
-  { id: "slideshow", x: 10805 },
+  { id: "price", x: 10326 },
+  { id: "slideshow", x: 11405 },
   { id: "enquiry", x: ENQUIRY },
 ] as const;
 
 /** Scroll positions (u) of the storyboard's 14 frames, for the walk check. */
-export const FRAMES = [0, 1354, 3242, 4142, 4710, 5542, 6728, 8118, 9128, 9726, 10805, 11593, 12792, 13390] as const;
+export const FRAMES = [0, 1354, 3242, 4142, 4710, 5542, 6728, 8118, 9128, 10326, 11405, 12193, 13392, 13990] as const;
 
 /** A block's rectangle in u, for a viewport `height` u tall. */
 export function rect(b: Block, height: number) {
@@ -172,7 +174,9 @@ export function toneAt(x: number, y: number, height: number): Tone {
 export function cueRanges(u: number, vw: number, travel: number): [number, number][] {
   const end = (v: number) => Math.min(v, travel);
   const t1: [number, number] = [(block("a3").x + block("a3").w) * u, block("headline").x * u - 690 * u];
-  const t2: [number, number] = [(block("specs").x + block("specs").w) * u - 0.14 * vw, block("price-title").x * u - 851 * u];
+  // T2 ends PRICE_GAP before the price section's own stop: the car holds its side pose over the open field
+  // before the price card enters (user, after 7f).
+  const t2: [number, number] = [(block("specs").x + block("specs").w) * u - 0.14 * vw, (block("price-title").x - 851 - PRICE_GAP) * u];
   const t3: [number, number] = [(block("slideshow").x + block("slideshow").w) * u - 0.16 * vw, end(ENQUIRY * u)];
   const out: [number, number][] = [];
   let floor = 0;

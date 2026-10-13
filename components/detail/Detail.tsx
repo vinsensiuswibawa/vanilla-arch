@@ -717,6 +717,15 @@ function Page({ car }: { car: CarWithAssets }) {
           const el = rootEl.querySelector<HTMLElement>(`[data-block="${id}"]`);
           return el ? [{ el, id, last: 0 }] : [];
         });
+    // M14 on the price section (after 7f): the card (nothing else animates its own transform) and its title
+    // (GSAP-owned by M1, so through a quickSetter) arrive faster than the page, settling at 0 on the price stop.
+    const priceStop = STOPS.findIndex((stop) => stop.id === "price");
+    const priceDrift = reduced
+      ? []
+      : [
+          ...(priceModuleEl ? [{ set: (px: number) => frameDrift(priceModuleEl, px), last: 0 }] : []),
+          ...(priceTitle.current ? [{ set: depthSetter(priceTitle.current), last: 0 }] : []),
+        ];
     const photoItems = reduced
       ? []
       : ["a1", "s-tall", "s-third"].flatMap((id) => {
@@ -806,6 +815,13 @@ function Page({ car }: { car: CarWithAssets }) {
           if (v !== item.last) {
             item.last = v;
             frameDrift(item.el, v);
+          }
+        }
+        const pv = near("price-module") ? frameOffset(x, stops[priceStop]) : 0;
+        for (const item of priceDrift) {
+          if (pv !== item.last) {
+            item.last = pv;
+            item.set(pv);
           }
         }
         for (const item of photoItems) {

@@ -19,8 +19,8 @@ export const film = {
   showroomHold: 2.2, // the showroom on screen before the carousel moves
   carouselGlide: 2.4, // time for the carousel to centre the car before it opens
   afterEntry: 1.6, // the hero held after the car settles
-  pace: 380, // u/s between stops; each move takes at least `minMove`
-  minMove: 2.4,
+  pace: 475, // u/s between stops (380 until the user asked for about 25% quicker); each move takes at least `minMove`
+  minMove: 1.9,
   hold: 1.8, // at each section stop
   endHold: 2.4, // on section E before the sidebar opens
   sidebarHold: 3, // the sidebar on screen before the run reports done
