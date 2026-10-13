@@ -271,7 +271,9 @@ function Page({ car }: { car: CarWithAssets }) {
     const bPhotoFrame = { left: 0, width: 0 };
     const sSwap = { timelines: [] as gsap.core.Animation[], left: 0, width: 0 };
     const layout = () => {
-      u = probe.current!.getBoundingClientRect().width || 1;
+      // The probe is the whole track wide, not one `u`: layout rounds a box's width to 1/64 px, and that error
+      // on a 1u probe, times 14,830, put the track's end up to ~60 px past the screen (7e: the inquire text cut off).
+      u = probe.current!.getBoundingClientRect().width / TRACK || 1;
       const w = rootEl.clientWidth;
       const h = rootEl.clientHeight;
       const total = TRACK * u;
@@ -642,7 +644,7 @@ function Page({ car }: { car: CarWithAssets }) {
     if (priceTitle.current) gsap.set(priceTitle.current, reduced ? { opacity: 0 } : { yPercent: effect.lineRise.yPercent });
     revealOnce(priceTitle.current, effect.lineRise.trigger, () => lineRise(priceTitle.current!, reduced));
 
-    // ---- Section E: "Give it" / "a new home" (M9, its first live use), and the enquiry sidebar (M11) -------
+    // ---- Section E: "Give this car" / "a new home" (M9, its first live use), and the enquiry sidebar (M11) -------
     if (giveIt.current) gsap.set(giveIt.current, reduced ? { opacity: 0 } : { xPercent: -effect.sideEntrance.xPercent, opacity: 0 });
     if (newHome.current) gsap.set(newHome.current, reduced ? { opacity: 0 } : { xPercent: effect.sideEntrance.xPercent, opacity: 0 });
     // `fieldETrigger` (not the "field-e" block itself): that block lives in the *behind* layer, a separate
@@ -999,8 +1001,8 @@ function Page({ car }: { car: CarWithAssets }) {
           </p>
           {/* Section E (step 3/6g): decorative behind-layer type, same as the hero name above — the real
               text is "Inquire about this car here →" in the front layer, below. */}
-          <p ref={giveIt} className="font-display absolute" style={{ ...styleOf(block("give-it")), fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)" }}>
-            Give it
+          <p ref={giveIt} className="font-display absolute" style={{ ...styleOf(block("give-it")), fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)", whiteSpace: "nowrap" }}>
+            Give this car
           </p>
           <p ref={newHome} className="font-display absolute" style={{ ...styleOf(block("new-home")), fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)" }}>
             A new home
@@ -1009,7 +1011,7 @@ function Page({ car }: { car: CarWithAssets }) {
       </div>
 
       <section ref={root} aria-labelledby="detail-title" data-detail data-pill-tone="light" data-section="hero" className="fixed top-0 left-0 z-30 h-dvh w-full">
-        <div ref={probe} aria-hidden className="pointer-events-none invisible absolute top-0 left-0 h-0" style={{ width: "var(--u)" }} />
+        <div ref={probe} aria-hidden className="pointer-events-none invisible absolute top-0 left-0 h-0" style={{ width: u(TRACK) }} />
         {/* The page's heading while it is open: the showroom's own h1 is hidden underneath. */}
         <h1 ref={heading} id="detail-title" tabIndex={-1} className="sr-only">
           <CarName car={car} />
@@ -1298,7 +1300,7 @@ function Page({ car }: { car: CarWithAssets }) {
                     at `layout()`'s assignment and at this marker's `revealOnce` calls. */}
                 <div ref={fieldETrigger} aria-hidden className="pointer-events-none absolute top-0 h-full" style={{ width: u(1) }} />
 
-                {/* E: the real link behind "Give it" / "A new home"'s decorative type (step 3/5/6g). */}
+                {/* E: the real link behind "Give this car" / "A new home"'s decorative type (step 3/5/6g). */}
                 <button
                   type="button"
                   data-block="inquire"

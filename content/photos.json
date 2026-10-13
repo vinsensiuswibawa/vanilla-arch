@@ -607,6 +607,17 @@
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tr6_Landstra%C3%9Fe,_Ansicht_von_schr%C3%A4g_hinten.jpg"
     },
     {
+      "src": "/photos/triumph-tr6/2751d33d5b.webp",
+      "width": 2000,
+      "height": 1500,
+      "kind": "interior",
+      "alt": "Black leather seats, wood dashboard and three-spoke wheel",
+      "credit": "Corvesprit",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Triumph_tr6_interior.jpg"
+    },
+    {
       "src": "/photos/triumph-tr6/3f8e59e37e.webp",
       "width": 2000,
       "height": 1394,
@@ -627,17 +638,6 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tr6_von_oben.jpg"
-    },
-    {
-      "src": "/photos/triumph-tr6/2751d33d5b.webp",
-      "width": 2000,
-      "height": 1500,
-      "kind": "interior",
-      "alt": "Black leather seats, wood dashboard and three-spoke wheel",
-      "credit": "Corvesprit",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Triumph_tr6_interior.jpg"
     }
   ],
   "porsche-930": [

@@ -120,7 +120,7 @@
   /* Type scale at the 1440 reference, from the storyboard's cap heights (font size = cap height / 0.7).
      Starting points; each section tunes its own in 6e and 6f. */
   --type-hero: calc(160 * var(--u)); /* the car name (user, 2026-10-09: 160px, down from the storyboard's 168) */
-  --type-enquiry: calc(136 * var(--u)); /* "Give it" / "A new home", cap height 95 */
+  --type-enquiry: calc(136 * var(--u)); /* "Give this car" / "A new home", cap height 95 */
   --type-headline: calc(106 * var(--u)); /* section B headline, cap height 75 */
   /* section C quote. Down from the storyboard's cap-height-60 reading (86px) — at that size the longer end of
      the summary's approved 25-40 word range (docs/overhaul-copy.md) wrapped to six lines and collided with "Our

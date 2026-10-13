@@ -66,9 +66,9 @@
     { "file": "File:Tr6 Landstraße Ansicht schräg vorne.jpg", "kind": "exterior", "alt": "White TR6 with the hood down on a country road, front three-quarter view" },
     { "file": "File:Tr6 Seitenansicht.jpg", "kind": "exterior", "alt": "Side profile" },
     { "file": "File:Tr6 Landstraße, Ansicht von schräg hinten.jpg", "kind": "exterior", "alt": "Rear three-quarter view on the road" },
+    { "file": "File:Triumph tr6 interior.jpg", "kind": "interior", "alt": "Black leather seats, wood dashboard and three-spoke wheel" },
     { "file": "File:Tr6 back field.jpg", "kind": "exterior", "alt": "Rear three-quarter view beside a field" },
-    { "file": "File:Tr6 von oben.jpg", "kind": "exterior", "alt": "From above, showing the boot rack" },
-    { "file": "File:Triumph tr6 interior.jpg", "kind": "interior", "alt": "Black leather seats, wood dashboard and three-spoke wheel" }
+    { "file": "File:Tr6 von oben.jpg", "kind": "exterior", "alt": "From above, showing the boot rack" }
   ],
   "porsche-930": [
     { "url": "https://live.staticflickr.com/65535/52561752768_b146ee206f_b.jpg", "kind": "exterior", "alt": "Copper Brown 911 Turbo in a classic-car hall, front three-quarter view showing the flared arches", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52561752768" },

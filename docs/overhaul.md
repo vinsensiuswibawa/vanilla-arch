@@ -1238,3 +1238,9 @@ want 1871.8). At 1440 × 960 it is exact (1428). At 1024 × 640 it is 1170.5 (wa
 - Done: `.price-info-tip` wraps and sits inside its box and the price card at 1440 × 960 and 1024 × 640 with no clipping ancestor; S swap always renders (reuses A2's photo only for pools under seven: porsche-930 and triumph-tr6 repeat once, bmw-m5-e39 never); "Give it" x 13535 → 13499.
 - Open: the cut-off inquire text is not the `h + travel` height mismatch (`lenis.limit === travel`, scroller height equals root height at every size) but the probe's 1/64 px quantisation noted above (1896 × 950: text 65 px past the edge; 1896 × 1065 and 1440 × 960 are exact). Not changed, awaiting a go on the `calc(var(--u) * 1000)` fix.
 - Verified: typecheck, lint, 6 smoke tests, porsche-930 walk at frames 11, 12, 14 (1440 × 960; enquiry auto-open fires). Not committed.
+
+## 7f status
+
+- Done: the inquire cut-off (7e's open item) is fixed by measuring the `u` probe at the full track width (`u(TRACK)`, then `/ TRACK`): a 1u probe's 1/64 px rounding, times 14,830, overshot the track's end. The inquire text's right edge is now exactly 12u inside the screen at 1885 × 1054, 1896 × 950, 1440 × 960 and 1024 × 640, with no horizontal page scroll. S third and "See all" end 24u before the slideshow panel (x 12276 / 12676). "Give it" → "Give this car" (one line, box w 900). The TR6's interior photo now sits in the C band (photos.json and photos.selection.json order).
+- Open: more photos for the TR6 and the 930, and the 930's interior photo for the C band. This session's network policy blocks Commons, Flickr and Openverse.
+- Verified: typecheck, lint, build, 6 smoke tests (the keyboard test timed out once on software WebGL and passed on rerun). Not committed.

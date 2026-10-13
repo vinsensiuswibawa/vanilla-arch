@@ -40,7 +40,7 @@ export const BLOCKS: Block[] = [
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
   { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
   { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
-  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give it", real: true, x: 13499, y: 200, w: 560, h: 130 },
+  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 13499, y: 200, w: 900, h: 130 },
   { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13760, y: 720, w: 1000, h: 130 },
 
   // ---- In front of the car: photos, the dark sections, the price section, small text and buttons ----
@@ -98,10 +98,10 @@ export const BLOCKS: Block[] = [
   { id: "slideshow", layer: "front", kind: "panel", tone: "dark", label: "Slideshow", x: 11300, w: 1720, h: "full" },
   { id: "s-tall", layer: "front", kind: "photo", tone: "dark", label: "Tall photo", real: true, x: 11324, y: 24, w: 607, h: "inset" },
   { id: "s-swap", layer: "front", kind: "photo", tone: "dark", label: "Swap slot", real: true, x: 11780, y: 240, w: 465, h: 480 },
-  { id: "s-third", layer: "front", kind: "photo", tone: "dark", label: "Third photo", real: true, x: 12288, y: 24, w: 720, h: 400 },
-  // Right edge on the third photo's right edge (13008), as in frame 12; at 12731 it ran 43u past it and its
-  // arrow sat off screen at the frame-12 position (6h).
-  { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12688, bottom: 24, w: 320, h: 28 },
+  { id: "s-third", layer: "front", kind: "photo", tone: "dark", label: "Third photo", real: true, x: 12276, y: 24, w: 720, h: 400 },
+  // Right edge on the third photo's right edge (12996), 24u inside the panel's end (13020; user, after 7e:
+  // 12u read as cramped). At 12731 it ran 43u past the photo and its arrow sat off screen at frame 12 (6h).
+  { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12676, bottom: 24, w: 320, h: 28 },
 
   { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14578, y: 430, w: 240, h: 100 },
 ];
