@@ -68,12 +68,14 @@
     { "file": "File:Tr6 Landstraße, Ansicht von schräg hinten.jpg", "kind": "exterior", "alt": "Rear three-quarter view on the road" },
     { "file": "File:Triumph tr6 interior.jpg", "kind": "interior", "alt": "Black leather seats, wood dashboard and three-spoke wheel" },
     { "file": "File:Tr6 back field.jpg", "kind": "exterior", "alt": "Rear three-quarter view beside a field" },
-    { "file": "File:Tr6 von oben.jpg", "kind": "exterior", "alt": "From above, showing the boot rack" }
+    { "file": "File:Tr6 von oben.jpg", "kind": "exterior", "alt": "From above, showing the boot rack" },
+    { "url": "https://live.staticflickr.com/389/32105493141_9963658303_b.jpg", "kind": "exterior", "alt": "Cream TR6 from behind with the hood down, black seats and wood dashboard", "credit": "andreboeni", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/65344061@N06/32105493141" }
   ],
   "porsche-930": [
     { "url": "https://live.staticflickr.com/65535/52561752768_b146ee206f_b.jpg", "kind": "exterior", "alt": "Copper Brown 911 Turbo in a classic-car hall, front three-quarter view showing the flared arches", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52561752768" },
     { "url": "https://live.staticflickr.com/65535/52561752743_25b44ddda7_b.jpg", "kind": "exterior", "alt": "Front three-quarter view, right side, on black-centred Fuchs wheels", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52561752743" },
     { "url": "https://live.staticflickr.com/65535/52560758942_b1419d4aaa_b.jpg", "kind": "exterior", "alt": "Rear three-quarter view with the whale-tail spoiler", "credit": "usf1fan2", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/43494963@N03/52560758942" },
+    { "url": "https://live.staticflickr.com/8039/7965578070_5ba97ff71f_b.jpg", "kind": "interior", "alt": "Black leather sports seats, four-spoke wheel and five-dial dashboard of a classic 911", "credit": "fragment.fi", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "sourceUrl": "https://www.flickr.com/photos/32757845@N08/7965578070" },
     { "file": "File:Porsche 930 Turbo (52176841670).jpg", "kind": "exterior", "alt": "Copper 911 Turbo in a classic-car hall, front three-quarter view" },
     { "file": "File:Porsche 911 930 Turbo (52176354211).jpg", "kind": "detail", "alt": "Whale-tail spoiler and Turbo script on the copper car, from behind" },
     { "file": "File:Porsche 911 Turbo 3.jpg", "kind": "exterior", "alt": "Rust-orange 911 Turbo, rear three-quarter view with the whale tail" }

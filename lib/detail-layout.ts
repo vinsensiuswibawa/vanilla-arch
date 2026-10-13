@@ -40,7 +40,7 @@ export const BLOCKS: Block[] = [
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
   { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
   { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
-  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 13499, y: 200, w: 900, h: 130 },
+  { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 13403, y: 200, w: 900, h: 130 },
   { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13760, y: 720, w: 1000, h: 130 },
 
   // ---- In front of the car: photos, the dark sections, the price section, small text and buttons ----
@@ -84,9 +84,9 @@ export const BLOCKS: Block[] = [
   // per line keeps the longest approved summaries to five lines. y moved up from 330 (user, 2026-10-10:
   // more clearance above "Our take"/"To keep in mind").
   { id: "c-summary", layer: "front", kind: "type", tone: "dark", label: "Summary quote", real: true, x: 8224, y: 270, w: 1080, h: 310 },
-  // `h` is nominal only: these two render at `height: auto` (Detail.tsx) so a longer paragraph grows
-  // upward from the shared 24u bottom margin instead of overflowing past it (user, 2026-10-10: "Our take"
-  // and "To keep in mind" landed at different bottom edges depending on their text length).
+  // `h` is nominal only: Detail.tsx sets these two as the columns of one bottom-anchored grid, aligned to the
+  // top, so the labels and first lines share a level and the longer paragraph grows upward from the 24u
+  // bottom margin (user, 2026-10-10, then after 7f: the labels sat at different heights).
   { id: "c-take", layer: "front", kind: "type", tone: "dark", label: "Our take", real: true, x: 8224, bottom: 24, w: 440, h: 100 },
   { id: "c-keep", layer: "front", kind: "type", tone: "dark", label: "To keep in mind", real: true, x: 8752, bottom: 24, w: 470, h: 100 },
 

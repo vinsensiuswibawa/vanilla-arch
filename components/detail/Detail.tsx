@@ -1220,27 +1220,40 @@ function Page({ car }: { car: CarWithAssets }) {
                   <span className="sr-only">{car.summary}</span>
                   <span aria-hidden>{scrollTextWords(car.summary, reduced)}</span>
                 </p>
-                <div ref={cTake} data-block="c-take" data-tone="dark" className="absolute" style={{ ...styleOf(block("c-take")), height: "auto", color: "var(--color-paper)" }}>
-                  <p ref={cTakeLabel} className="detail-label overflow-hidden" style={{ lineHeight: 1 }}>
-                    Our take
-                  </p>
-                  <p className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
-                    <span className="sr-only">{car.ourTake}</span>
-                    <span aria-hidden ref={cTakeBody}>
-                      {car.ourTake}
-                    </span>
-                  </p>
-                </div>
-                <div ref={cKeep} data-block="c-keep" data-tone="dark" className="absolute" style={{ ...styleOf(block("c-keep")), height: "auto", color: "var(--color-paper)" }}>
-                  <p ref={cKeepLabel} className="detail-label overflow-hidden" style={{ lineHeight: 1 }}>
-                    To keep in mind
-                  </p>
-                  <p className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
-                    <span className="sr-only">{car.toKeepInMind}</span>
-                    <span aria-hidden ref={cKeepBody}>
-                      {car.toKeepInMind}
-                    </span>
-                  </p>
+                {/* One bottom-anchored grid, columns aligned to the top (user, after 7f): the two labels and the first
+                    lines share a level, and the longer paragraph alone sets the 24u bottom margin. */}
+                <div
+                  className="absolute grid items-start"
+                  style={{
+                    left: u(block("c-take").x),
+                    bottom: u(block("c-take").bottom ?? 24),
+                    gridTemplateColumns: `${u(block("c-take").w)} ${u(block("c-keep").w)}`,
+                    columnGap: u(block("c-keep").x - block("c-take").x - block("c-take").w),
+                    color: "var(--color-paper)",
+                  }}
+                >
+                  <div ref={cTake} data-block="c-take" data-tone="dark">
+                    <p ref={cTakeLabel} className="detail-label overflow-hidden" style={{ lineHeight: 1 }}>
+                      Our take
+                    </p>
+                    <p className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
+                      <span className="sr-only">{car.ourTake}</span>
+                      <span aria-hidden ref={cTakeBody}>
+                        {car.ourTake}
+                      </span>
+                    </p>
+                  </div>
+                  <div ref={cKeep} data-block="c-keep" data-tone="dark">
+                    <p ref={cKeepLabel} className="detail-label overflow-hidden" style={{ lineHeight: 1 }}>
+                      To keep in mind
+                    </p>
+                    <p className="mt-2" style={{ fontSize: "max(13px, var(--type-body))", lineHeight: 1.4 }}>
+                      <span className="sr-only">{car.toKeepInMind}</span>
+                      <span aria-hidden ref={cKeepBody}>
+                        {car.toKeepInMind}
+                      </span>
+                    </p>
+                  </div>
                 </div>
 
                 {/* D: the price comparison in three tabs (docs/overhaul.md step 5, 7a). The

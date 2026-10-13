@@ -190,7 +190,7 @@ The Index is an overlay on any route, not a page.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 01 | 1975 Datsun 240K GT (C110), Kuwait-delivered | ケンメリ スカイライン | Arch | Silver Blue Metallic / Black vinyl | $38,500 | 88,900 mi | Utrecht, Netherlands | [Lionsharp Studios](https://sketchfab.com/3d-models/b2303a552b444e5b8637fdf5169b41cb) (CC BY-SA) |
 | 02 | 1972 Triumph TR6 (CP), 150 bhp injection | トライアンフ TR6 | Circle | Pure White / Black leather | $34,000 | 61,200 mi | Baden-Württemberg, Germany | [Alexios_Apokaukos](https://sketchfab.com/3d-models/69e5de3f68804fbc900557b7740b680c) |
-| 03 | 1976 Porsche 911 Turbo (930), 3.0 | ポルシェ 930 ターボ | Square | Copper Brown Metallic / Tan leather | $245,000 | 54,300 mi | Düsseldorf, Germany | [Lionsharp Studios](https://sketchfab.com/3d-models/8568d9d14a994b9cae59499f0dbed21e) |
+| 03 | 1976 Porsche 911 Turbo (930), 3.0 | ポルシェ 930 ターボ | Square | Copper Brown Metallic / Black leather | $245,000 | 54,300 mi | Düsseldorf, Germany | [Lionsharp Studios](https://sketchfab.com/3d-models/8568d9d14a994b9cae59499f0dbed21e) |
 | 04 | 1993 Peugeot 205 CJ | プジョー 205 カブリオレ | Half-disc | Blanc Meije / Grey cloth | $9,800 | 68,400 mi | Barcelona, Spain | [maxipub](https://sketchfab.com/3d-models/ff2b04cf7da94cbdbd277fe23b7204b8) |
 | 05 | 1991 Honda NSX (NA1), automatic | ホンダ NSX | Arch | Formula Red / Black leather | $92,000 | 58,600 mi | Leicestershire, England | [Lexyc16](https://sketchfab.com/3d-models/honda-nsx-1990-1cc15628a00a4739a6b6c01128927c8d) |
 | 06 | 1993 Jaguar XJ220 | ジャガー XJ220 | Circle | Maroon metallic / Cream leather | $585,000 | 3,900 mi | Lakeland, Florida | [comrade1280](https://sketchfab.com/3d-models/jaguar-xj220-1991-d99bb7b0fc0e4e3c9553246679dd067f) |

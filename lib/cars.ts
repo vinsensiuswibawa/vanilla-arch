@@ -239,12 +239,12 @@ const listings: Record<Slug, Listing> = {
     },
     colors: {
       paint: { name: "Copper Brown Metallic", hex: "#6b3a22", metallic: true },
-      interior: { name: "Tan leather" },
+      interior: { name: "Black leather" },
       wheels: { name: "Fuchs forged alloys, black centres" },
     },
-    take: "Porsche built the Turbo to homologate a racing car and expected to sell a few hundred. The 3.0-litre flat-six makes 260 PS and very little of it below 3,000 rpm; then the turbocharger wakes and the rear tyres learn what the flared arches are for. It has four gears because no five-speed of the time would hold the torque. This is a 1976 car, one of 2,819 three-litre Turbos, in Copper Brown over tan, with its whale tail and Fuchs wheels. Respect the boost and it will repay you.",
-    highlights: ["One of 2,819 three-litre Turbos", "Copper Brown over tan", "Matching-numbers engine"],
-    equipment: ["Whale-tail rear spoiler", "Fuchs forged wheels", "Tan leather sports seats", "Electric windows", "Air conditioning"],
+    take: "Porsche built the Turbo to homologate a racing car and expected to sell a few hundred. The 3.0-litre flat-six makes 260 PS and very little of it below 3,000 rpm; then the turbocharger wakes and the rear tyres learn what the flared arches are for. It has four gears because no five-speed of the time would hold the torque. This is a 1976 car, one of 2,819 three-litre Turbos, in Copper Brown over black, with its whale tail and Fuchs wheels. Respect the boost and it will repay you.",
+    highlights: ["One of 2,819 three-litre Turbos", "Copper Brown over black", "Matching-numbers engine"],
+    equipment: ["Whale-tail rear spoiler", "Fuchs forged wheels", "Black leather sports seats", "Electric windows", "Air conditioning"],
     condition: {
       grade: "4.5",
       interior: "B",
@@ -844,7 +844,7 @@ const detailCopy: Record<Slug, DetailCopy> = {
     about:
       "Porsche built the Turbo to homologate a racing car and expected to sell a few hundred. The 3.0-litre flat six made 260 PS and very little below 3,000 rpm; then the turbocharger arrived all at once. It had four gears because no five-speed of the day would hold the torque. Between 1975 and 1977, 2,819 three-litre Turbos were built.",
     summary:
-      "A three-litre Turbo in Copper Brown over tan, matching numbers, with its whale tail and Fuchs wheels, and a service file that reads like a manual.",
+      "A three-litre Turbo in Copper Brown over black, matching numbers, with its whale tail and Fuchs wheels, and a service file that reads like a manual.",
     ourTake:
       "Early three-litre cars are the purest Turbos and the rarest. This one has had the expensive work done: heat exchangers, clutch, hoses. Keep to the service intervals, warm it properly, and respect the boost when the road is wet.",
     toKeepInMind:
