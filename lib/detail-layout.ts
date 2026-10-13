@@ -53,6 +53,8 @@ export const BLOCKS: Block[] = [
   // trailing well past the text; -25% hugs "Jump to specs →" instead).
   { id: "jump", layer: "front", kind: "control", tone: "light", label: "Jump to specs →", real: true, x: 24, y: 612, w: 150, h: 36 },
   { id: "scroll-cue", layer: "front", kind: "type", tone: "light", label: "Scroll", real: true, x: 1252, bottom: BAR + 12, w: 20, h: 190 },
+  // The 3D model's CC credit (title, author, licence, "modified"), bottom left over the bar (user, after 7f).
+  { id: "model-credit", layer: "front", kind: "type", tone: "light", label: "3D model credit", real: true, x: 24, bottom: BAR + 12, w: 900, h: 16 },
   { id: "a1", layer: "front", kind: "photo", tone: "dark", label: "A1 photo", real: true, x: 1318, y: 0, w: 620, h: "aboveBar" },
   { id: "a2", layer: "front", kind: "photo", tone: "dark", label: "A2 swap slot", real: true, x: 1794, y: 446, w: 530, h: 355 },
   { id: "a3", layer: "front", kind: "photo", tone: "dark", label: "A3 photo", real: true, x: 2700, y: 160, w: 542, h: 640 },

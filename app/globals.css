@@ -652,6 +652,23 @@ button.blk-control:hover {
   }
 }
 
+/* The hero's 3D-model credit (after 7f): small print; its links underline on hover or focus. */
+.detail-credit {
+  white-space: nowrap;
+}
+.detail-credit a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+}
+.detail-credit a:focus-visible {
+  text-decoration-color: currentColor;
+}
+@media (hover: hover) and (pointer: fine) {
+  .detail-credit a:hover {
+    text-decoration-color: currentColor;
+  }
+}
 .detail-label {
   font-size: max(10px, var(--type-label));
   letter-spacing: var(--label-tracking);

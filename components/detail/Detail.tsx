@@ -33,6 +33,11 @@ import { useArcade } from "@/lib/store";
 const SHAPES = shapes as unknown as Record<string, ShapeData>;
 /** The back pill's centre, in px from the top left: where the page asks "light or dark under here?". */
 const PILL = { x: 24 + 56, y: 24 + 18 };
+/** A Sketchfab licence id ("CC-BY-4.0", "CC-BY-SA-4.0") as its short name and deed URL. */
+const licenceOf = (id: string) => {
+  const kind = id.replace(/^CC-/, "").replace(/-\d.*$/, "").toLowerCase();
+  return { name: id.replace(/^CC-/, "CC ").replace(/-(\d)/, " $1"), url: `https://creativecommons.org/licenses/${kind}/4.0/` };
+};
 /** The pill row's inset from the viewport edge in px (`top-6 left-6`); section E aligns to it at rest. */
 const PILL_INSET = 24;
 /** The spec bar leaves over the end of section A and the start of T1: a scroll range, in u, around T1's start. */
@@ -202,6 +207,7 @@ function Page({ car }: { car: CarWithAssets }) {
   const repositionName = useRef<() => void>(() => {});
   const emblem = useRef<HTMLDivElement>(null);
   const scrollCue = useRef<HTMLParagraphElement>(null);
+  const modelCredit = useRef<HTMLParagraphElement>(null);
   const backPill = useRef<HTMLAnchorElement>(null);
   const soundBtn = useRef<HTMLButtonElement>(null);
   const a1Frame = useRef<HTMLDivElement>(null);
@@ -354,7 +360,7 @@ function Page({ car }: { car: CarWithAssets }) {
     // Every entry-animated element is set to its hidden starting look immediately, synchronously, before the
     // first paint (useLayoutEffect), so a deep link never flashes the finished hero through the dissolving
     // gate. Only the actual *playback* (below) is gated on `phase === "showroom"`.
-    const chromeEls = live([emblem.current, scrollCue.current, backPill.current, soundBtn.current]);
+    const chromeEls = live([emblem.current, scrollCue.current, modelCredit.current, backPill.current, soundBtn.current]);
     const charEls = live(nameChars.current.flat());
     if (reduced) {
       gsap.set(live([name.current, make.current, jumpBtn.current, barEl, a1Frame.current]).concat(chromeEls), { opacity: 0 });
@@ -1167,6 +1173,24 @@ function Page({ car }: { car: CarWithAssets }) {
                   style={{ ...styleOf(block("scroll-cue")), fontSize: "max(10px, var(--type-label))", letterSpacing: "var(--label-tracking)", textTransform: "var(--label-case)" }}
                 >
                   Scroll for more
+                </p>
+                {/* The model's licence asks for title, author, source, licence and a note of changes (CLAUDE.md's
+                    credit rule; the photos are credited in the gallery). */}
+                <p
+                  ref={modelCredit}
+                  data-block="model-credit"
+                  className="detail-credit text-mist-700 absolute"
+                  style={{ ...styleOf(block("model-credit")), height: "auto", fontSize: "max(11px, calc(12 * var(--u)))", lineHeight: 1.3 }}
+                >
+                  3D model:{" "}
+                  <a href={car.model3d.sourceUrl} target="_blank" rel="noreferrer">
+                    {car.model3d.title}
+                  </a>{" "}
+                  by {car.model3d.author} ·{" "}
+                  <a href={licenceOf(car.model3d.license).url} target="_blank" rel="noreferrer">
+                    {licenceOf(car.model3d.license).name}
+                  </a>{" "}
+                  · modified
                 </p>
 
                 {firstPhoto && (
