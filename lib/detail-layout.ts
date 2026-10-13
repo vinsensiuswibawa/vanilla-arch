@@ -40,8 +40,8 @@ export const BLOCKS: Block[] = [
   { id: "hero-make", layer: "behind", kind: "type", tone: "light", label: "Make · year", real: true, x: 24, y: 560, w: 300, h: 28 },
   { id: "field-cd", layer: "behind", kind: "field", tone: "light", label: "Light field, specs to price", x: 9328, w: 1225, h: "full" },
   { id: "field-e", layer: "behind", kind: "field", tone: "light", label: "Light field, enquiry", x: 13020, w: 1810, h: "full" },
-  // Section E's headings stack at the screen's top-left at rest (user, after 7f): the x here is the 1440-wide
-  // case; Detail.tsx's layout() pins both to 24u inside the resting viewport's left edge at any width.
+  // Section E's headings stack, centred in the resting viewport (user, after 7f): x and w here are nominal;
+  // Detail.tsx's layout() sets both to the viewport at rest, at any width.
   { id: "give-it", layer: "behind", kind: "type", tone: "light", label: "Give this car", real: true, x: 13414, y: 88, w: 900, h: 130 },
   { id: "new-home", layer: "behind", kind: "type", tone: "light", label: "A new home", real: true, x: 13414, y: 218, w: 1000, h: 130 },
 
@@ -105,10 +105,8 @@ export const BLOCKS: Block[] = [
   // 12u read as cramped). At 12731 it ran 43u past the photo and its arrow sat off screen at frame 12 (6h).
   { id: "s-all", layer: "front", kind: "control", tone: "dark", label: "See all of this car's images →", real: true, x: 12676, bottom: 24, w: 320, h: 28 },
 
-  // Section E's right column, right-aligned 12u inside the track's end (the screen's right edge at rest): the
-  // contact card, "or", then the form link, stacked in one flex column so the gaps follow the card's real
-  // height at the px floors (user, after 7f). `h` is nominal.
-  { id: "contact", layer: "front", kind: "card", tone: "light", label: "Contact, or, inquire", real: true, x: 14478, y: 24, w: 340, h: 420 },
+  // Right edge 12u inside the track's end, the screen's right edge at rest (7e/7f).
+  { id: "inquire", layer: "front", kind: "control", tone: "light", label: "Inquire about this car here →", real: true, x: 14578, y: 430, w: 240, h: 72 },
 ];
 
 const byId = new Map(BLOCKS.map((block) => [block.id, block]));

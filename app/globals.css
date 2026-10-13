@@ -550,13 +550,25 @@ button.blk-control:hover {
     transform: scaleX(1);
   }
 }
-/* Section E's contact card (after 7f): paper on the light field with the pills' hairline, sharp corners like
-   the price card. Links show their underline on hover/focus only. */
+/* The enquiry sidebar's contact card (after 7f): the pills' hairline, sharp corners like the price card. Links
+   show their underline on hover/focus only. "or send a message" sits between hairlines below it. */
 .detail-contact {
   padding: max(16px, calc(20 * var(--u)));
   background: var(--color-paper);
   border: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
   color: var(--color-ink);
+}
+.enquiry-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.enquiry-or::before,
+.enquiry-or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-ink) 14%, transparent);
 }
 .detail-contact a {
   text-decoration: underline;

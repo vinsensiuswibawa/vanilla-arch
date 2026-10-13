@@ -20,7 +20,7 @@ import { cars, getCar, type CarWithAssets, type Photo } from "@/lib/cars";
 import { applyState, mixPose, arc as shortestArc, screenBox, solveAll, stateOf } from "@/lib/choreography";
 import { detail, exit, leaveDetail, resetDetail, stepTurntable } from "@/lib/detail";
 import { block, cueRanges, progressAt, STOPS, styleOf, toneAt, TRACK, u } from "@/lib/detail-layout";
-import { barExit, charRise, chromeFade, depthOffset, depthSetter, frameDrift, frameOffset, imageReveal, imageSwap, lineRise, parallax, ruleDraw, scrollText, sideEntrance, splitChars, splitLines } from "@/lib/detail-fx";
+import { barExit, charRise, chromeFade, depthOffset, depthSetter, frameDrift, frameOffset, imageReveal, imageSwap, lineRise, parallax, ruleDraw, scrollText, splitChars, splitLines } from "@/lib/detail-fx";
 import { ease, effect, entry, reduced as reducedTokens, SCROLL_LAG, scrollFeel } from "@/lib/detail-motion";
 import { formatKilometres, formatMiles, formatPrice } from "@/lib/format";
 import { FRAMES } from "@/lib/frames";
@@ -45,8 +45,6 @@ const CHASSIS_GAP_PX = 4;
 const CHASSIS_SIZE = 14;
 /** Section E's stacked headings: 88u from the top, but never under the back/sound pills' px-floored row. */
 const E_HEAD_TOP = `max(calc(var(--u) * 88), 76px)`;
-/** Section E's contact card (fiction, user after 7f): a UK drama-range number and a reserved .example domain. */
-const CONTACT = { name: "Mara Lindqvist", role: "Listings specialist, Arcade", phone: "+44 20 7946 0318", email: "mara@arcade.example" } as const;
 const JUMP_SIZE = 12;
 const EMBLEM_WIDTH = 140;
 
@@ -233,10 +231,7 @@ function Page({ car }: { car: CarWithAssets }) {
   const sThirdInner = useRef<HTMLDivElement>(null);
   const giveIt = useRef<HTMLParagraphElement>(null);
   const newHome = useRef<HTMLParagraphElement>(null);
-  const contactCard = useRef<HTMLDivElement>(null);
-  const enquiryOr = useRef<HTMLParagraphElement>(null);
   const inquireBtn = useRef<HTMLButtonElement>(null);
-  const fieldETrigger = useRef<HTMLDivElement>(null);
   const jump = useRef<() => void>(() => {});
   const phase = useArcade((state) => state.phase);
   const sound = useArcade((state) => state.sound);
@@ -303,16 +298,12 @@ function Page({ car }: { car: CarWithAssets }) {
       setLeftWidth("b-photo", bPhotoSwap);
       setLeftWidth("b-photo", bPhotoFrame);
       setLeftWidth("s-swap", sSwap);
-      // The section-E trigger marker sits at the track's true resting scroll position (`travel`), not the
-      // nominal `ENQUIRY` track constant: the two aren't quite equal (the achievable `travel` runs a little
-      // short of `ENQUIRY * u`, likely the scrollbar's own width shaving off client area) — found live-testing
-      // at 1024 wide, the narrowest supported width: with the marker fixed at `ENQUIRY`, that gap left the
-      // trigger just out of reach, so M9's reveal and the enquiry sidebar's auto-open never fired at all.
-      if (fieldETrigger.current) fieldETrigger.current.style.left = `${travel}px`;
-      // E's stacked headings sit 24u inside the resting viewport's left edge at every width (the right column
-      // follows the track's end, which is the screen's right edge at rest, so its fixed x already holds).
-      // (24px floor: the pills' own left edge, which doesn't scale down).
-      for (const el of [giveIt.current, newHome.current]) if (el) el.style.left = `${travel + Math.max(24 * u, 24)}px`;
+      // E's stacked headings span the resting viewport and centre in it at every width (user, after 7f).
+      for (const el of [giveIt.current, newHome.current]) {
+        if (!el) continue;
+        el.style.left = `${travel}px`;
+        el.style.width = `${w}px`;
+      }
       if (dragEl) {
         // The hero's drag target covers the car where it stands at P0.
         const camera = new PerspectiveCamera();
@@ -646,23 +637,12 @@ function Page({ car }: { car: CarWithAssets }) {
     if (priceTitle.current) gsap.set(priceTitle.current, reduced ? { opacity: 0 } : { yPercent: effect.lineRise.yPercent });
     revealOnce(priceTitle.current, effect.lineRise.trigger, () => lineRise(priceTitle.current!, reduced));
 
-    // ---- Section E: "Give this car" / "a new home" (M9, its first live use), and the enquiry sidebar (M11) -------
-    const eLeft = live([giveIt.current, newHome.current]);
-    const eRight = live([contactCard.current, enquiryOr.current, inquireBtn.current]);
-    gsap.set(eLeft, reduced ? { opacity: 0 } : { xPercent: -effect.sideEntrance.xPercent, opacity: 0 });
-    gsap.set(eRight, reduced ? { opacity: 0 } : { xPercent: effect.sideEntrance.xPercent, opacity: 0 });
-    // `fieldETrigger` (not the "field-e" block itself): that block lives in the *behind* layer, a separate
-    // `position: fixed` tree outside `scroller`/`content` entirely — `ScrollTrigger`'s `containerAnimation`
-    // trigger math never fired against it (verified: it calibrates fine against front-layer elements, which
-    // sit inside the real scroller). This marker carries the same track geometry in the front layer instead.
-    //
-    // It's positioned (in `layout()`, above) at the track's true resting scroll position, not "field-e"'s
-    // block x: that block starts right where the slideshow ends and includes the D-to-E gap (step 3), so the
-    // generic M1-style 70%/40% thresholds fired against it long before T3 (the side-to-front camera move) had
-    // even started — verified visually: at the storyboard-13 scroll position, "GIVE IT" was already mid-reveal
-    // and the sidebar already open while the car was still in its side pose. Anchored at rest instead, a small
-    // trigger value means "fires once the track is nearly or fully settled".
-    revealOnce(fieldETrigger.current, 0.1, () => sideEntrance(eLeft, eRight, reduced));
+    // ---- Section E: the headings and the form link fade in with the scroll (M9, after 7f) -----------------
+    // Opacity only, tied to the track like M3 and with M3's range: from section E's resting left edge (the
+    // track at `travel`) at 90% of the viewport to 45%, so all three are in before the track settles.
+    const eFade = [giveIt.current, newHome.current, inquireBtn.current].filter((el): el is HTMLParagraphElement | HTMLButtonElement => el !== null);
+    let eFadeWritten = -1;
+    if (!reduced) for (const el of eFade) el.style.opacity = "0";
     // No scroll-triggered sidebar any more (user, after 7f): section E offers the contact card or the form,
     // and the form opens only from "Inquire about this car here →".
 
@@ -735,6 +715,15 @@ function Page({ car }: { car: CarWithAssets }) {
       if (qWritten !== barWritten) {
         barWritten = qWritten;
         barExit(barEl, q);
+      }
+      // M9: section E fades in over M3's range (see above); written only when it changes.
+      if (!reduced && eFade.length) {
+        const vw = detail.viewport.w;
+        const q = Math.round(clamp01((x - (travel - effect.scrollText.start * vw)) / ((effect.scrollText.start - effect.scrollText.end) * vw)) * 1000) / 1000;
+        if (q !== eFadeWritten) {
+          eFadeWritten = q;
+          for (const el of eFade) el.style.opacity = String(q);
+        }
       }
       // M3: the summary brightens from its left edge at 90% of the viewport to its centre at 45%.
       if (!reduced && summaryChars.length) scrollText(summaryChars, clamp01((x - summaryStart) / (summaryEnd - summaryStart)));
@@ -989,11 +978,11 @@ function Page({ car }: { car: CarWithAssets }) {
           </p>
           {/* Section E (step 3/6g): decorative behind-layer type, same as the hero name above — the real
               text is "Inquire about this car here →" in the front layer, below. */}
-          <p ref={giveIt} className="font-display absolute" style={{ ...styleOf(block("give-it")), top: E_HEAD_TOP, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)", whiteSpace: "nowrap" }}>
+          <p ref={giveIt} className="font-display absolute text-center" style={{ ...styleOf(block("give-it")), top: E_HEAD_TOP, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", whiteSpace: "nowrap" }}>
             Give this car
           </p>
-          <p ref={newHome} className="font-display absolute" style={{ ...styleOf(block("new-home")), top: `calc(${E_HEAD_TOP} + var(--type-enquiry) * var(--display-leading))`, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", textTransform: "var(--display-case)", whiteSpace: "nowrap" }}>
-            A new home
+          <p ref={newHome} className="font-display absolute text-center" style={{ ...styleOf(block("new-home")), top: `calc(${E_HEAD_TOP} + var(--type-enquiry) * var(--display-leading))`, fontSize: "var(--type-enquiry)", lineHeight: "var(--display-leading)", letterSpacing: "var(--display-tracking)", whiteSpace: "nowrap" }}>
+            a new home
           </p>
         </div>
       </div>
@@ -1296,63 +1285,23 @@ function Page({ car }: { car: CarWithAssets }) {
                   See all of this car&rsquo;s images →
                 </button>
 
-                {/* E: an invisible front-layer trigger marker, positioned imperatively in `layout()` at the
-                    track's true resting scroll position rather than "field-e"'s own block — see the comments
-                    at `layout()`'s assignment and at this marker's `revealOnce` calls. */}
-                <div ref={fieldETrigger} aria-hidden className="pointer-events-none absolute top-0 h-full" style={{ width: u(1) }} />
 
-                {/* E's right column (user, after 7f): a contact card, "or", then the enquiry form's link. The
-                    contact is fictional: a UK drama-range number (Ofcom 020 7946 0xxx) and a reserved .example address. */}
-                <div data-block="contact" className="absolute flex flex-col items-end" style={{ ...styleOf(block("contact")), height: "auto", rowGap: `max(20px, ${u(48)})` }}>
-                  <div ref={contactCard} data-tone="light" className="detail-contact box-border w-full">
-                    <p className="detail-label text-mist-700" style={{ lineHeight: 1 }}>
-                      Your contact
-                    </p>
-                    <div className="flex items-center" style={{ marginTop: u(16), columnGap: u(14) }}>
-                      <span aria-hidden className="detail-contact-avatar">
-                        {CONTACT.name.split(" ").map((w) => w[0]).join("")}
-                      </span>
-                      <span>
-                        <span className="font-display block" style={{ fontSize: "max(18px, calc(24 * var(--u)))", lineHeight: 1.1 }}>
-                          {CONTACT.name}
-                        </span>
-                        <span className="text-mist-700 block" style={{ marginTop: 4, fontSize: "max(12px, var(--type-label))" }}>
-                          {CONTACT.role}
-                        </span>
-                      </span>
-                    </div>
-                    <address className="not-italic" style={{ marginTop: u(16), fontSize: "max(13px, var(--type-body))", lineHeight: 1.5 }}>
-                      <a className="font-mono block" href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}>
-                        {CONTACT.phone}
-                      </a>
-                      <a className="block" href={`mailto:${CONTACT.email}`}>
-                        {CONTACT.email}
-                      </a>
-                    </address>
-                    <p className="text-mist-700" style={{ marginTop: u(12), fontSize: "max(11px, calc(12 * var(--u)))", lineHeight: 1.3 }}>
-                      A fictional contact for a concept site.
-                    </p>
-                  </div>
-                  <p ref={enquiryOr} data-tone="light" className="font-display text-mist-700 text-right" style={{ fontSize: "max(16px, calc(28 * var(--u)))", lineHeight: 1, textTransform: "var(--display-case)" }}>
-                    or
-                  </p>
-
-                  {/* E: the enquiry form's link (step 3/5/6g). Two fixed lines, each with its own hover underline;
-                      the arrow nudges right. Opens the sidebar (modal); it no longer opens on its own. */}
-                  <button
-                    ref={inquireBtn}
-                    type="button"
-                    data-tone="light"
-                    className="detail-inquire font-display text-right"
-                    style={{ fontSize: "max(16px, calc(28 * var(--u)))", lineHeight: 1.15 }}
-                    onClick={() => setEnquiryOpen(true)}
-                  >
-                    <span className="detail-inquire-line">Inquire about this</span>
-                    <span className="detail-inquire-line">
-                      car here <span className="detail-inquire-arrow">→</span>
-                    </span>
-                  </button>
-                </div>
+                {/* E: the enquiry form's link (step 3/5/6g). Two fixed lines, each with its own hover underline;
+                    the arrow nudges right. Opens the sidebar (modal), which also holds the contact card. */}
+                <button
+                  ref={inquireBtn}
+                  type="button"
+                  data-block="inquire"
+                  data-tone="light"
+                  className="detail-inquire font-display absolute text-right"
+                  style={{ ...styleOf(block("inquire")), fontSize: "max(16px, calc(28 * var(--u)))", lineHeight: 1.15 }}
+                  onClick={() => setEnquiryOpen(true)}
+                >
+                  <span className="detail-inquire-line">Inquire about this</span>
+                  <span className="detail-inquire-line">
+                    car here <span className="detail-inquire-arrow">→</span>
+                  </span>
+                </button>
               </div>
 
               {/* Chrome: the progress line and the spec bar. */}

@@ -143,15 +143,6 @@ export function ruleDraw(targets: Targets, reduced: boolean) {
   return gsap.fromTo(targets, { scaleX: 0 }, { scaleX: 1, duration: effect.ruleDraw.duration, ease: effect.ruleDraw.ease, stagger: effect.ruleDraw.stagger, transformOrigin: "left" });
 }
 
-/** M9: section E's two sides: the stacked headings from the left, the contact column from the right, with a fade. */
-export function sideEntrance(left: Targets, right: Targets, reduced: boolean) {
-  if (reduced) return gsap.fromTo([left, right], { opacity: 0 }, { opacity: 1, duration: reducedTokens.fade, ease: ease.fade, stagger: 0.1 });
-  const tl = gsap.timeline();
-  tl.fromTo(left, { xPercent: -effect.sideEntrance.xPercent, opacity: 0 }, { xPercent: 0, opacity: 1, duration: effect.sideEntrance.duration, ease: effect.sideEntrance.ease });
-  tl.fromTo(right, { xPercent: effect.sideEntrance.xPercent, opacity: 0 }, { xPercent: 0, opacity: 1, duration: effect.sideEntrance.duration, ease: effect.sideEntrance.ease }, 0.15);
-  return tl;
-}
-
 /** M10: the bottom spec bar slides down and out over its scroll range. `q` is progress through the exit, 0 to 1. */
 export function barExit(el: HTMLElement, q: number) {
   el.style.transform = `translate3d(0, ${q * 100}%, 0)`;

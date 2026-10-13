@@ -2,7 +2,7 @@
 
 // The enquiry sidebar placeholder (docs/overhaul.md step 5): a mock form, M11's first live use. Nothing is
 // sent — submitting swaps the form for a thank-you state. Opened by section E's "Inquire about this car
-// here →" or, once per visit, by scrolling section E 40% into view (both wired from Detail.tsx).
+// here →" (wired from Detail.tsx). The listing's contact sits above the form (after 7f).
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { CarWithAssets } from "@/lib/cars";
 import gsap from "gsap";
@@ -17,6 +17,10 @@ interface Fields {
   message: string;
 }
 type FieldErrors = Partial<Record<keyof Fields, string>>;
+
+/** The listing's contact, shown above the form (user, after 7f; it was a card on section E). Fiction: a UK
+ * drama-range number (Ofcom 020 7946 0xxx) and a reserved .example address, so neither reaches anyone. */
+const CONTACT = { name: "Mara Lindqvist", role: "Listings specialist, Arcade", phone: "+44 20 7946 0318", email: "mara@arcade.example" } as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+()\d][\d\s()+-]{5,}$/;
@@ -190,63 +194,100 @@ export function Enquiry({ car, open, modal, onClose }: { car: CarWithAssets; ope
               </button>
             </div>
           ) : (
-            <form onSubmit={onSubmit} noValidate>
-              <Field label="Name" error={errors.name} errorId="enquiry-name-error">
-                <input
-                  ref={nameInput}
-                  type="text"
-                  autoComplete="name"
-                  value={fields.name}
-                  onChange={(event) => onChange("name", event.target.value)}
-                  onBlur={() => onBlur("name")}
-                  aria-invalid={Boolean(errors.name)}
-                  aria-describedby={errors.name ? "enquiry-name-error" : undefined}
-                  className="enquiry-input"
-                />
-              </Field>
-              <Field label="Email" error={errors.email} errorId="enquiry-email-error">
-                <input
-                  type="email"
-                  autoComplete="email"
-                  value={fields.email}
-                  onChange={(event) => onChange("email", event.target.value)}
-                  onBlur={() => onBlur("email")}
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? "enquiry-email-error" : undefined}
-                  className="enquiry-input"
-                />
-              </Field>
-              <Field label="Phone (optional)" error={errors.phone} errorId="enquiry-phone-error">
-                <input
-                  type="tel"
-                  autoComplete="tel"
-                  value={fields.phone}
-                  onChange={(event) => onChange("phone", event.target.value)}
-                  onBlur={() => onBlur("phone")}
-                  aria-invalid={Boolean(errors.phone)}
-                  aria-describedby={errors.phone ? "enquiry-phone-error" : undefined}
-                  className="enquiry-input"
-                />
-              </Field>
-              <Field label="Message" error={errors.message} errorId="enquiry-message-error">
-                <textarea
-                  rows={4}
-                  value={fields.message}
-                  onChange={(event) => onChange("message", event.target.value)}
-                  onBlur={() => onBlur("message")}
-                  aria-invalid={Boolean(errors.message)}
-                  aria-describedby={errors.message ? "enquiry-message-error" : undefined}
-                  className="enquiry-input"
-                />
-              </Field>
-              <button type="submit" className="detail-pill mt-2">
-                Send enquiry
-              </button>
-              {/* 75%, not 60% (6h): 60% measured 4.03:1 on the figma theme's paper, under AA. */}
-              <p className="mt-3" style={{ fontSize: "max(11px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 75%, transparent)" }}>
-                This is a concept: nothing will be sent, and no one will reply.
+            <>
+              <div className="detail-contact">
+                <p className="detail-label text-mist-700" style={{ lineHeight: 1 }}>
+                  Your contact
+                </p>
+                <div className="mt-4 flex items-center gap-3.5">
+                  <span aria-hidden className="detail-contact-avatar">
+                    {CONTACT.name
+                      .split(" ")
+                      .map((word) => word[0])
+                      .join("")}
+                  </span>
+                  <span>
+                    <span className="font-display block" style={{ fontSize: "max(18px, calc(22 * var(--u)))", lineHeight: 1.1 }}>
+                      {CONTACT.name}
+                    </span>
+                    <span className="text-mist-700 mt-1 block" style={{ fontSize: "max(12px, var(--type-label))" }}>
+                      {CONTACT.role}
+                    </span>
+                  </span>
+                </div>
+                <address className="mt-4 not-italic" style={{ fontSize: "max(14px, var(--type-body))", lineHeight: 1.5 }}>
+                  <a className="font-mono block" href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}>
+                    {CONTACT.phone}
+                  </a>
+                  <a className="block" href={`mailto:${CONTACT.email}`}>
+                    {CONTACT.email}
+                  </a>
+                </address>
+                <p className="text-mist-700 mt-3" style={{ fontSize: "max(11px, calc(12 * var(--u)))", lineHeight: 1.3 }}>
+                  A fictional contact for a concept site.
+                </p>
+              </div>
+              <p className="detail-label enquiry-or text-mist-700 my-6" style={{ lineHeight: 1 }}>
+                or send a message
               </p>
-            </form>
+              <form onSubmit={onSubmit} noValidate>
+                <Field label="Name" error={errors.name} errorId="enquiry-name-error">
+                  <input
+                    ref={nameInput}
+                    type="text"
+                    autoComplete="name"
+                    value={fields.name}
+                    onChange={(event) => onChange("name", event.target.value)}
+                    onBlur={() => onBlur("name")}
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby={errors.name ? "enquiry-name-error" : undefined}
+                    className="enquiry-input"
+                  />
+                </Field>
+                <Field label="Email" error={errors.email} errorId="enquiry-email-error">
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    value={fields.email}
+                    onChange={(event) => onChange("email", event.target.value)}
+                    onBlur={() => onBlur("email")}
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? "enquiry-email-error" : undefined}
+                    className="enquiry-input"
+                  />
+                </Field>
+                <Field label="Phone (optional)" error={errors.phone} errorId="enquiry-phone-error">
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    value={fields.phone}
+                    onChange={(event) => onChange("phone", event.target.value)}
+                    onBlur={() => onBlur("phone")}
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={errors.phone ? "enquiry-phone-error" : undefined}
+                    className="enquiry-input"
+                  />
+                </Field>
+                <Field label="Message" error={errors.message} errorId="enquiry-message-error">
+                  <textarea
+                    rows={4}
+                    value={fields.message}
+                    onChange={(event) => onChange("message", event.target.value)}
+                    onBlur={() => onBlur("message")}
+                    aria-invalid={Boolean(errors.message)}
+                    aria-describedby={errors.message ? "enquiry-message-error" : undefined}
+                    className="enquiry-input"
+                  />
+                </Field>
+                <button type="submit" className="detail-pill mt-2">
+                  Send enquiry
+                </button>
+                {/* 75%, not 60% (6h): 60% measured 4.03:1 on the figma theme's paper, under AA. */}
+                <p className="mt-3" style={{ fontSize: "max(11px, var(--type-label))", color: "color-mix(in srgb, var(--color-ink) 75%, transparent)" }}>
+                  This is a concept: nothing will be sent, and no one will reply.
+                </p>
+              </form>
+            </>
           )}
         </div>
       </div>

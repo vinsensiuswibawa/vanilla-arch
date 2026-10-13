@@ -41,7 +41,7 @@ export const effect = {
   depthDrift: { name: 0.82, make: 0.88, jump: 0.94, giveIt: 0.85, newHome: 0.85 },
   frameDrift: { k: 0.12 }, // M14 (7c): small overlapping photos move at 1.12x the page: offset -(x - xc) * k
   ruleDraw: { duration: 1.2, stagger: 0.06, ease: ease.reveal, hoverDuration: 0.3 }, // M8
-  sideEntrance: { xPercent: 12, duration: 1.4, stagger: 0.15, ease: ease.reveal, trigger: 0.7 }, // M9
+  // M9 (after 7f): section E's headings and form link fade 0 → 1 with the scroll over `scrollText`'s start/end range
   barExit: { share: 0.3 }, // M10: last 30 % of the bar's travel, over section A's final 25 %
   sidebar: { duration: 0.8, scrimDuration: 0.6, scrimOpacity: 0.4, leaveDuration: 0.5 }, // M11
   chromeFade: { duration: 0.6, ease: ease.fade }, // M12
